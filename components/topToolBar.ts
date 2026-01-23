@@ -24,11 +24,6 @@ export class TopToolBar {
     constructor(page: Page) {
         this.page = page;
         this.helpAbout = page.locator('button#help-shell');
-        this.globalSearch = page.locator('button#global-search-shell')
-        this.globalText = page.getByRole('textbox', { name: 'Global Search' });
-        this.globalSearchSend = page.locator('button#global-search-submit-shell');
-        this.globalSearchContainer = page.locator('eqms-global-search');
-        this.globalClose = page.locator('eqms-global-search').getByRole('button', { name: 'Close', exact: true });
         this.docLibraryLink = page.getByRole('menuitem', { name: 'Document library' });
         this.aboutLink = page.getByRole('menuitem', { name: 'About' });
         this.aboutDialog = page.locator('eqms-dialog-about-environment');
@@ -38,9 +33,13 @@ export class TopToolBar {
         this.walkMeFrame = page.locator('.walkme-menu');
         this.walkMeDisabled = page.locator('EQMS-GUIDE-ME-DIALOG').getByText('Could not establish connection to Guide me server.');
         this.closeDisabledWalkMe = page.locator('[role="dialog"]:has(mat-icon:text("close"))').getByText('close');
+        this.globalSearch = page.locator('button#global-search-shell')
+        this.globalText = page.getByRole('textbox', { name: 'Global Search' });
+        this.globalSearchSend = page.locator('button#global-search-submit-shell');
+        this.globalSearchContainer = page.locator('eqms-global-search');
+        this.globalClose = page.locator('eqms-global-search').getByRole('button', { name: 'Close', exact: true });
         this.logout = page.getByRole('menuitem', { name: 'Sign Out' });
         this.profileSettings = page.locator('button#profile-shell');
-
 
 
     }
@@ -79,7 +78,6 @@ export class TopToolBar {
     async openWalkMe(): Promise<'opened' | 'disabled'> {
         await this.helpAbout.click();
         await expect(this.walkMeLink).toBeVisible({ timeout: 5000 });
-
         await this.walkMeLink.click();
 
         // Wait for either: frame appears OR disabled message appears
@@ -98,6 +96,7 @@ export class TopToolBar {
         }
     }
 
+
     async globalSearchOpen(data: string) {
         await this.globalSearch.click();
         await expect(this.globalText).toBeVisible({ timeout: 5000 });
@@ -106,10 +105,8 @@ export class TopToolBar {
         await expect(this.globalSearchContainer).toBeVisible({timeout:20000});
         await this.globalClose.click();
 
-
-
-
     }
+
 
     async openAboutDialog() {
         await this.helpAbout.click();
