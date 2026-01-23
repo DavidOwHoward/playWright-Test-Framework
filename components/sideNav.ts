@@ -28,6 +28,7 @@ export class SideNav {
     }
 
 
+    //TO DO: combine search and open process
     //enters search text into Nav Search. checks to see if nav is collapsed and expands it if it is
     async searchProcess(searchText: string) {
         await this.ensureNavExpanded()
@@ -35,7 +36,9 @@ export class SideNav {
     }
 
 
-    //clicks the link to open the process. for now, will use the searchText variable to validate the correct process object opens using the browser title
+    //TO DO: create a dictionary of friendly process names to process system name so user doesn't have to specify system name to open process.
+    // Another option would be to figure out how to get playwright to click the link with just the search text
+    //clicks the link to open the process.
     async navOpenProcess(path: string) {
         const link = this.page.locator(`a[href="/search/${path}"]`);
         await link.waitFor({ state: 'visible' });

@@ -18,8 +18,8 @@ export class loginPage {
         this.signInButton = page.getByRole("button", {name: 'Sign in'});
 
     }
-
-    async logInUser(user: string, password: string) {
+    //TO DO: Turn these into one method
+    async loginUser(user: string, password: string) {
         await this.userNameBox.fill(user)
         await this.passwordBox.fill(password)
         await this.signInButton.click();
@@ -28,7 +28,7 @@ export class loginPage {
     async openPage(){
         const url = 'https://homedev.qad.com'
         await this.page.goto(url);
-        await expect(this.page).toHaveTitle('Login - QAD EQMS')
+        await expect(this.page).toHaveTitle('Login - QAD EQMS');
     }
 }
 

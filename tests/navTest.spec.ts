@@ -12,7 +12,7 @@ test('First Go', async ({ page }) => {
     const home = new HomePage(page);
 
     await login.openPage();
-    await login.logInUser('demo', 'qad');
+    await login.loginUser('demo', 'qad');
     await home.nav.searchProcess('Non-Conformances');
     await home.nav.navOpenProcess('Nonconformances_p');
 
