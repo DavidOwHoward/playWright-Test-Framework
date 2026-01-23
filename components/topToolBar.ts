@@ -18,6 +18,8 @@ export class TopToolBar {
     readonly walkMeDisabled: Locator;
     readonly globalSearchContainer: Locator;
     readonly closeDisabledWalkMe: Locator;
+    readonly profileSettings: Locator;
+    readonly logout: Locator;
 
     constructor(page: Page) {
         this.page = page;
@@ -36,6 +38,8 @@ export class TopToolBar {
         this.walkMeFrame = page.locator('.walkme-menu');
         this.walkMeDisabled = page.locator('EQMS-GUIDE-ME-DIALOG').getByText('Could not establish connection to Guide me server.');
         this.closeDisabledWalkMe = page.locator('[role="dialog"]:has(mat-icon:text("close"))').getByText('close');
+        this.logout = page.getByRole('menuitem', { name: 'Sign Out' });
+        this.profileSettings = page.locator('button#profile-shell');
 
 
 
@@ -103,12 +107,23 @@ export class TopToolBar {
         await this.globalClose.click();
 
 
+
+
     }
 
     async openAboutDialog() {
         await this.helpAbout.click();
         await this.aboutLink.click();
         await expect(this.aboutDialog).toBeVisible({ timeout: 5000 });
+        await this.page.keyboard.press('Escape');
+        await expect(this.aboutDialog).not.toBeVisible({ timeout: 5000 });
+
+    }
+
+    async userLogout() {
+        await this.profileSettings.click();
+        await this.logout.click();
+        await expect(this.page).toHaveTitle('Login - QAD EQMS');
 
     }
 
