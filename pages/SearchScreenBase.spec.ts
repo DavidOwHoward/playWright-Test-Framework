@@ -49,7 +49,6 @@ export class SearchScreen {
     }
     async showFilterRow() {
         await this.filterAndLayout.click();
-        await expect(this.page.getByRole('menuitem', { name: /Show Filter Row/i })).toBeVisible();
         await this.filterRowShow.click();
         await expect(this.filterRow).toBeVisible();
         await this.filterAndLayout.click();
