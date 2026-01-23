@@ -14,5 +14,6 @@ test("topToolBarSanity", async ({page}) => {
     await home.ttb.openWalkMe();
     await home.ttb.globalSearchOpen('titanium');
     await home.ttb.openAboutDialog();
+    await home.ttb.userLogout();
 
 })
