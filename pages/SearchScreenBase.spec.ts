@@ -16,8 +16,10 @@ export class SearchScreen {
     readonly layoutPanel: Locator;
     readonly actionsExport: Locator;
     readonly actionsBulk: Locator;
-    readonly filterRowVisible: Locator;
+    readonly filterRow: Locator;
     readonly hideFilterRow: Locator;
+    readonly gridRoot: Locator;
+
 
 
 
@@ -33,10 +35,13 @@ export class SearchScreen {
         this.filterAndLayout = page.locator('#settings-search-toolbar');
         this.clearSort = page.locator('#clear-sorting-search-toolbar');
         this.clearGroup = page.locator('#grouping-color-search-toolbar');
-        this.filterRowShow = page.getByRole('menuitem', { name: 'Show Filter Row' })
-        this.layoutPanel = page.getByRole('menuitem', { name: 'Show Filters & Layouts Panel' })
-        this.filterRowVisible = page.locator('eqms-grid[role="grid"][aria-label="Data table]').locator('tr.k-filter-row')
-        this.hideFilterRow = page.getByRole('menuitem', { name: 'Hide Filter Row' })
+        this.filterRowShow = page.getByRole('menuitem', { name: 'Show Filter Row' });
+        this.layoutPanel = page.getByRole('menuitem', { name: 'Show Filters & Layouts Panel' });
+        this.gridRoot = page
+            .locator('eqms-grid')
+            .locator('div[role="grid"][aria-label="Data table"]')
+        this.filterRow = this.gridRoot.locator('tr.k-filter-row');
+        this.hideFilterRow = page.getByRole('menuitem', { name: 'Hide Filter Row' });
         this.actionsExport = page.locator('#export-search-toolbar');
         this.actionsBulk = page.locator('#bulk-search-toolbar');
 
@@ -46,10 +51,10 @@ export class SearchScreen {
         await this.filterAndLayout.click();
         await expect(this.page.getByRole('menuitem', { name: /Show Filter Row/i })).toBeVisible();
         await this.filterRowShow.click();
-        await expect(this.filterRowVisible).toBeVisible();
+        await expect(this.filterRow).toBeVisible();
         await this.filterAndLayout.click();
         await this.hideFilterRow.click();
-        await expect(this.filterRowVisible).not.toBeVisible();
+        await expect(this.filterRow).toHaveCount(0);
     }
 
 
