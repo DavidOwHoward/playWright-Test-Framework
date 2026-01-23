@@ -1,4 +1,4 @@
-import {Page, test} from '@playwright/test'
+import { test } from '@playwright/test'
 import { SearchScreen } from "../pages/SearchScreenBase.spec";
 import { loginPage } from "../pages/loginBase.spec"
 import { HomePage } from "../pages/HomePageBase.spec"
@@ -12,6 +12,18 @@ test('SearchScreen', async ({page}) => {
     await login.loginUser('demo','qad');
     await home.nav.searchProcess('Record Types');
     await home.nav.navOpenProcess('RecordTypes_p');
-    await srch.searchBox.fill('Audits');
+    //await srch.searchBox.fill('Audits');
+    //await srch.addButton.click();
+    //await srch.ellipseButton.click();
+    //await srch.reportsButton.click();
+    //await srch.actionsButton.click();
+    //await srch.clearGroup.click();
+    //await srch.clearSort.click();
+    //await srch.refreshButton.click();
+    //await srch.closeButton.click();
+    //await srch.filterAndLayout.click();
+    await srch.showFilterRow();
+
+
 
 })

@@ -43,6 +43,8 @@ export class TopToolBar {
 
 
     }
+
+    //TO DO: Create a helper function to click on a context menu and select an item inside that menu(helpAbout and profileSettings)
     async openDocLibrary() {
 
         await this.helpAbout.click();
