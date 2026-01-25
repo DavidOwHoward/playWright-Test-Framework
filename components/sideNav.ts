@@ -1,4 +1,4 @@
-import { type Locator, type Page } from '@playwright/test';
+import { expect, type Locator, type Page } from '@playwright/test';
 import { ensureClassAbsent } from "../utils/ensureClassAbsent.spec";
 
 //function escapeRegExp(value: string): string {
