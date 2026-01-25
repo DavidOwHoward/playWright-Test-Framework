@@ -2,6 +2,7 @@ import { type Page } from '@playwright/test';
 import {SideNav} from "../components/sideNav";
 import {HomeTopToolBar} from "../components/HomeTopToolBar";
 import { LayoutsAndFiltersPanel} from "../components/filterAndLayoutPanel.spec";
+import { DetailsTopToolBar } from "../components/DetailsTopToolBar.spec";
 
 export class HomePage {
     readonly page: Page;
