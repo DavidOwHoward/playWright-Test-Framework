@@ -48,6 +48,6 @@ export class LayoutsAndFiltersPanel {
 
         //await this.layoutAndFiltersButton.click();
         await this.filtersList.click();
-        await this.filterSearch.fill(searchFilters);
+        await this.filterSearch.fill(searchFilter);
     }
 }
