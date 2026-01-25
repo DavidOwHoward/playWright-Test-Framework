@@ -44,7 +44,7 @@ export class LayoutsAndFiltersPanel {
 
     }
 
-    async filtersOpenSearch(searchFilters: string): Promise<void> {
+    async filtersOpenSearch(searchFilter: string): Promise<void> {
 
         //await this.layoutAndFiltersButton.click();
         await this.filtersList.click();
