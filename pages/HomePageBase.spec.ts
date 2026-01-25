@@ -6,7 +6,7 @@ import { LayoutsAndFiltersPanel} from "../components/filterAndLayoutPanel.spec";
 export class HomePage {
     readonly page: Page;
     readonly nav: SideNav;
-    readonly ttb: TopToolBar
+    readonly httb: HomeTopToolBar
     readonly lfp: LayoutsAndFiltersPanel;
 
 
