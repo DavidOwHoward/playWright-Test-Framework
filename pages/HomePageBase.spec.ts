@@ -1,6 +1,6 @@
 import { type Page } from '@playwright/test';
 import {SideNav} from "../components/sideNav";
-import {TopToolBar} from "../components/topToolBar";
+import {HomeTopToolBar} from "../components/HomeTopToolBar";
 import { LayoutsAndFiltersPanel} from "../components/filterAndLayoutPanel.spec";
 
 export class HomePage {
