@@ -37,7 +37,7 @@ export class SideNav {
     }
 
 
-    async newNavOpenProcess(group: string, process: string) {
+    async navOpenProcess(group: string, process: string) {
         await this.ensureNavExpanded()
 
         const navGroupItem = this.navPanel
