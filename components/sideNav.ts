@@ -54,13 +54,19 @@ export class SideNav {
     }
 
     async newNavOpenProcess(group: string, process: string) {
-        await this.page.locator('.fm-navigation')
-            .locator('.cdk-virtual-scroll-content-wrapper')
-            .locator('.mat-mdc-list-item')
-            .getByText(`${group}`).click();
-        await this.page.locator('.fm-navigation')
-            .locator('.cdk-virtual-scroll-content-wrapper')
-            .locator('.mdc-list-item', {hasText: `${process}`}).click();
+        await this.ensureNavExpanded()
+
+        const navGroupItem = this.navPanel
+            .locator('.mat-mdc-list-item', {hasText: `${group}`})
+
+        await navGroupItem.click();
+
+        const navChildItem = this.navPanel
+            .locator('.mdc-list-item', {hasText: `${process}`});
+
+        await expect(navChildItem).toBeVisible();
+        await navChildItem.scrollIntoViewIfNeeded();
+        await navChildItem.click();
 
     }
 
