@@ -15,7 +15,7 @@ export class SideNav {
         this.navSearch = page.getByPlaceholder('Looking for a Process');
         this.navCollapse = page.locator('fm-navigation').getByRole('button').filter({ hasText: 'menu' });
         this.navPanel = page.locator('.fm-navigation');
-       
+
     }
 
 
