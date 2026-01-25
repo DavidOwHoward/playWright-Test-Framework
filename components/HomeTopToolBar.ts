@@ -1,7 +1,7 @@
 import {expect, type Locator, type Page} from '@playwright/test';
 
 
-export class TopToolBar {
+export class HomeTopToolBar {
     readonly page: Page;
     readonly globalSearch: Locator;
     readonly helpAbout: Locator;
