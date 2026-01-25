@@ -54,8 +54,15 @@ export class SideNav {
     }
 
     async newNavOpenProcess(group: string, process: string) {
-        await this.page.locator('.fm-navigation').locator('.cdk-virtual-scroll-content-wrapper').locator('.mat-mdc-list-item').getByText(`${group}`).click()
-        await this.page.locator('.fm-navigation').locator('.cdk-virtual-scroll-content-wrapper').locator('.mat-mdc-list-item').getByText(`${process}`).click({force: true});
+        await this.page.locator('.fm-navigation')
+            .locator('.cdk-virtual-scroll-content-wrapper')
+            .locator('.mat-mdc-list-item')
+            .getByText(`${group}`).click();
+        await this.page.locator('.fm-navigation')
+            .locator('.cdk-virtual-scroll-content-wrapper')
+            .locator('.mat-mdc-list-item')
+            .locator('mat-mdc-list-item-title')
+            .getByText(`${process}`).click();
 
     }
 
