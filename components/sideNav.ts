@@ -60,9 +60,7 @@ export class SideNav {
             .getByText(`${group}`).click();
         await this.page.locator('.fm-navigation')
             .locator('.cdk-virtual-scroll-content-wrapper')
-            .locator('.mat-mdc-list-item')
-            .locator('mat-mdc-list-item-title')
-            .getByText(`${process}`).click();
+            .locator('.mdc-list-item', {hasText: `${process}`}).click();
 
     }
 
