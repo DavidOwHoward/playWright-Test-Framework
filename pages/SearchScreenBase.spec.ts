@@ -17,9 +17,6 @@ export class SearchScreen {
     readonly actionsBulk: Locator;
     readonly filterRow: Locator;
     readonly hideFilterRow: Locator;
-    readonly gridRoot: Locator;
-
-
 
 
 

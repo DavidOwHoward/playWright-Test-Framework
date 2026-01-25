@@ -3,6 +3,9 @@ import { SearchScreen } from "../pages/SearchScreenBase.spec";
 import { loginPage } from "../pages/loginBase.spec"
 import { HomePage } from "../pages/HomePageBase.spec"
 
+// test.use({
+//     viewport: {width: 1920, height: 1080}})
+
 test('SearchScreen', async ({page}) => {
     const srch = new SearchScreen(page);
     const login = new loginPage(page);
@@ -22,7 +25,9 @@ test('SearchScreen', async ({page}) => {
     //await srch.refreshButton.click();
     //await srch.closeButton.click();
     //await srch.filterAndLayout.click();
-    await srch.showFilterRow();
+    //await srch.showFilterRow();
+    await home.lfp.layoutsOpenSearch('Data');
+    await home.lfp.filtersOpenSearch('Active');
 
 
 

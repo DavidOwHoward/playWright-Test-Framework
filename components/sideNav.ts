@@ -1,4 +1,5 @@
 import { type Locator, type Page } from '@playwright/test';
+import { ensureClassAbsent } from "../utils/ensureClassAbsent.spec";
 
 //function escapeRegExp(value: string): string {
     //return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');}
@@ -18,13 +19,20 @@ export class SideNav {
 
 
     async ensureNavExpanded() {
-        const isCollapsed = await this.navPanel.evaluate(el =>
-            el.classList.contains('side-to-icon')
-        );
+        await ensureClassAbsent(
+            this.page,
+            this.navPanel,
+            'side-to-icon',
+            async () => {
+                await this.navCollapse.click();
+            },
+            {
+                maxRetries: 3,
+                retryDelayMs: 300,
+            }
+        )
 
-        if (isCollapsed) {
-            await this.navCollapse.click();
-        }
+
     }
 
 
