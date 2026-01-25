@@ -10,6 +10,7 @@ export class SideNav {
     readonly navCollapse:Locator;
     readonly navPanel: Locator;
 
+
     constructor(page: Page) {
         this.page = page;
         this.navSearch = page.getByPlaceholder('Looking for a Process');
