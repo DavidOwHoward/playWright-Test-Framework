@@ -14,7 +14,7 @@ export class HomePage {
 
         this.page = page;
         this.nav = new SideNav(page);
-        this.ttb = new TopToolBar(page);
+        this.httb = new HomeTopToolBar(page);
         this.lfp = new LayoutsAndFiltersPanel(page);
     }
 
