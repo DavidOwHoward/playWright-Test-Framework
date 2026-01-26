@@ -1,4 +1,4 @@
-import { expect, Locator, Page } from '@playwright/test';
+import { expect, Page } from '@playwright/test';
 import {HomePage} from "../pages/HomePageBase.spec";
 
 export async function checkIfFavorite(
