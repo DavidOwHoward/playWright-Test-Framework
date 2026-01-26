@@ -29,15 +29,23 @@ export class HomeTopToolBar {
         this.aboutDialog = page.locator('eqms-dialog-about-environment');
         this.enhancementLink = page.getByRole('menuitem', { name: 'Submit Enhancement Idea' });
         this.walkMeLink = page.getByRole('menuitem', { name: 'Guide Me' });
-        this.closeWalkMe = page.locator('.walkme-menu').getByTitle('Close');
+        this.closeWalkMe = page.locator('.walkme-menu')
+            .getByTitle('Close');
+
         this.walkMeFrame = page.locator('.walkme-menu');
-        this.walkMeDisabled = page.locator('EQMS-GUIDE-ME-DIALOG').getByText('Could not establish connection to Guide me server.');
-        this.closeDisabledWalkMe = page.locator('[role="dialog"]:has(mat-icon:text("close"))').getByText('close');
+        this.walkMeDisabled = page.locator('EQMS-GUIDE-ME-DIALOG')
+            .getByText('Could not establish connection to Guide me server.');
+
+        this.closeDisabledWalkMe = page.locator('[role="dialog"]:has(mat-icon:text("close"))')
+            .getByText('close');
+
         this.globalSearch = page.locator('button#global-search-shell')
         this.globalText = page.getByRole('textbox', { name: 'Global Search' });
         this.globalSearchSend = page.locator('button#global-search-submit-shell');
         this.globalSearchContainer = page.locator('eqms-global-search');
-        this.globalClose = page.locator('eqms-global-search').getByRole('button', { name: 'Close', exact: true });
+        this.globalClose = page.locator('eqms-global-search')
+            .getByRole('button', { name: 'Close', exact: true });
+        
         this.logout = page.getByRole('menuitem', { name: 'Sign Out' });
         this.profileSettings = page.locator('button#profile-shell');
 
