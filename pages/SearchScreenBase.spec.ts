@@ -1,10 +1,12 @@
 import {expect, Locator, type Page} from '@playwright/test';
+import {checkIfFavorite} from "../utils/checkIfFavorite.spec";
 
 export class SearchScreen {
     readonly page: Page;
     readonly searchBox: Locator;
     readonly addButton: Locator;
     readonly ellipseButton: Locator;
+    readonly favoriteButton: Locator;
     readonly reportsButton: Locator;
     readonly actionsButton: Locator;
     readonly closeButton: Locator;
@@ -20,14 +22,15 @@ export class SearchScreen {
 
 
 
-    constructor (page: Page)    {
+    constructor (page: Page) {
         this.page = page;
         this.searchBox = page.locator('#filter-text-search-toolbar');
         this.addButton = page.locator('#new-search-toolbar');
         this.ellipseButton = page.locator('#more-search-toolbar');
-        this.reportsButton = page.getByRole('button', { name: 'Reports' });
-        this.actionsButton = page.getByRole('button', { name: 'Actions' });
-        this.closeButton = page.getByRole('button', { name: 'Close', exact: true });
+        this.favoriteButton = page.getByRole('menuitem', { name: 'Favorites' });
+        this.reportsButton = page.getByRole('button', {name: 'Reports'});
+        this.actionsButton = page.getByRole('button', {name: 'Actions'});
+        this.closeButton = page.getByRole('button', {name: 'Close', exact: true});
         this.refreshButton = page.locator('#refresh-search-footer');
         this.clearSort = page.locator('#clear-sorting-search-toolbar');
         this.clearGroup = page.locator('#grouping-color-search-toolbar');
@@ -36,14 +39,21 @@ export class SearchScreen {
 
 
     }
-    async showFilterRow() {
-        await this.filterAndLayout.click();
-        await this.filterRowShow.click();
-        await expect(this.filterRow).toBeVisible();
-        await this.filterAndLayout.click();
-        await this.hideFilterRow.click();
-        await expect(this.filterRow).toHaveCount(0);
+    //this is going to be turned into its own method when I get to working with the search screen
+    async findRecordSearch(searchText: string) {
+
+        await this.searchBox.fill(searchText);
     }
+
+    async addNewRecord() {
+
+        await this.addButton.click();
+    }
+    async favoritesButton() {
+        await checkIfFavorite(
+            this.page
+        )
+}
 
 
 }
