@@ -11,9 +11,9 @@ export class ReportsBase{
     readonly reportsExport: Locator;
     readonly togglePrint: Locator;
     readonly printReport: Locator;
-    readonly reportZoomIn: Locator;
-    readonly reportZoomOut: Locator;
-    readonly reportFullPage: Locator;
+    readonly reportsZoomIn: Locator;
+    readonly reportsZoomOut: Locator;
+    readonly reportsFullPage: Locator;
     readonly reportsClose: Locator;
     readonly reportsRefresh: Locator;
     readonly reportsRender: Locator;
@@ -22,6 +22,7 @@ export class ReportsBase{
     readonly landscape: Locator;
     readonly landscapeFit: Locator;
     readonly reportSearch: Locator;
+    readonly reportsLoad: Locator;
 
 
 
@@ -29,9 +30,15 @@ export class ReportsBase{
 
         this.page = page;
         this.reportsButton = page.getByRole('button', {name: 'Reports'});
+        this.reportsLoad = page.locator('.trv-error-pane')
+            .locator('.trv-centered')
+            .locator('.trv-error-message')
+            .getByText(/Done/);
+
         this.reportsContainer = page.locator('eqms-report-viewer');
-        this.reportsList = this.reportsContainer
-            .locator('.mat-mdc-nav-list');
+        this.reportsList = this.page.locator('.mat-sidenav')
+            .locator('.mat-mdc-nav-list')
+            .locator('.cdk-virtual-scroll-content-wrapper');
 
         this.listMenu = this.reportsContainer
             .locator('.utilities-container')
@@ -50,15 +57,15 @@ export class ReportsBase{
             .locator('.utilities-container')
             .locator('mat-icon', {hasText:"print"});
 
-        this.reportZoomIn = this.reportsContainer
+        this.reportsZoomIn = this.reportsContainer
             .locator('.utilities-container')
             .locator('mat-icon', {hasText:"zoom_in"});
 
-        this.reportZoomOut = this.reportsContainer
+        this.reportsZoomOut = this.reportsContainer
             .locator('.utilities-container')
             .locator('mat-icon', {hasText:"zoom_out"});
 
-        this.reportFullPage = this.reportsContainer
+        this.reportsFullPage = this.reportsContainer
             .locator('.utilities-container')
             .locator('mat-icon', {hasText:"screenshot_monitor"});
 
@@ -75,19 +82,19 @@ export class ReportsBase{
             .locator('mat-icon', {hasText:"close"});
 
         this.portrait = this.reportsList
-            .locator('.mat-list-item')
+            .locator('mat-list-item')
             .getByText('Portrait', {exact: true});
 
         this.portraitFit = this.reportsList
-            .locator('.mat-list-item')
+            .locator('mat-list-item')
             .getByText('Portrait Fit to Page', {exact: true});
 
         this.landscape = this.reportsList
-            .locator('.mat-list-item')
+            .locator('mat-list-item')
             .getByText('Landscape', {exact: true});
 
         this.landscapeFit = this.reportsList
-            .locator('.mat-list-item')
+            .locator('mat-list-item')
             .getByText('Landscape Fit to Page', {exact: true});
 
         this.reportSearch = this.reportsList
