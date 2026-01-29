@@ -1,7 +1,7 @@
 import { Locator } from '@playwright/test';
 
 
-export async function getListTextWithoutIcons(listItems: Locator): Promise<string[]> {
+export async function getListWithoutIcons(listItems: Locator): Promise<string[]> {
     return await listItems.evaluateAll((nodes) => {
         return nodes.map((node) => {
             //Make a deep copy so the DOM isn't modified
