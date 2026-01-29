@@ -7,8 +7,10 @@ export class ReportsBase{
     readonly reportsButton: Locator;
     readonly reportsContainer: Locator
     readonly reportsList: Locator;
+    readonly rootToolbar: Locator;
     readonly listMenu:  Locator;
     readonly reportsExport: Locator;
+    readonly exportItems: Locator;
     readonly togglePrint: Locator;
     readonly printReport: Locator;
     readonly reportsZoomIn: Locator;
@@ -23,6 +25,7 @@ export class ReportsBase{
     readonly landscapeFit: Locator;
     readonly reportSearch: Locator;
     readonly reportsLoad: Locator;
+    readonly reportsPage: Locator;
 
 
 
@@ -30,16 +33,18 @@ export class ReportsBase{
 
         this.page = page;
         this.reportsButton = page.getByRole('button', {name: 'Reports'});
-        this.reportsLoad = page.locator('.trv-error-pane')
-            .locator('.trv-centered')
-            .locator('.trv-error-message')
-            .getByText(/Done/);
+        this.reportsLoad = page.locator('iframe[title="Report viewer container."]')
+            .contentFrame()
+            .getByText('Done');
+
+
 
         this.reportsContainer = page.locator('eqms-report-viewer');
-        this.reportsList = this.page.locator('.mat-sidenav')
-            .locator('.mat-mdc-nav-list')
-            .locator('.cdk-virtual-scroll-content-wrapper');
+        this.reportsList = this.reportsContainer
+            .locator('mat-list-item')
+            .locator('.mdc-list-item__content')
 
+        this.rootToolbar = page.locator('.utilities-container');
         this.listMenu = this.reportsContainer
             .locator('.utilities-container')
             .locator('.mat-icon', {hasText:"menu"});
@@ -48,6 +53,8 @@ export class ReportsBase{
         this.reportsExport = this.reportsContainer
             .locator('.utilities-container')
             .locator('.mat-mdc-menu-trigger');
+
+        this.exportItems = page.getByRole('menuitem');
 
         this.togglePrint = this.reportsContainer
             .locator('.utilities-container')
@@ -82,23 +89,21 @@ export class ReportsBase{
             .locator('mat-icon', {hasText:"close"});
 
         this.portrait = this.reportsList
-            .locator('mat-list-item')
             .getByText('Portrait', {exact: true});
 
         this.portraitFit = this.reportsList
-            .locator('mat-list-item')
             .getByText('Portrait Fit to Page', {exact: true});
 
         this.landscape = this.reportsList
-            .locator('mat-list-item')
             .getByText('Landscape', {exact: true});
 
         this.landscapeFit = this.reportsList
-            .locator('mat-list-item')
             .getByText('Landscape Fit to Page', {exact: true});
 
         this.reportSearch = this.reportsList
             .locator('mat-icon', {hasText:"Search"})
+
+        this.reportsPage = this.page.locator('.trv-page-container');
 
 
 
