@@ -29,6 +29,10 @@ export class DetailsPageBase {
         this.stateSelector = this.saveStateBar
             .getByRole('button', {name:'Active'});
 
-}
+};
+
+    async closeRecord() {
+        await this.closeButton.click();
+    }
 
 }
