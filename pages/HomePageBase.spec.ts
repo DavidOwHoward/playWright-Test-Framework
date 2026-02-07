@@ -3,8 +3,9 @@ import {SideNav} from "../components/sideNav";
 import {HomeTopToolBar} from "../components/HomeTopToolBar";
 import { LayoutsAndFiltersPanel} from "../components/filterAndLayoutPanel.spec";
 import { DetailsTopToolBar } from "../components/DetailsTopToolBar.spec";
-import { SearchScreen } from "../pages/SearchScreenBase.spec"
+import { SearchScreen } from "./SearchScreenBase.spec"
 import { ReportsBase} from "../components/ReportBase.spec";
+import { SearchFilterRow} from "../components/SearchFilterRow.spec";
 
 export class HomePage {
     readonly page: Page;
@@ -13,6 +14,7 @@ export class HomePage {
     readonly srch: SearchScreen;
     readonly lfp: LayoutsAndFiltersPanel;
     readonly reps: ReportsBase;
+    readonly srfr: SearchFilterRow
 
 
     constructor(page: Page) {
@@ -23,6 +25,7 @@ export class HomePage {
         this.lfp = new LayoutsAndFiltersPanel(page);
         this.srch = new SearchScreen(page);
         this.reps = new ReportsBase(page);
+        this.srfr = new SearchFilterRow(page);
     }
 
 
