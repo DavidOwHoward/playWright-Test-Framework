@@ -1,6 +1,8 @@
 
 
 export const baseUrl = "https://homedev.qad.com";
+export const idpUrl = `${baseUrl}/admintoolsidp`
+export const metaApi = `${baseUrl}/admintoolsapi`
 
 export const docReports = [
     'Portrait',
