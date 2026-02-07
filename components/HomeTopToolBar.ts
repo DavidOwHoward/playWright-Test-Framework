@@ -18,6 +18,7 @@ export class HomeTopToolBar {
     readonly walkMeDisabled: Locator;
     readonly globalSearchContainer: Locator;
     readonly closeDisabledWalkMe: Locator;
+    readonly profile: Locator;
     readonly profileSettings: Locator;
     readonly logout: Locator;
 
@@ -45,9 +46,10 @@ export class HomeTopToolBar {
         this.globalSearchContainer = page.locator('eqms-global-search');
         this.globalClose = page.locator('eqms-global-search')
             .getByRole('button', { name: 'Close', exact: true });
-        
+
+        this.profile = page.locator('button#profile-shell');
+        this.profileSettings = page.getByRole('menuitem', { name: 'Settings' });
         this.logout = page.getByRole('menuitem', { name: 'Sign Out' });
-        this.profileSettings = page.locator('button#profile-shell');
 
 
     }
@@ -126,6 +128,17 @@ export class HomeTopToolBar {
         await expect(this.aboutDialog).not.toBeVisible({ timeout: 5000 });
 
     }
+
+
+    async openSettings() {
+        await this.profile.click()
+        await this.profileSettings.click();
+        await expect(this.page.locator('fm-sidenav')
+            .locator('eqms-actions-bar-settings')
+            .getByText('Show User Name')).toBeVisible()
+
+    }
+
 
     async userLogout() {
         await this.profileSettings.click();
