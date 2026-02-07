@@ -10,7 +10,7 @@ type TokenResult = {
     scope?: string;
 };
 
-const ISSUER_BASE_URL = "https://homedev.qad.com/admintoolsidp";
+const ISSUER_BASE_URL = `${idpUrl}`;
 const CLIENT_ID = "cebos.internal.api";
 const CLIENT_SECRET = "fHeeOdPVDzXFTZxNST65FlKV02DaWfKKE+SeMOL3oyg=";
 
@@ -32,5 +32,3 @@ export async function getAccessToken(): Promise<TokenResult> {
     return tokenSet as TokenResult;
 
 }
-const displayToken = await getAccessToken();
-console.log(displayToken);
