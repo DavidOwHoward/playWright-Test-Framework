@@ -1,5 +1,5 @@
 import { expect, type Locator, type Page } from '@playwright/test';
-
+import { baseUrl } from "../fixtures/constants.spec";
 
 
 export class loginPage {
@@ -32,8 +32,7 @@ export class loginPage {
     }
 
     async openPage(){
-        const url = 'https://homedev.qad.com'
-        await this.page.goto(url);
+        await this.page.goto(baseUrl);
         await expect(this.page).toHaveTitle('Login - QAD EQMS');
 
     }
