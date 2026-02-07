@@ -6,6 +6,7 @@ import { DetailsTopToolBar } from "../components/DetailsTopToolBar.spec";
 import { SearchScreen } from "./SearchScreenBase.spec"
 import { ReportsBase} from "../components/ReportBase.spec";
 import { SearchFilterRow} from "../components/SearchFilterRow.spec";
+import { DetailsPageBase} from "./DetailsPageBase.spec";
 
 export class HomePage {
     readonly page: Page;
@@ -15,6 +16,7 @@ export class HomePage {
     readonly lfp: LayoutsAndFiltersPanel;
     readonly reps: ReportsBase;
     readonly srfr: SearchFilterRow
+    readonly debp: DetailsPageBase;
 
 
     constructor(page: Page) {
@@ -26,6 +28,7 @@ export class HomePage {
         this.srch = new SearchScreen(page);
         this.reps = new ReportsBase(page);
         this.srfr = new SearchFilterRow(page);
+        this.debp = new DetailsPageBase(page);
     }
 
 
