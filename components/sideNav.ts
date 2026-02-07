@@ -16,7 +16,7 @@ export class SideNav {
         this.navCollapse = page.locator('fm-navigation').getByRole('button').filter({ hasText: 'menu' });
         this.navPanel = page.locator('.fm-navigation');
 
-    }
+    };
 
 
     async ensureNavExpanded() {
@@ -32,9 +32,7 @@ export class SideNav {
                 retryDelayMs: 300,
             }
         )
-
-
-    }
+    };
 
 
     async navOpenProcess(group: string, process: string) {
@@ -52,6 +50,6 @@ export class SideNav {
         await navChildItem.scrollIntoViewIfNeeded();
         await navChildItem.click();
 
-    }
+    };
 
 }
