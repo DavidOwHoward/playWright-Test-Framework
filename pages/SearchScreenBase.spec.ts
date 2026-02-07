@@ -1,9 +1,12 @@
 import {expect, Locator, type Page} from '@playwright/test';
 import {checkIfFavorite} from "../utils/checkIfFavorite.spec";
+import { clearSortCheck } from "../utils/clearSortCheck"
 
 export class SearchScreen {
     readonly page: Page;
     readonly searchBox: Locator;
+    readonly clearSearch: Locator;
+    readonly searchGrid: Locator;
     readonly addButton: Locator;
     readonly ellipseButton: Locator;
     readonly favoriteButton: Locator;
@@ -17,9 +20,15 @@ export class SearchScreen {
     readonly actionsBulk: Locator;
 
 
+
     constructor (page: Page) {
         this.page = page;
         this.searchBox = page.locator('#filter-text-search-toolbar');
+        this.searchGrid = page.locator('kendo-grid-list')
+            .locator('table')
+            .locator('tbody')
+
+        this.clearSearch = page.locator('#filter-text-clear-search-toolbar')
         this.addButton = page.locator('#new-search-toolbar');
         this.ellipseButton = page.locator('#more-search-toolbar');
         this.favoriteButton = page.getByRole('menuitem', { name: 'Favorites' });
@@ -33,12 +42,18 @@ export class SearchScreen {
         this.actionsBulk = page.locator('#bulk-search-toolbar');
 
 
+
     };
     //this is going to be turned into its own method when I get to working with the search screen
     async findRecordSearch(searchText: string) {
 
         await this.searchBox.fill(searchText);
     };
+
+    async ClearSearch() {
+
+        await this.clearSearch.click()
+    }
 
     async addNewRecord() {
 
@@ -50,6 +65,14 @@ export class SearchScreen {
         )
     };
 
+    async openRecord(recId: string): Promise<void> {
 
+        await this.searchGrid.getByText(`${recId}`).dblclick();
+    }
+
+    async clearSort() {
+        await this.clearSortButton.click();
+        await clearSortCheck(this.page);
+    }
 
 }
