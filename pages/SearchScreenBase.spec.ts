@@ -11,15 +11,10 @@ export class SearchScreen {
     readonly actionsButton: Locator;
     readonly closeButton: Locator;
     readonly refreshButton: Locator;
-    readonly filterAndLayout: Locator;
-    readonly clearSort: Locator;
-    readonly clearGroup: Locator;
-    readonly filterRowShow: Locator;
+    readonly clearSortButton: Locator;
+    readonly clearGroupButton: Locator;
     readonly actionsExport: Locator;
     readonly actionsBulk: Locator;
-    readonly filterRow: Locator;
-    readonly hideFilterRow: Locator;
-
 
 
     constructor (page: Page) {
@@ -32,28 +27,29 @@ export class SearchScreen {
         this.actionsButton = page.getByRole('button', {name: 'Actions'});
         this.closeButton = page.getByRole('button', {name: 'Close', exact: true});
         this.refreshButton = page.locator('#refresh-search-footer');
-        this.clearSort = page.locator('#clear-sorting-search-toolbar');
-        this.clearGroup = page.locator('#grouping-color-search-toolbar');
+        this.clearSortButton = page.locator('#clear-sorting-search-toolbar');
+        this.clearGroupButton = page.locator('#grouping-color-search-toolbar');
         this.actionsExport = page.locator('#export-search-toolbar');
         this.actionsBulk = page.locator('#bulk-search-toolbar');
 
 
-    }
+    };
     //this is going to be turned into its own method when I get to working with the search screen
     async findRecordSearch(searchText: string) {
 
         await this.searchBox.fill(searchText);
-    }
+    };
 
     async addNewRecord() {
 
         await this.addButton.click();
-    }
+    };
     async favoritesButton() {
         await checkIfFavorite(
             this.page
         )
-}
+    };
+
 
 
 }
