@@ -11,8 +11,8 @@ type TokenResult = {
 };
 
 const ISSUER_BASE_URL = `${idpUrl}`;
-const CLIENT_ID = "cebos.internal.api";
-const CLIENT_SECRET = "fHeeOdPVDzXFTZxNST65FlKV02DaWfKKE+SeMOL3oyg=";
+const CLIENT_ID = process.env.apiClientId;
+const CLIENT_SECRET = process.env.apiClientSecret;
 
 
 export async function getAccessToken(): Promise<TokenResult> {
