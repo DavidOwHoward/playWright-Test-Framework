@@ -1,12 +1,12 @@
 import { type Page } from '@playwright/test';
 import {SideNav} from "../components/sideNav";
 import {HomeTopToolBar} from "../components/HomeTopToolBar";
-import { LayoutsAndFiltersPanel} from "../components/filterAndLayoutPanel.spec";
-import { DetailsTopToolBar } from "../components/DetailsTopToolBar.spec";
-import { SearchScreen } from "./SearchScreenBase.spec"
+import { LayoutsAndFiltersPanel} from "../components/filterAndLayoutPanel";
+import { DetailsTopToolBar } from "../components/DetailsTopToolBar";
+import { SearchScreen } from "./SearchScreenBase"
 import { ReportsBase} from "../components/ReportBase.spec";
-import { SearchFilterRow} from "../components/SearchFilterRow.spec";
-import { DetailsPageBase} from "./DetailsPageBase.spec";
+import { SearchFilterRow} from "../components/SearchFilterRow";
+import { DetailsPageBase} from "./DetailsPageBase";
 
 export class HomePage {
     readonly page: Page;

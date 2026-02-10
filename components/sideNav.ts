@@ -1,5 +1,5 @@
 import { expect, type Locator, type Page } from '@playwright/test';
-import { ensureClassAbsent } from "../utils/ensureClassAbsent.spec";
+import { ensureClassAbsent } from "../utils/ensureClassAbsent";
 
 
 

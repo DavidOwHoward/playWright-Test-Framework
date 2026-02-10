@@ -1,5 +1,5 @@
 import * as oidc from "openid-client";
-import { idpUrl } from "../fixtures/constants.spec";
+import { idpUrl } from "../fixtures/constants";
 
 
 

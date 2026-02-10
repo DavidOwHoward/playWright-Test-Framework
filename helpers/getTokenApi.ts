@@ -1,5 +1,5 @@
 import { request, expect } from '@playwright/test'
-import { webApi  } from "../fixtures/constants.spec";
+import { webApi  } from "../fixtures/constants";
 
 
 

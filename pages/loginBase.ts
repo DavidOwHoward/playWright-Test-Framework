@@ -1,5 +1,5 @@
 import { expect, type Locator, type Page } from '@playwright/test';
-import { baseUrl } from "../fixtures/constants.spec";
+import { baseUrl } from "../fixtures/constants";
 
 
 export class loginPage {

@@ -1,5 +1,5 @@
 import {expect, Locator, type Page} from '@playwright/test';
-import {checkIfFavorite} from "../utils/checkIfFavorite.spec";
+import {checkIfFavorite} from "../utils/checkIfFavorite";
 import { clearSortCheck } from "../utils/clearSortCheck"
 
 export class SearchScreen {
