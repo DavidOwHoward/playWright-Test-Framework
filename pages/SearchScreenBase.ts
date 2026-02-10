@@ -1,5 +1,4 @@
 import {expect, Locator, type Page} from '@playwright/test';
-import {checkIfFavorite} from "../utils/checkIfFavorite";
 import { clearSortCheck } from "../utils/clearSortCheck"
 
 export class SearchScreen {
@@ -18,6 +17,7 @@ export class SearchScreen {
     readonly clearGroupButton: Locator;
     readonly actionsExport: Locator;
     readonly actionsBulk: Locator;
+    readonly favoriteIcon: Locator;
 
 
 
@@ -40,6 +40,7 @@ export class SearchScreen {
         this.clearGroupButton = page.locator('#grouping-color-search-toolbar');
         this.actionsExport = page.locator('#export-search-toolbar');
         this.actionsBulk = page.locator('#bulk-search-toolbar');
+        this.favoriteIcon = this.favoriteButton.locator('mat-icon')
 
 
 
@@ -59,11 +60,6 @@ export class SearchScreen {
 
         await this.addButton.click();
     };
-    async favoritesButton() {
-        await checkIfFavorite(
-            this.page
-        )
-    };
 
     async openRecord(recId: string): Promise<void> {
 
@@ -73,6 +69,30 @@ export class SearchScreen {
     async clearSort() {
         await this.clearSortButton.click();
         await clearSortCheck(this.page);
+    }
+
+    async toggleFavorite() {
+        //open the favorite menu
+        await this.ellipseButton.click();
+
+        //evaluate the icon text and store as iconBefore since it's before the first click action
+        const iconBefore = await this.favoriteIcon.evaluate(el => el.textContent.trim()
+        );
+
+        //click the button
+        await this.favoriteButton.click();
+
+        //since the menu closes after click, reopen the menu
+        await this.ellipseButton.click();
+
+        //evaluate the icon after the click and store it as icon after
+        const iconAfter = await this.favoriteIcon.evaluate(el => el.textContent.trim())
+
+        if(iconBefore === 'star') {
+            expect(iconAfter).toBe('star_outline')
+
+        } else
+            expect(iconAfter).toBe('star');
     }
 
 }
