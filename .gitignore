@@ -6,4 +6,10 @@ node_modules/
 /blob-report/
 /playwright/.cache/
 /playwright/.auth/
-/tests/searchScreenTest.spec.ts
+/tests/
+/.env
+/config/env.ts
+/tests/tests/locatorListValidat.spec.ts
+/tests/tests/navTest.spec.ts
+/tests/tests/reportSanitytest.spec.ts
+/tests/tests/topToolBarSanity.spec.ts
