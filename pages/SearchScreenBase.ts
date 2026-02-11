@@ -1,5 +1,6 @@
 import {expect, Locator, type Page} from '@playwright/test';
 import { clearSortCheck } from "../utils/clearSortCheck"
+import { groupColumn } from "../utils/dragAndDrop";
 
 export class SearchScreen {
     readonly page: Page;
@@ -18,6 +19,7 @@ export class SearchScreen {
     readonly actionsExport: Locator;
     readonly actionsBulk: Locator;
     readonly favoriteIcon: Locator;
+
 
 
 
@@ -41,6 +43,7 @@ export class SearchScreen {
         this.actionsExport = page.locator('#export-search-toolbar');
         this.actionsBulk = page.locator('#bulk-search-toolbar');
         this.favoriteIcon = this.favoriteButton.locator('mat-icon')
+
 
 
 
@@ -69,6 +72,10 @@ export class SearchScreen {
     async clearSort() {
         await this.clearSortButton.click();
         await clearSortCheck(this.page);
+    }
+
+    async dragDrop(column: string) {
+        await groupColumn(this.page , column)
     }
 
     async toggleFavorite() {
