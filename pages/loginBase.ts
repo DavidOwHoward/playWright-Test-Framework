@@ -1,5 +1,6 @@
 import { expect, type Locator, type Page } from '@playwright/test';
 import { baseUrl } from "../fixtures/constants";
+import { LoginUser } from '../config/user';
 
 
 export class loginPage {
@@ -22,9 +23,11 @@ export class loginPage {
 
     }
     //TO DO: Turn these into one method
-    async loginUser(user: string, password: string) {
-        await this.userNameBox.fill(user);
-        await this.passwordBox.fill(password);
+   
+
+    async loginUser(user: LoginUser) {
+        await this.userNameBox.fill(user.username);
+        await this.passwordBox.fill(user.password);
         await this.signInButton.click();
         await expect(this.page).toHaveTitle('Home - EQMS');
     //wait for the toast to go away since some test run fast enough that it can be in the way of grabbing elements

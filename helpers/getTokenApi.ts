@@ -1,5 +1,7 @@
 import { request, expect } from '@playwright/test'
 import { webApi  } from "../fixtures/constants";
+import { LoginUser } from '../config/user';
+
 
 
 
@@ -10,7 +12,7 @@ type TokenResponse = {
     scope?: string;
 };
 
-export async function getAccessToken(): Promise<string> {
+export async function getAccessToken(user: LoginUser): Promise<string> {
     const requestContext = await request.newContext({
 
     });
@@ -18,8 +20,9 @@ export async function getAccessToken(): Promise<string> {
     // create our urlencoded parameters
     const form = new URLSearchParams({
         grant_type: "password",
-        username: process.env.username,
-        password: process.env.password,
+        username: user.username ,
+        password: user.password,
+        
 
     });
 

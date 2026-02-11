@@ -1,6 +1,8 @@
 import { test } from '@playwright/test'
 import { HomePage} from "../pages/HomePageBase.spec";
-import { loginPage } from "../pages/loginBase.spec"
+import { users } from "../config/user";
+import { loginPage } from "../pages/loginBase"
+
 
 
 test.use({
@@ -12,9 +14,9 @@ test('First Go', async ({ page }) => {
     const home = new HomePage(page);
 
     await login.openPage();
-    await login.loginUser('demo', 'qad');
-    await home.nav.searchProcess('Non-Conformances');
-    await home.nav.navOpenProcess('Nonconformances_p');
+    await login.loginUser(users.demo);
+    await home.nav.navOpenProcess('NCR & CAPA', "Non-Conformances");
+   
 
 
 })
