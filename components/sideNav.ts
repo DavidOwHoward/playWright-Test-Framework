@@ -1,55 +1,98 @@
 import { expect, type Locator, type Page } from '@playwright/test';
 import { ensureClassAbsent } from "../utils/ensureClassAbsent";
+import { BaseComponent} from "./baseComponent";
 
 
-
-export class SideNav {
-    readonly page: Page;
+export class SideNav extends BaseComponent {
     readonly navSearch: Locator;
-    readonly navCollapse:Locator;
-    readonly navPanel: Locator;
+    readonly navCollapse: Locator;
 
+    constructor(page:Page) {
 
-    constructor(page: Page) {
-        this.page = page;
-        this.navSearch = page.getByPlaceholder('Looking for a Process');
-        this.navCollapse = page.locator('fm-navigation').getByRole('button').filter({ hasText: 'menu' });
-        this.navPanel = page.locator('.fm-navigation');
-
-    };
-
+        super(page, page.locator('.fm-navigation'));
+        this.navSearch = this.root.getByPlaceholder('Looking for a Process');
+        this.navCollapse = this.root.locator('fm-navigation').getByRole('button').filter({ hasText: 'menu' });
+    }
 
     async ensureNavExpanded() {
-        await ensureClassAbsent(
+        await ensureClassAbsent (
             this.page,
-            this.navPanel,
+            this.root,
             'side-to-icon',
-            async () => {
+        async () => {
                 await this.navCollapse.click();
-            },
+        },
             {
                 maxRetries: 3,
                 retryDelayMs: 300,
             }
-        )
-    };
+        );
+    }
 
 
     async navOpenProcess(group: string, process: string) {
-        await this.ensureNavExpanded()
+        await this.ensureNavExpanded();
 
-        const navGroupItem = this.navPanel
-            .locator('.mat-mdc-list-item', {hasText: `${group}`})
-
+        const navGroupItem = this.root.locator('.mat-mdc-list-item', { hasText: group});
         await navGroupItem.click();
 
-        const navChildItem = this.navPanel
-            .locator('.mdc-list-item', {hasText: `${process}`});
+        const navChildItem = this.root.locator('.mdc-list-item', { hasText: process});
 
         await expect(navChildItem).toBeVisible();
         await navChildItem.scrollIntoViewIfNeeded();
         await navChildItem.click();
-
-    };
+    }
 
 }
+
+
+// export class SideNav {
+//     readonly page: Page;
+//     readonly navSearch: Locator;
+//     readonly navCollapse:Locator;
+//     readonly navPanel: Locator;
+//
+//
+//     constructor(page: Page) {
+//         this.page = page;
+//         this.navSearch = page.getByPlaceholder('Looking for a Process');
+//         this.navCollapse = page.locator('fm-navigation').getByRole('button').filter({ hasText: 'menu' });
+//         this.navPanel = page.locator('.fm-navigation');
+//
+//     };
+//
+//
+//     async ensureNavExpanded() {
+//         await ensureClassAbsent(
+//             this.page,
+//             this.navPanel,
+//             'side-to-icon',
+//             async () => {
+//                 await this.navCollapse.click();
+//             },
+//             {
+//                 maxRetries: 3,
+//                 retryDelayMs: 300,
+//             }
+//         )
+//     };
+//
+//
+//     async navOpenProcess(group: string, process: string) {
+//         await this.ensureNavExpanded()
+//
+//         const navGroupItem = this.navPanel
+//             .locator('.mat-mdc-list-item', {hasText: `${group}`})
+//
+//         await navGroupItem.click();
+//
+//         const navChildItem = this.navPanel
+//             .locator('.mdc-list-item', {hasText: `${process}`});
+//
+//         await expect(navChildItem).toBeVisible();
+//         await navChildItem.scrollIntoViewIfNeeded();
+//         await navChildItem.click();
+//
+//     };
+//
+// }
