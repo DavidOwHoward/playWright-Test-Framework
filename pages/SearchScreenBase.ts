@@ -7,6 +7,9 @@ export class SearchScreen {
     readonly searchBox: Locator;
     readonly clearSearch: Locator;
     readonly searchGrid: Locator;
+    readonly searchGridRow: Locator;
+    readonly groupPanel: Locator;
+    readonly groupPanelRemove: Locator;
     readonly addButton: Locator;
     readonly ellipseButton: Locator;
     readonly favoriteButton: Locator;
@@ -21,14 +24,19 @@ export class SearchScreen {
     readonly favoriteIcon: Locator;
 
 
-
-
     constructor (page: Page) {
         this.page = page;
         this.searchBox = page.locator('#filter-text-search-toolbar');
         this.searchGrid = page.locator('kendo-grid-list')
             .locator('table')
             .locator('tbody')
+
+        this.searchGridRow = this.searchGrid
+            .locator('tr')
+
+        this.groupPanel = page.getByRole('toolbar', { name: 'Group panel' });
+        this.groupPanelRemove = this.groupPanel
+            .locator('.k-chip-remove-action')
 
         this.clearSearch = page.locator('#filter-text-clear-search-toolbar')
         this.addButton = page.locator('#new-search-toolbar');
@@ -43,8 +51,6 @@ export class SearchScreen {
         this.actionsExport = page.locator('#export-search-toolbar');
         this.actionsBulk = page.locator('#bulk-search-toolbar');
         this.favoriteIcon = this.favoriteButton.locator('mat-icon')
-
-
 
 
     };
