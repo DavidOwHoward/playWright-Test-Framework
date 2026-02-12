@@ -21,20 +21,13 @@ test('smokeTest', async ({page}) => {
     await eqms.srch.ClearSearch();
     await expect(eqms.srch.searchGrid.locator("tr")).toHaveCount(25);
     await eqms.srch.clearSort()
-    const source = page.getByText('Current State');
-    const target = page.getByRole('toolbar', { name: 'Group panel' });
-    // const target = page.getByText('Drag a column header and drop');
-    const dragClue = page.locator('.k-drag-clue');
-    await source.hover();
-    await page.mouse.down();
-    await page.waitForTimeout(2000);
-    await page.mouse.move(600,110);
-    await dragClue.dragTo(target, {targetPosition: {x:100, y:30}, timeout: 3000});
-    await expect(page.locator('.k-grouping-row')).toHaveCount(5);
-    const groupedColumn = await page.locator('.k-grouping-row').allInnerTexts();
-    for (const item of groupedColumn ) {
-        console.log(item)
-    }
+    await eqms.srch.dragDrop("Current State");
+    await page.getByRole('toolbar', { name: 'Group panel' }).locator('.k-chip-remove-action').click()
+    await expect(eqms.srch.searchGrid.locator("tr")).toHaveCount(25);
+    await eqms.srch.clearGroupButton.click()
+    await expect(page.getByRole('toolbar', { name: 'Group panel' })).not.toBeVisible();
+
+
 
           
      
