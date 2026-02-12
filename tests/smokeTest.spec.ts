@@ -17,15 +17,15 @@ test('smokeTest', async ({page}) => {
     await eqms.debp.closeRecord();
     await eqms.srch.findRecordSearch("Burr")
     await expect(eqms.srch.searchGrid.getByText("Burr")).toBeVisible();
-    await expect(eqms.srch.searchGrid.locator("tr")).toHaveCount(1);
+    await expect(eqms.srch.searchGridRow).toHaveCount(1);
     await eqms.srch.ClearSearch();
-    await expect(eqms.srch.searchGrid.locator("tr")).toHaveCount(25);
+    await expect(eqms.srch.searchGridRow).toHaveCount(25);
     await eqms.srch.clearSort()
     await eqms.srch.dragDrop("Current State");
-    await page.getByRole('toolbar', { name: 'Group panel' }).locator('.k-chip-remove-action').click()
-    await expect(eqms.srch.searchGrid.locator("tr")).toHaveCount(25);
+    await eqms.srch.groupPanelRemove.click()
+    await expect(eqms.srch.searchGridRow).toHaveCount(25);
     await eqms.srch.clearGroupButton.click()
-    await expect(page.getByRole('toolbar', { name: 'Group panel' })).not.toBeVisible();
+    await expect(eqms.srch.groupPanel).not.toBeVisible();
 
 
 
