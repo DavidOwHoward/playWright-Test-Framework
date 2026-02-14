@@ -1,6 +1,7 @@
 import {expect, Locator, type Page} from '@playwright/test';
 import { clearSortCheck } from "../utils/clearSortCheck"
 import { groupColumn } from "../utils/dragAndDrop";
+import { KendoGrid} from "../components/KendoGrid";
 
 export class SearchScreen {
     readonly page: Page;
@@ -10,6 +11,7 @@ export class SearchScreen {
     readonly searchGridRow: Locator;
     readonly groupPanel: Locator;
     readonly groupPanelRemove: Locator;
+    readonly groupGridRoot: Locator;
     readonly addButton: Locator;
     readonly ellipseButton: Locator;
     readonly favoriteButton: Locator;
@@ -22,6 +24,8 @@ export class SearchScreen {
     readonly actionsExport: Locator;
     readonly actionsBulk: Locator;
     readonly favoriteIcon: Locator;
+    readonly grid: KendoGrid;
+
 
 
     constructor (page: Page) {
@@ -38,6 +42,8 @@ export class SearchScreen {
         this.groupPanelRemove = this.groupPanel
             .locator('.k-chip-remove-action')
 
+        this.groupGridRoot = page.locator('.k-grid-table-wrap')
+        this.grid = new KendoGrid(this.groupGridRoot)
         this.clearSearch = page.locator('#filter-text-clear-search-toolbar')
         this.addButton = page.locator('#new-search-toolbar');
         this.ellipseButton = page.locator('#more-search-toolbar');
