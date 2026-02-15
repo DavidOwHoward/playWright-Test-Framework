@@ -39,31 +39,61 @@ export class KendoGrid {
         await expect(stateCell).toHaveAttribute('aria-expanded', 'false');
     }
 
-    async findAllChildGroups(groupRow: Locator)  {
-
-        const childCount = await groupRow.locator('.group-counter').innerText();
-        const childCountNum = Number(childCount.match(/\d+/)?.[0]);
-        const gridBody = this.root.locator('tbody');
-        const masterRow = gridBody.locator('tr.k-master-row');
-        const indexStart = await groupRow.getAttribute('aria-rowindex');
-
+    async getGroupChildCount(groupRow: Locator): Promise<number> {
+        const raw = await groupRow.locator('.group-counter').innerText(); // "(8 items)"
+        const digits = raw.match(/\d+/)?.[0];
+        return digits ? Number(digits) : 0;
     }
+
+    // async findAllChildGroups(groupRow: Locator)  {
+
+
+
+    //     const totalItems = await this.getGroupChildCount(groupRow);
+    //     // const indexStart = await Number(groupRow.getAttribute('aria-rowindex'));
+    //     for (let i = 0; i < totalItems; i++) {
+    //       const index = await masterRow.nth(i).getAttribute('aria-rowindex');
+    //       console.log(index);
+    //     }
+    //
+    // }
 
 
     async auditGrouping() {
 
-        const groups = this.findAllGroupRows()
-        const groupCount = await groups.count()
-              for (let i =0; i < groupCount; i++) {
-                const groupRow = groups.nth(i)
+        const groups = this.findAllGroupRows();
+        const groupCount = await groups.count();
+        const gridBody = this.root.locator('tbody');
+        const masterRow = gridBody.locator('tr.k-master-row');
+
+                for (let i =0; i < groupCount; i++) {
+
+                  const groupRow = groups.nth(i);
+                  const nextGroup = groups.nth(i+1);
+                  const totalItems = this.getGroupChildCount(groupRow);
+                  const rawIndexStart = await groupRow.getAttribute('aria-rowindex');
+                  const indexStart = Number(rawIndexStart);
+
                 if (!(await this.isGroupExpanded(groupRow))) {
+
                     await this.expandGroup(groupRow)
-                    await this.findAllChildGroups(groupRow)
+                    const rawIndexEnd = await nextGroup.getAttribute('aria-rowindex');
+                    const indexEnd = Number(rawIndexEnd);
+
+                    let rowCount = 0
+                    for (let rowIndex = indexStart + 1; rowIndex < indexEnd; rowIndex++) {
+                        if (gridBody.locator('tr[aria-rowindex=${rowIndex}]'))  {
+                            rowCount += 1
+                        }
+
+                    }
+
+                    //await this.findAllChildGroups(groupRow)
                     await this.collapseGroup(groupRow)
 
                 }
 
-            }
+            };
 
 
 
