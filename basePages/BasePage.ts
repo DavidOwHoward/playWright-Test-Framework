@@ -7,19 +7,43 @@ export abstract class BasePage {
         this.page = page;
     }
 
-    async xref(field: Locator, value: string) {
-        await field.getByRole('button').filter({ hasText: 'arrow_drop_down' }).click();
+    async xref(field: Locator, value: string, opts?: { assertContains?: string | RegExp}) {
+
+        await field
+            .getByRole('button')
+            .filter({ hasText: 'arrow_drop_down' })
+            .click();
 
         const listbox = this.page.getByRole('listbox');
         await expect(listbox).toBeVisible();
 
-        // Prefer option role if it exists; fallback can be getByText if needed
+
         const option = this.page.getByRole('gridcell').getByText(value);
         await option.click();
 
+
         await expect(listbox).not.toBeVisible();
-        await expect(field).toContainText(value);
+        const input = field.locator('input');
+        const expected = opts?.assertContains ?? value
+
+        if (expected instanceof RegExp) {
+
+            await expect(input).toHaveValue(expected);
+        } else {
+            const escaped = expected.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+            await expect(input).toHaveValue(new RegExp (escaped, 'i'));
+        }
+    };
+
+    async selectState(state: string) {
+
+        const root = this.page.locator('eqms-details-layout-dialog-confirm-state')
+        const stateButton = this.page.getByRole('button', {name: state})
+        await expect(root, 'The State popup was not visible').toBeVisible();
+        await expect(stateButton, `Could not find "${state}" in the State dialog`).toBeVisible();
+        await root.getByRole('button', {name: state}).click();
     }
+
 }
 
 
