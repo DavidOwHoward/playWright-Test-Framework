@@ -6,6 +6,8 @@ export type UserKey = 'demo' | 'admin' | 'mgrDoc';
 export interface LoginUser {
   username: string;
   password: string;
+  defaultSite?: string;
+  defaultDomain?: string;
 }
 
 
@@ -13,6 +15,8 @@ export const users: Record<UserKey, LoginUser> = {
   demo: {
     username: 'demo',
     password: env.defaultPassword,
+    defaultDomain: '10USA - USA Domain',
+    defaultSite: '10-200 - Auto Industrial Mfg'
   },
   admin: {
     username: 'admin',
