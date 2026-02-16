@@ -1,9 +1,10 @@
 import { test as base } from '@playwright/test';
 import { SideNav } from "../components/sideNav";
-import { SearchScreen } from "../pages/SearchScreenBase";
-import { DetailsPageBase } from "../pages/DetailsPageBase";
+import { SearchScreen } from "../basePages/SearchScreenBase";
+import { DetailsPageBase } from "../basePages/DetailsPageBase";
 import { ReportsBase } from "../components/ReportBase";
-import { loginPage } from "../pages/loginBase";
+import { loginPage } from "../basePages/LoginBase";
+
 
 type baseFixtures = {
     login: loginPage;
@@ -11,6 +12,7 @@ type baseFixtures = {
     reports: ReportsBase;
     search: SearchScreen
     details: DetailsPageBase;
+
 }
 
 export const test = base.extend<baseFixtures>({
@@ -28,7 +30,8 @@ export const test = base.extend<baseFixtures>({
     },
     reports: async ({page}, use) => {
         await use(new ReportsBase(page));
-    }
+    },
+
 })
 
 export { expect } from '@playwright/test'
