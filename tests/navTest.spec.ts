@@ -1,7 +1,7 @@
 import { test } from '@playwright/test'
-import { HomePage} from "../pages/HomePageBase.spec";
+import { HomePage} from "../basePages/HomePageBase.spec";
 import { users } from "../config/user";
-import { loginPage } from "../pages/loginBase"
+import { loginPage } from "../basePages/LoginBase"
 
 
 
