@@ -10,7 +10,6 @@ export class KendoGrid {
 
     }
 
-
     findAllGroupRows(): Locator {
 
         return this.root
@@ -49,35 +48,17 @@ export class KendoGrid {
         return digits ? Number(digits) : 0;
     }
 
-    // async findAllChildGroups(groupRow: Locator)  {
-
-
-    //     const totalItems = await this.getGroupChildCount(groupRow);
-    //     // const indexStart = await Number(groupRow.getAttribute('aria-rowindex'));
-    //     for (let i = 0; i < totalItems; i++) {
-    //       const index = await masterRow.nth(i).getAttribute('aria-rowindex');
-    //       console.log(index);
-    //     }
-    //
-    // }
-
-
     async auditGrouping() {
 
         const groups = this.findAllGroupRows();
         const groupCount = await groups.count();
-        console.log(groupCount);
         const gridBody = this.root.locator('tbody');
         const masterRow = gridBody.locator('tr.k-master-row');
 
         for (let i = 0; i < groupCount; i++) {
 
             const groupRow = groups.nth(i);
-
             const totalItems = this.getGroupChildCount(groupRow);
-
-            // const nextGroupRow = Number(rawNextGroupRow);
-
 
             if (!(await this.isGroupExpanded(groupRow))) {
 
@@ -92,17 +73,9 @@ export class KendoGrid {
                         const rawEnd = await nextGroup.getAttribute('aria-rowindex');
                         indexEnd = Number(rawEnd);
                     } else {
-                        // last group: end is last row in tbody (+1 so the loop includes the last row)
                         const rawLast = await gridBody.locator('tr').last().getAttribute('aria-rowindex');
                         indexEnd = Number(rawLast) + 1;
                     }
-                // const nextGroup = groups.nth(i + 1);
-                // const rawIndexEnd = await nextGroup.getAttribute('aria-rowindex');
-                // const indexEnd = Number(rawIndexEnd);
-                console.log(`this is the header: ${groupRow}`);
-                // console.log(`this is the next header: ${nextGroup}`);
-                console.log(`this is the start: ${indexStart}`);
-                console.log(`this is the end: ${indexEnd}`);
 
                 let rowCount = 0
                 for (let rowIndex = indexStart + 1; rowIndex < indexEnd; rowIndex++) {
@@ -114,18 +87,11 @@ export class KendoGrid {
                     }
                     console.log(`this is the count:${rowCount}`);
                     console.log(`this is the row we got: ${row}`);
-
-
                 }
-
-                //await this.findAllChildGroups(groupRow)
-                await this.collapseGroup(groupRow)
+                await this.collapseGroup(groupRow);
 
             }
 
         }
-
-
-
-    }
+    };
 }
