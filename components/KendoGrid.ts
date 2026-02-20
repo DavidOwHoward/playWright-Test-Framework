@@ -85,11 +85,22 @@ export class KendoGrid {
                 const indexStart = Number(rawIndexStart);
                 await this.expandGroup(groupRow)
                 await expect(gridBody.locator(`tr[aria-rowindex="${indexStart + 1}"]`)).toBeVisible();
-                const nextGroup = groups.nth(i + 1);
-                const rawIndexEnd = await nextGroup.getAttribute('aria-rowindex');
-                const indexEnd = Number(rawIndexEnd);
+                let indexEnd: number;
+
+                    if (i + 1 < groupCount) {
+                        const nextGroup = groups.nth(i + 1);
+                        const rawEnd = await nextGroup.getAttribute('aria-rowindex');
+                        indexEnd = Number(rawEnd);
+                    } else {
+                        // last group: end is last row in tbody (+1 so the loop includes the last row)
+                        const rawLast = await gridBody.locator('tr').last().getAttribute('aria-rowindex');
+                        indexEnd = Number(rawLast) + 1;
+                    }
+                // const nextGroup = groups.nth(i + 1);
+                // const rawIndexEnd = await nextGroup.getAttribute('aria-rowindex');
+                // const indexEnd = Number(rawIndexEnd);
                 console.log(`this is the header: ${groupRow}`);
-                console.log(`this is the next header: ${nextGroup}`);
+                // console.log(`this is the next header: ${nextGroup}`);
                 console.log(`this is the start: ${indexStart}`);
                 console.log(`this is the end: ${indexEnd}`);
 
