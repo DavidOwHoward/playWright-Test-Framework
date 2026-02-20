@@ -31,7 +31,6 @@ export class KendoGrid {
         await groupRow.locator('a[aria-label="Expand Group"]').click()
         await expect(stateCell).toHaveAttribute('aria-expanded', 'true');
 
-
     }
 
     async collapseGroup(groupRow: Locator) {
@@ -39,55 +38,85 @@ export class KendoGrid {
         const stateCell = groupRow.locator('td[aria-expanded]');
         await groupRow.locator('a[aria-label="Collapse Group"]').click()
         await expect(stateCell).toHaveAttribute('aria-expanded', 'false');
-        await expect
+
     }
 
     async getGroupChildCount(groupRow: Locator): Promise<number> {
-        const raw = await groupRow.locator('.group-counter').innerText(); // "(8 items)"
-        const digits = raw.match(/\d+/)?.[0];
-        return digits ? Number(digits) : 0;
+        const raw = await groupRow.locator('.group-counter').innerText();
+        const digits = raw.match(/(\d+)\s+items/);
+        return digits ? Number(digits[1]) : 0;
     }
+
+    async getRowIndexFromRow(row: Locator):Promise<number> {
+        return  Number(await row.getAttribute('aria-rowindex'))
+    };
+
+    async waitForFirstChild(index: number) {
+        const rowIndex = index + 1;
+        const row = this.root.locator(`tr[aria-rowindex="${rowIndex}"]`);
+        await expect(row).toBeVisible();
+    };
+
+    async getGroupEndBoundary(groupCount: number, index: number, groups: Locator, gridBody: Locator) {
+
+        if (index + 1 < groupCount) {
+            const nextGroup = groups.nth(index + 1);
+
+            const rawEnd = await nextGroup.getAttribute('aria-rowindex');
+            if (rawEnd === null) {
+                throw new Error('Next group header is missing aria-rowindex')
+            }
+            const indexEnd = Number(rawEnd)
+            if (Number.isNaN(indexEnd)) {
+                throw new Error(`Invalid aria-rowindex value: ${rawEnd}`)
+            }
+            return indexEnd;
+        } else {
+            const rawLast = await gridBody.locator('tr').last().getAttribute('aria-rowindex');
+            if (rawLast === null) {
+                throw new Error('Last row in grid is missing aria-rowindex')
+            } const lastIndex = Number(rawLast)
+            if (Number.isNaN(lastIndex)) {
+                throw new Error(`Invalid aria-rowindex value: ${rawLast}`)
+            }
+            return lastIndex + 1;
+        }
+    };
+
+    async countRows(indexStart: number, indexEnd:number, gridBody) {
+        let rowCount = 0
+
+        for (let rowIndex = indexStart + 1; rowIndex < indexEnd; rowIndex++) {
+            let row = await gridBody.locator(`tr[aria-rowindex="${rowIndex}"]`);
+            const isMaster = await row.evaluate(el => el.classList.contains('k-master-row'))
+            if (isMaster)
+            {
+                rowCount += 1;
+            }
+        } return rowCount;
+    };
 
     async auditGrouping() {
 
         const groups = this.findAllGroupRows();
         const groupCount = await groups.count();
         const gridBody = this.root.locator('tbody');
-        const masterRow = gridBody.locator('tr.k-master-row');
 
         for (let i = 0; i < groupCount; i++) {
 
             const groupRow = groups.nth(i);
-            const totalItems = this.getGroupChildCount(groupRow);
 
             if (!(await this.isGroupExpanded(groupRow))) {
 
-                const rawIndexStart = await groupRow.getAttribute('aria-rowindex');
-                const indexStart = Number(rawIndexStart);
+                const indexStart = await this.getRowIndexFromRow(groupRow);
                 await this.expandGroup(groupRow)
-                await expect(gridBody.locator(`tr[aria-rowindex="${indexStart + 1}"]`)).toBeVisible();
-                let indexEnd: number;
+                await this.waitForFirstChild(indexStart);
+                const indexEnd = await this.getGroupEndBoundary(groupCount, i, groups, gridBody);
 
-                    if (i + 1 < groupCount) {
-                        const nextGroup = groups.nth(i + 1);
-                        const rawEnd = await nextGroup.getAttribute('aria-rowindex');
-                        indexEnd = Number(rawEnd);
-                    } else {
-                        const rawLast = await gridBody.locator('tr').last().getAttribute('aria-rowindex');
-                        indexEnd = Number(rawLast) + 1;
-                    }
+                const items = await this.getGroupChildCount(groupRow);
+                const actualItems = await this.countRows(indexStart, indexEnd, gridBody);
 
-                let rowCount = 0
-                for (let rowIndex = indexStart + 1; rowIndex < indexEnd; rowIndex++) {
-                    let row = gridBody.locator(`tr[aria-rowindex="${rowIndex}"]`);
-                    const isMaster = await row.evaluate(el =>
-                        el.classList.contains('k-master-row'))
-                    if (isMaster) {
-                        rowCount += 1
-                    }
-                    console.log(`this is the count:${rowCount}`);
-                    console.log(`this is the row we got: ${row}`);
-                }
+                expect(items).toEqual(actualItems);
                 await this.collapseGroup(groupRow);
 
             }
