@@ -42,6 +42,7 @@ export class KendoGrid {
     }
 
     async getGroupChildCount(groupRow: Locator): Promise<number> {
+
         const raw = await groupRow.locator('.group-counter').innerText();
         const digits = raw.match(/(\d+)\s+items/);
         return digits ? Number(digits[1]) : 0;
@@ -52,10 +53,29 @@ export class KendoGrid {
     };
 
     async waitForFirstChild(index: number) {
+
         const rowIndex = index + 1;
         const row = this.root.locator(`tr[aria-rowindex="${rowIndex}"]`);
         await expect(row).toBeVisible();
     };
+
+    async checkForPager(groupRow: Locator, indexEnd: number, indexStart: number) {
+
+        const pager = groupRow.locator('.group-pager-container');
+        const hasPager = (await pager.count()) > 0;
+        const next = groupRow.locator('.group-pager-container').getByText('arrow_right');
+        const previous = groupRow.locator('.group-pager-container').getByText('arrow_left');
+        const groupCounter = await groupRow.locator('.group-counter').innerText();
+
+        if (hasPager) {
+            const before = await groupRow.locator('.group-counter').innerText();
+            await next.click();
+            const after = await groupRow.locator('.group-counter').innerText()
+            expect(before).not.toEqual(after);
+            await previous.click();
+            expect(groupCounter,'equality not found').toEqual(before);
+        }
+    }
 
     async getGroupEndBoundary(groupCount: number, index: number, groups: Locator, gridBody: Locator) {
 
@@ -83,7 +103,7 @@ export class KendoGrid {
         }
     };
 
-    async countRows(indexStart: number, indexEnd:number, gridBody) {
+    async countRows(indexStart: number, indexEnd:number, gridBody: Locator) {
         let rowCount = 0
 
         for (let rowIndex = indexStart + 1; rowIndex < indexEnd; rowIndex++) {
@@ -109,9 +129,10 @@ export class KendoGrid {
             if (!(await this.isGroupExpanded(groupRow))) {
 
                 const indexStart = await this.getRowIndexFromRow(groupRow);
-                await this.expandGroup(groupRow)
+                await this.expandGroup(groupRow);
                 await this.waitForFirstChild(indexStart);
                 const indexEnd = await this.getGroupEndBoundary(groupCount, i, groups, gridBody);
+                await this.checkForPager(groupRow, indexEnd, indexStart);
 
                 const items = await this.getGroupChildCount(groupRow);
                 const actualItems = await this.countRows(indexStart, indexEnd, gridBody);
