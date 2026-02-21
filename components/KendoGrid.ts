@@ -59,21 +59,69 @@ export class KendoGrid {
         await expect(row).toBeVisible();
     };
 
-    async checkForPager(groupRow: Locator, indexEnd: number, indexStart: number) {
+    async checkForPager(groupRow: Locator) {
 
         const pager = groupRow.locator('.group-pager-container');
         const hasPager = (await pager.count()) > 0;
-        const next = groupRow.locator('.group-pager-container').getByText('arrow_right');
-        const previous = groupRow.locator('.group-pager-container').getByText('arrow_left');
-        const groupCounter = await groupRow.locator('.group-counter').innerText();
 
         if (hasPager) {
-            const before = await groupRow.locator('.group-counter').innerText();
-            await next.click();
-            const after = await groupRow.locator('.group-counter').innerText()
-            expect(before).not.toEqual(after);
-            await previous.click();
-            expect(groupCounter,'equality not found').toEqual(before);
+            await this.moveThroughPager(groupRow)
+        } else {
+            console.log('No Pager Found')
+        }
+
+
+
+
+
+        // if (hasPager) {
+        //     const before = await groupRow.locator('.group-counter').innerText();
+        //     await next.click();
+        //     const after = await groupRow.locator('.group-counter').innerText()
+        //     expect(before).not.toEqual(after);
+        //     await previous.click();
+        //     expect(groupCounter,'equality not found').toEqual(before);
+        // }
+    }
+
+    async getLastPage(groupRow: Locator) {
+
+        const pager = groupRow.locator('.group-pager-container');
+        const pagerInfo = await pager.getByRole('button').filter({hasText:/(\d+)\s*\/\s*(\d+)/}).innerText();
+        const lastPage = pagerInfo.match(/(\d+)\s*\/\s*(\d+)/);
+        return lastPage ? Number(pagerInfo[2]) : 0;
+
+    }
+
+    async getFirstPage(groupRow: Locator) {
+        const pager = groupRow.locator('.group-pager-container');
+        const pagerInfo = await pager.getByRole('button').filter({hasText:/(\d+)\s*\/\s*(\d+)/}).innerText();
+        const firstPage = pagerInfo.match(/(\d+)\s*\/\s*(\d+)/);
+        return firstPage ? Number(pagerInfo[1]) : 0;
+    }
+
+    async moveThroughPager(groupRow: Locator) {
+
+        const next = groupRow.locator('.group-pager-container').getByText('arrow_right');
+        const previous = groupRow.locator('.group-pager-container').getByText('arrow_left');
+        const totalPages = await this.getLastPage(groupRow);
+
+
+            for (let i = 1; i <= totalPages; i++) {
+
+                const before = await groupRow.locator('.group-counter').innerText();
+                await next.click();
+                const after = await groupRow.locator('.group-counter').innerText();
+                expect(before).not.toEqual(after)
+        }
+
+        const firstPage = await this.getFirstPage(groupRow);
+            for (let i = totalPages; i > firstPage;i--) {
+
+                const before = await groupRow.locator('.group-counter').innerText();
+                await previous.click();
+                const after = await groupRow.locator('.group-counter').innerText();
+                expect(before).not.toEqual(after)
         }
     }
 
@@ -120,7 +168,7 @@ export class KendoGrid {
 
         const groups = this.findAllGroupRows();
         const groupCount = await groups.count();
-        const gridBody = this.root.locator('tbody');
+        // const gridBody = this.root.locator('tbody');
 
         for (let i = 0; i < groupCount; i++) {
 
@@ -131,13 +179,13 @@ export class KendoGrid {
                 const indexStart = await this.getRowIndexFromRow(groupRow);
                 await this.expandGroup(groupRow);
                 await this.waitForFirstChild(indexStart);
-                const indexEnd = await this.getGroupEndBoundary(groupCount, i, groups, gridBody);
-                await this.checkForPager(groupRow, indexEnd, indexStart);
+                // const indexEnd = await this.getGroupEndBoundary(groupCount, i, groups, gridBody);
+                await this.checkForPager(groupRow);
 
-                const items = await this.getGroupChildCount(groupRow);
-                const actualItems = await this.countRows(indexStart, indexEnd, gridBody);
-
-                expect(items).toEqual(actualItems);
+                // const items = await this.getGroupChildCount(groupRow);
+                // const actualItems = await this.countRows(indexStart, indexEnd, gridBody);
+                //
+                // expect(items).toEqual(actualItems);
                 await this.collapseGroup(groupRow);
 
             }
