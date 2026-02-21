@@ -1,4 +1,4 @@
-import { Locator, type Page} from '@playwright/test';
+import { Locator, type Page, expect} from '@playwright/test';
 import { BasePage } from "./BasePage";
 
 export class DetailsPageBase extends BasePage {
@@ -32,11 +32,12 @@ export class DetailsPageBase extends BasePage {
 };
 
     async closeRecord() {
+        await expect(this.saveButton, 'Check to see if Save button is not enabled.').toHaveClass(/mat-mdc-button-disabled/)
         await this.closeButton.click();
     }
 
-
     async saveRecord() {
+        await expect(this.saveButton, 'Check to see if Save button is enabled.').not.toHaveClass(/mat-mdc-button-disabled/)
         await this.saveButton.click();
     }
 
