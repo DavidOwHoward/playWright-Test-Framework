@@ -1,2 +1,58 @@
 import { Locator, expect } from "@playwright/test";
 
+
+export class ScrPager {
+    constructor(private readonly listBox: Locator) {}
+
+    private pagerRoot() {
+        return this.listBox.locator('kendo-pager');
+    };
+
+    private pagerInfo(){
+        return this.pagerRoot().locator('.k-pager-info');
+    };
+
+    private pagerNext() {
+        return this.pagerRoot().getByTitle('Go to the next page');
+    };
+
+    private pagerPrevious() {
+        return this.pagerRoot().getByTitle('Go to the previous page');
+    };
+
+    async getTotalItems() {
+        const rawItems = await this.pagerInfo().innerText();
+        const match = rawItems.match(/(\d+)(\s)(items)/);
+        if (!match) {
+            throw new Error(`Unable to parse total items from pager info: "${rawItems}"`);
+        }
+        const items = Number(match[1]);
+
+        return items;
+    };
+
+    async getNumberOfPages() {
+        const totalItems = await this.getTotalItems();
+        
+        if (Math.ceil(totalItems/10) < 10) {
+            throw new Error(`Number of ${totalItems} was not greater than 10. No pager expected.`);
+        } else return Math.ceil(totalItems/10);    
+    
+    };
+
+    async auditPager() {
+        const pages = await this.getNumberOfPages();        
+        for (let i = 1; i <= pages; i++) {
+            if (pages >= 1) {
+                await this.pagerNext().click();
+            } 
+        }
+
+        for ( let i = pages; i > 1; i--) {
+            await this.pagerPrevious().click();
+        }
+    };
+
+
+
+}
