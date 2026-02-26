@@ -21,38 +21,45 @@ export class ScrPager {
     };
 
     async getTotalItems() {
+        
+        await expect(this.pagerInfo(), 'Pager not visible').toBeVisible();
         const rawItems = await this.pagerInfo().innerText();
-        const match = rawItems.match(/(\d+)(\s)(items)/);
+        const match = rawItems.replace(/,/g, "").match(/\d+/g);
         if (!match) {
             throw new Error(`Unable to parse total items from pager info: "${rawItems}"`);
         }
-        const items = Number(match[1]);
+        const items = match ? Number(match[match.length - 1]) : 0;
 
         return items;
     };
 
     async getNumberOfPages() {
-        const totalItems = await this.getTotalItems();
-        
-        if (Math.ceil(totalItems/10) < 10) {
-            throw new Error(`Number of ${totalItems} was not greater than 10. No pager expected.`);
-        } else return Math.ceil(totalItems/10);    
+
+        const totalItems = await this.getTotalItems();        
+        const pages = Math.ceil(totalItems / 10);
+        if (pages <= 1) return 1;
+        return pages;
     
     };
 
     async auditPager() {
-        const pages = await this.getNumberOfPages();        
-        for (let i = 1; i <= pages; i++) {
-            if (pages >= 1) {
-                await this.pagerNext().click();
-            } 
+
+        const pages = await this.getNumberOfPages();
+        if (pages <=1) return 1;
+
+        for (let i = 1; i < pages; i++) {
+            
+            const before = await this.pagerInfo().innerText();
+            await this.pagerNext().click();
+            await expect(this.pagerInfo()).not.toHaveText(before);
         }
 
         for ( let i = pages; i > 1; i--) {
+            const before = await this.pagerInfo().innerText();  
             await this.pagerPrevious().click();
+            await expect(this.pagerInfo()).not.toHaveText(before);
         }
     };
-
 
 
 }
