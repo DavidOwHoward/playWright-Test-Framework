@@ -7,6 +7,10 @@ export abstract class BasePage {
         this.page = page;
     }
 
+    protected fieldRoot(id: string): Locator {
+    return this.page.locator(`#${id}_f`);
+    };
+
     async xref(field: Locator, value: string, opts?: { assertContains?: string | RegExp}) {
 
         await field
@@ -17,10 +21,8 @@ export abstract class BasePage {
         const listbox = this.page.getByRole('listbox');
         await expect(listbox).toBeVisible();
 
-
         const option = this.page.getByRole('gridcell').getByText(value);
         await option.click();
-
 
         await expect(listbox).not.toBeVisible();
         const input = field.locator('input');
@@ -42,7 +44,9 @@ export abstract class BasePage {
         await expect(root, 'The State popup was not visible').toBeVisible();
         await expect(stateButton, `Could not find "${state}" in the State dialog`).toBeVisible();
         await root.getByRole('button', {name: state}).click();
-    }
+    };
+
+
 
 }
 
