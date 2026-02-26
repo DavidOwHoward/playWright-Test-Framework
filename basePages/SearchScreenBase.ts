@@ -76,9 +76,10 @@ export class SearchScreen {
         await this.addButton.click();
     };
 
-    async openRecord(recId: string): Promise<void> {
+    async openRecord(search: string): Promise<void> {
 
-        await this.searchGrid.getByText(`${recId}`).dblclick();
+        await this.searchGrid.getByText(`${search}`).dblclick();
+
     }
 
     async clearSort() {
