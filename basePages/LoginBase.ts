@@ -10,9 +10,6 @@ export class loginPage {
     readonly signInButton: Locator;
     readonly loginToast: Locator;
 
-
-
-
     constructor(page: Page) {
         this.page = page;
         this.userNameBox = page.getByLabel('User Name');
@@ -21,9 +18,8 @@ export class loginPage {
         this.loginToast = page.locator('.cdk-overlay-pane')
             .getByText('Welcome');
 
-    }
-    //TO DO: Turn these into one method
-   
+    };
+    //TO DO: Turn these into one method   
 
     async loginUser(user: LoginUser) {
         await this.userNameBox.fill(user.username);
@@ -32,14 +28,14 @@ export class loginPage {
         await expect(this.page).toHaveTitle('Home - EQMS');
     //wait for the toast to go away since some test run fast enough that it can be in the way of grabbing elements
         await this.loginToast.waitFor({state: 'hidden'});
-    }
+    };
 
     async openPage(){
         await this.page.goto(baseUrl);
         await expect(this.page).toHaveTitle('Login - QAD EQMS');
 
-    }
-}
+    };
+};
 
 
 
