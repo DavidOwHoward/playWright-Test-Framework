@@ -32,7 +32,7 @@ export class DetailsPageBase extends BasePage {
 };
 
     async closeRecord() {
-        await expect(this.saveButton, 'Check to see if Save button is not enabled.').toHaveClass(/mat-mdc-button-disabled/)
+        await expect(this.saveButton, 'Check to see if Save button is disabled.').toHaveClass(/mat-mdc-button-disabled/)
         await this.closeButton.click();
     }
 
