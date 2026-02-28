@@ -1,5 +1,6 @@
 import { expect } from "@playwright/test";
 import { FieldComponent } from "./FieldComponents";
+import { ScrPager } from "./fieldWidgets/ScrPager";
 
 export class ScrField extends FieldComponent {
 
@@ -17,7 +18,7 @@ export class ScrField extends FieldComponent {
 
 
     async open() {
-        await this.expectVisible();        
+        await this.ensureReady();
         await this.dropDown().click();
         await expect(this.listBox(), "SCR field dropdown did not open").toBeVisible();
     };   
@@ -35,7 +36,7 @@ export class ScrField extends FieldComponent {
     };
 
     async expectValue(value:string, opts?: { assertContains?: string | RegExp}) {
-        await this.expectVisible();
+        await this.ensureReady();
         const expected = opts?.assertContains ?? value
 
         if (expected instanceof RegExp) {
@@ -46,7 +47,17 @@ export class ScrField extends FieldComponent {
         }
     };
 
-
+    async auditPager() {
+        await this.open();
+        try {
+            await new ScrPager(this.listBox()).auditPager();
+        } finally {
+            if (await this.listBox().isVisible()) {
+                await this.dropDown().click();
+                await expect(this.listBox()).not.toBeVisible();
+            }
+        }
+    }
 
 
 };
