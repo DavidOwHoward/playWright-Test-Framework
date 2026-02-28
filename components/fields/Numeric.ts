@@ -1,10 +1,11 @@
 import { expect } from "@playwright/test";
 import { FieldComponent } from "./FieldComponents";
 
-export class TextField extends FieldComponent {
+
+export class NumericField extends FieldComponent {
   
   private control() {
-    return this.root.locator("textarea");
+    return this.root.locator(".k-input-inner");
   }
   
 
@@ -15,7 +16,7 @@ export class TextField extends FieldComponent {
     
     async expectValue(value:string) {
         await this.ensureReady();
-        await expect(this.control(), "Text field value did not match").toHaveValue(value);
+        await expect(this.control(), "Number field value did not match").toHaveValue(value);
     };
 
     async clear() {
