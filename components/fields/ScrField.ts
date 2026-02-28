@@ -16,6 +16,14 @@ export class ScrField extends FieldComponent {
         return this.page.getByRole('listbox');
     };
 
+    private openItem() {
+        return this.root.getByRole('button').filter({ hasText: 'adjust' });
+    };
+
+    private clearItem() {
+        return this.root.getByRole('button').filter({ hasText: 'remove_circle_outline' });
+    };
+
 
     async open() {
         await this.ensureReady();
@@ -45,6 +53,16 @@ export class ScrField extends FieldComponent {
             const escaped = expected.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
             await expect(this.input(), "SCR field value did not match").toHaveValue(new RegExp (escaped, 'i'));
         }
+    };
+
+    async showItem() {
+        await expect(this.openItem(), "SCR field open item button is not visible").toBeVisible();
+        await this.openItem().click();
+    };
+
+    async clear() {
+        await expect(this.clearItem(), "SCR field clear item button is not visible").toBeVisible();
+        await this.clearItem().click();
     };
 
     async auditPager() {

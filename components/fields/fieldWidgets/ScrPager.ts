@@ -1,0 +1,65 @@
+import { Locator, expect } from "@playwright/test";
+
+
+export class ScrPager {
+    constructor(private readonly listBox: Locator) {}
+
+    private pagerRoot() {
+        return this.listBox.locator('kendo-pager');
+    };
+
+    private pagerInfo() {
+        return this.pagerRoot().locator('.k-pager-info');
+    };
+
+    private pagerNext() {
+        return this.pagerRoot().getByTitle('Go to the next page');
+    };
+
+    private pagerPrevious() {
+        return this.pagerRoot().getByTitle('Go to the previous page');
+    };
+
+    async getTotalItems(): Promise<number> {
+        
+        await expect(this.pagerInfo(), 'Pager not visible').toBeVisible();
+        const rawItems = await this.pagerInfo().innerText();
+        const match = rawItems.replace(/,/g, "").match(/\d+/g);
+        if (!match) {
+            throw new Error(`Unable to parse total items from pager info: "${rawItems}"`);
+        }
+        const items = match ? Number(match[match.length - 1]) : 0;
+
+        return items;
+    };
+
+    async getNumberOfPages(): Promise<number> {
+
+        const totalItems = await this.getTotalItems();        
+        const pages = Math.ceil(totalItems / 10);
+        if (pages <= 1) return 1;
+        return pages;
+    
+    };
+
+    async auditPager() {
+
+        const pages = await this.getNumberOfPages();
+        if (pages <=1) return 1;
+
+        for (let i = 1; i < pages; i++) {
+            
+            const before = await this.pagerInfo().innerText();
+            await this.pagerNext().click();
+            await expect(this.pagerInfo()).not.toHaveText(before);
+        }
+
+        for ( let i = pages; i > 1; i--) {
+            const before = await this.pagerInfo().innerText();  
+            await this.pagerPrevious().click();
+            await expect(this.pagerInfo()).not.toHaveText(before);
+        }
+    };
+
+
+}
