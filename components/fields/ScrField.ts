@@ -34,7 +34,6 @@ export class ScrField extends FieldComponent {
     async set(value: string) {
 
         await this.open();
-        await this.dropDown().click();
         await expect(this.listBox()).toBeVisible();
         const option = this.page.getByRole('gridcell').getByText(value);
         await expect(option, `Could not find "${value}" in the SCR dropdown options`).toBeVisible();
