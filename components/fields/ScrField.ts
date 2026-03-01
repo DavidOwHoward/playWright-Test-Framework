@@ -6,7 +6,7 @@ export class ScrField extends FieldComponent {
 
     private dropDown() {
         return this.root.getByRole('button').filter({ hasText: 'arrow_drop_down' });
-    }
+    };
     
     private input() {
         return this.root.locator("input");
@@ -74,7 +74,7 @@ export class ScrField extends FieldComponent {
                 await expect(this.listBox()).not.toBeVisible();
             }
         }
-    }
+    };
 
 
 };
