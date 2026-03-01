@@ -35,6 +35,6 @@ export abstract class BasePage {
 
 
 
-}
+};
 
 

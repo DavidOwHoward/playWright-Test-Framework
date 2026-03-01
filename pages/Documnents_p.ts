@@ -4,6 +4,7 @@ import { TextField } from '../components/fields/TextField';
 import { ScrField } from '../components/fields/ScrField';
 import { NumericField } from '../components/fields/Numeric';
 import { DateField } from '../components/fields/DateField';
+import { DetailsTopToolBar } from '../components/DetailsTopToolBar';
 
 export class Documents extends DetailsPageBase {
 

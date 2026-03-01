@@ -1,8 +1,11 @@
 import { Locator, type Page} from '@playwright/test';
+import { DetailsPageBase } from '../basePages/DetailsPageBase';
+import { BasePage } from '../basePages/BasePage';
 
-export class DetailsTopToolBar {
 
-    readonly page: Page;
+export class DetailsTopToolBar extends BasePage{
+
+    
     readonly topToolBar: Locator;
     readonly addButton: Locator;
     readonly deleteButton: Locator;
@@ -14,7 +17,7 @@ export class DetailsTopToolBar {
 
     constructor(page: Page) {
 
-        this.page = page;
+        super(page);
         this.topToolBar = page.locator('eqms-details-layout')
             .locator('.content')
             .locator('.toolbar');
@@ -27,6 +30,10 @@ export class DetailsTopToolBar {
         this.actionsButton = this.page.getByRole('button', { name: 'Actions' });
         this.attachmentsButton = this.page.getByRole('button', { name: 'Attachments' });
         this.commentsButton = this.page.locator('#comments-details-toolbar');
-    }
+    };
+
+    async openActions() {
+        await this.actionsButton.click();
+    };
 
 }

@@ -4,6 +4,7 @@ import { SearchScreen } from "../basePages/SearchScreenBase";
 import { DetailsPageBase } from "../basePages/DetailsPageBase";
 import { ReportsBase } from "../components/ReportBase";
 import { loginPage } from "../basePages/LoginBase";
+import { DetailsTopToolBar } from '../components/DetailsTopToolBar';
 
 
 type baseFixtures = {
@@ -11,7 +12,7 @@ type baseFixtures = {
     nav: SideNav;
     reports: ReportsBase;
     search: SearchScreen
-    details: DetailsPageBase;
+    details: DetailsTopToolBar;
 
 }
 
@@ -26,7 +27,7 @@ export const test = base.extend<baseFixtures>({
         await use(new SearchScreen(page));
     },
     details: async ({page}, use) => {
-        await use(new DetailsPageBase(page));
+        await use(new DetailsTopToolBar(page));
     },
     reports: async ({page}, use) => {
         await use(new ReportsBase(page));
