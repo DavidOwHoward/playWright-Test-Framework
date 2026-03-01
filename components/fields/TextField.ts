@@ -5,7 +5,7 @@ export class TextField extends FieldComponent {
   
   private control() {
     return this.root.locator("textarea");
-  }
+  };
   
 
     async set(value: string) {
