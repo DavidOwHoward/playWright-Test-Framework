@@ -6,7 +6,7 @@ export class NumericField extends FieldComponent {
   
   private control() {
     return this.root.locator(".k-input-inner");
-  }
+  };
   
 
     async set(value: string) {
