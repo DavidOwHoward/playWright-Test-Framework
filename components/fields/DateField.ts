@@ -14,13 +14,12 @@ export class DateField extends FieldComponent {
 
     private today() {
         return this.calendar().getByRole('link', { name: 'Today' });
-    }
-
+    };
 
 
     // private setDate(day: string, month: number) {
     //     return this.calendar().getByRole('grid').locator('tbody').nth(month).getByRole('gridcell').locator('.k-link').filter({ hasText: new RegExp(`\\b${day}\\b`)});
-    // }
+    // };
 
 
     async open() {
@@ -28,7 +27,7 @@ export class DateField extends FieldComponent {
         await this.ensureReady();
         await this.openCalendar().click();
         await expect(this.calendar(), "Calendar did not open").toBeVisible();
-    }
+    };
     
     async setToday() {
         
