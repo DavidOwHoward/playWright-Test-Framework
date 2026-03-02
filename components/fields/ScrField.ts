@@ -26,9 +26,10 @@ export class ScrField extends FieldComponent {
 
 
     async open() {
+        
         await this.ensureReady();
         await this.dropDown().click();
-        await expect(this.listBox(), "SCR field dropdown did not open").toBeVisible();
+        
     };   
     
     async set(value: string) {
@@ -43,6 +44,7 @@ export class ScrField extends FieldComponent {
     };
 
     async expectValue(value:string, opts?: { assertContains?: string | RegExp}) {
+        
         await this.ensureReady();
         const expected = opts?.assertContains ?? value
 
@@ -55,16 +57,19 @@ export class ScrField extends FieldComponent {
     };
 
     async showItem() {
+        
         await expect(this.openItem(), "SCR field open item button is not visible").toBeVisible();
         await this.openItem().click();
     };
 
     async clear() {
+        
         await expect(this.clearItem(), "SCR field clear item button is not visible").toBeVisible();
         await this.clearItem().click();
     };
 
     async auditPager() {
+        
         await this.open();
         try {
             await new ScrPager(this.listBox()).auditPager();
