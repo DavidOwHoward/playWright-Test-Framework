@@ -1,5 +1,5 @@
 import { Locator, type Page} from '@playwright/test';
-import { DetailsPageBase } from '../basePages/DetailsPageBase';
+import { Snackbar } from './SnackBar';
 import { BasePage } from '../basePages/BasePage';
 
 
@@ -36,4 +36,4 @@ export class DetailsTopToolBar extends BasePage{
         await this.actionsButton.click();
     };
 
-}
+};
