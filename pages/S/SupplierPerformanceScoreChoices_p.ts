@@ -1,0 +1,70 @@
+import { DetailsPageBase } from '../../basePages/DetailsPageBase';
+import { TextField } from '../../components/fields/TextField';
+import { ScrField } from '../../components/fields/ScrField';
+import { NumericField } from '../../components/fields/NumericField';
+import { DateField } from '../../components/fields/DateField';
+import { FileField } from '../../components/fields/FileField';
+import { McrField } from '../../components/fields/McrField';
+import { ApprovalField } from '../../components/fields/ApprovalField';
+import { LabelField } from '../../components/fields/LabelField';
+import { CheckboxField } from '../../components/fields/CheckboxField';
+import { RcrField } from '../../components/fields/RcrField';
+import { ChecklistField } from '../../components/fields/ChecklistField';
+import { ChoiceField } from '../../components/fields/ChoiceField';
+import { AutoNumField } from '../../components/fields/AutoNumField';
+import { VideoField } from '../../components/fields/VideoField';
+import { CommandField } from '../../components/fields/CommandField';
+import { DisplayListField } from '../../components/fields/DisplayListField';
+import { FrequencyField } from '../../components/fields/FrequencyField';
+
+
+export class SupplierPerformanceScoreChoices_p extends DetailsPageBase {
+  get Criteria() {
+
+    const { root, section } = this.fieldRootInSection(`Criteria_f`, `General`);
+
+    return new TextField(this.page, root, async () => section.openAndWait(root));
+  }
+
+  get CriteriaHigh() {
+
+    const { root, section } = this.fieldRootInSection(`CriteriaHigh_f`, `General`);
+
+    return new NumericField(this.page, root, async () => section.openAndWait(root));
+  }
+
+  get CriteriaLow() {
+
+    const { root, section } = this.fieldRootInSection(`CriteriaLow_f`, `General`);
+
+    return new NumericField(this.page, root, async () => section.openAndWait(root));
+  }
+
+  get Points() {
+
+    const { root, section } = this.fieldRootInSection(`Points_f`, `General`);
+
+    return new NumericField(this.page, root, async () => section.openAndWait(root));
+  }
+
+  get ScoreChoiceCode() {
+
+    const { root, section } = this.fieldRootInSection(`Code_f`, `General`);
+
+    return new TextField(this.page, root, async () => section.openAndWait(root));
+  }
+
+  get ScoreChoiceDescription() {
+
+    const { root, section } = this.fieldRootInSection(`Description_f`, `General`);
+
+    return new TextField(this.page, root, async () => section.openAndWait(root));
+  }
+
+  get SupplierPerformanceIndicator() {
+
+    const { root, section } = this.fieldRootInSection(`SupplierPerformanceIndicato_f`, `General`);
+
+    return new ScrField(this.page, root, async () => section.openAndWait(root));
+  }
+}

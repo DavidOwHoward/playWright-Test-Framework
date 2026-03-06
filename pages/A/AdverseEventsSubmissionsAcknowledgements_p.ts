@@ -1,0 +1,56 @@
+import { DetailsPageBase } from '../../basePages/DetailsPageBase';
+import { TextField } from '../../components/fields/TextField';
+import { ScrField } from '../../components/fields/ScrField';
+import { NumericField } from '../../components/fields/NumericField';
+import { DateField } from '../../components/fields/DateField';
+import { FileField } from '../../components/fields/FileField';
+import { McrField } from '../../components/fields/McrField';
+import { ApprovalField } from '../../components/fields/ApprovalField';
+import { LabelField } from '../../components/fields/LabelField';
+import { CheckboxField } from '../../components/fields/CheckboxField';
+import { RcrField } from '../../components/fields/RcrField';
+import { ChecklistField } from '../../components/fields/ChecklistField';
+import { ChoiceField } from '../../components/fields/ChoiceField';
+import { AutoNumField } from '../../components/fields/AutoNumField';
+import { VideoField } from '../../components/fields/VideoField';
+import { CommandField } from '../../components/fields/CommandField';
+import { DisplayListField } from '../../components/fields/DisplayListField';
+import { FrequencyField } from '../../components/fields/FrequencyField';
+
+
+export class AdverseEventsSubmissionsAcknowledgements_p extends DetailsPageBase {
+  get AcknowledgementNumber() {
+
+    const { root, section } = this.fieldRootInSection(`AcknowledgementNumber_f`, `General`);
+
+    return new NumericField(this.page, root, async () => section.openAndWait(root));
+  }
+
+  get AcknowledgementReceieved() {
+
+    const { root, section } = this.fieldRootInSection(`AcknowledgementReceieved_f`, `General`);
+
+    return new DateField(this.page, root, async () => section.openAndWait(root));
+  }
+
+  get NumberofFailures() {
+
+    const { root, section } = this.fieldRootInSection(`NumberofFailures_f`, `General`);
+
+    return new NumericField(this.page, root, async () => section.openAndWait(root));
+  }
+
+  get ComplaintSubmission() {
+
+    const { root, section } = this.fieldRootInSection(`ComplaintSubmission_f`, `General`);
+
+    return new ScrField(this.page, root, async () => section.openAndWait(root));
+  }
+
+  get _AcknowledgementFailures() {
+
+    const { root, section } = this.fieldRootInSection(`AcknowledgementFailures_f`, `General`);
+
+    return new McrField(this.page, root, async () => section.openAndWait(root));
+  }
+}

@@ -1,0 +1,91 @@
+import { DetailsPageBase } from '../../basePages/DetailsPageBase';
+import { TextField } from '../../components/fields/TextField';
+import { ScrField } from '../../components/fields/ScrField';
+import { NumericField } from '../../components/fields/NumericField';
+import { DateField } from '../../components/fields/DateField';
+import { FileField } from '../../components/fields/FileField';
+import { McrField } from '../../components/fields/McrField';
+import { ApprovalField } from '../../components/fields/ApprovalField';
+import { LabelField } from '../../components/fields/LabelField';
+import { CheckboxField } from '../../components/fields/CheckboxField';
+import { RcrField } from '../../components/fields/RcrField';
+import { ChecklistField } from '../../components/fields/ChecklistField';
+import { ChoiceField } from '../../components/fields/ChoiceField';
+import { AutoNumField } from '../../components/fields/AutoNumField';
+import { VideoField } from '../../components/fields/VideoField';
+import { CommandField } from '../../components/fields/CommandField';
+import { DisplayListField } from '../../components/fields/DisplayListField';
+import { FrequencyField } from '../../components/fields/FrequencyField';
+
+
+export class DFMEASystemsLibrary_p extends DetailsPageBase {
+  get BlockDiagram() {
+
+    const { root, section } = this.fieldRootInSection(`BlockDiagram_f`, `General`);
+
+    return new FileField(this.page, root, async () => section.openAndWait(root));
+  }
+
+  get BoundaryDiagram() {
+
+    const { root, section } = this.fieldRootInSection(`BoundaryDiagram_f`, `General`);
+
+    return new FileField(this.page, root, async () => section.openAndWait(root));
+  }
+
+  get InterfaceAnalysis() {
+
+    const { root, section } = this.fieldRootInSection(`InterfaceAnalysis_f`, `General`);
+
+    return new FileField(this.page, root, async () => section.openAndWait(root));
+  }
+
+  get ITARRestricted() {
+
+    const { root, section } = this.fieldRootInSection(`ITARRestricted_f`, `General`);
+
+    return new CheckboxField(this.page, root, async () => section.openAndWait(root));
+  }
+
+  get StructureTree() {
+
+    const { root, section } = this.fieldRootInSection(`StructureTree_f`, `General`);
+
+    return new FileField(this.page, root, async () => section.openAndWait(root));
+  }
+
+  get _SystemSubsystemCode() {
+
+    const { root, section } = this.fieldRootInSection(`SystemsubsystemComponentInt_f`, `General`);
+
+    return new TextField(this.page, root, async () => section.openAndWait(root));
+  }
+
+  get _SystemSubsystemName() {
+
+    const { root, section } = this.fieldRootInSection(`SystemsubsystemComponentNa_f`, `General`);
+
+    return new TextField(this.page, root, async () => section.openAndWait(root));
+  }
+
+  get Domain() {
+
+    const { root, section } = this.fieldRootInSection(`Domain_f`, `General`);
+
+    return new ScrField(this.page, root, async () => section.openAndWait(root));
+  }
+
+  get Entity() {
+
+    const { root, section } = this.fieldRootInSection(`Entity_f`, `General`);
+
+    return new ScrField(this.page, root, async () => section.openAndWait(root));
+  }
+
+  get _Sites() {
+
+    const { root, section } = this.fieldRootInSection(`Sites_f`, `General`);
+
+    return new McrField(this.page, root, async () => section.openAndWait(root));
+  }
+}
