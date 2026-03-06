@@ -1,6 +1,5 @@
 import path from 'node:path';
 import fs from 'node:fs/promises';
-import processIds from '../Data/processIds.json'
 import { BaseSql } from './BaseSql';
 import { SqlQueries, type FieldRow } from './SqlQueries';
 
@@ -9,6 +8,7 @@ import { SqlQueries, type FieldRow } from './SqlQueries';
 export type ProcessIdInput = number | number[];
 
 const OUTPUT_ROOT = path.resolve(process.cwd(), 'Pages');
+const PROCESS_IDS_PATH = path.resolve(process.cwd(), 'data', 'processIds.json');
 
 
 const RESERVED_WORDS = new Set<string>([
@@ -18,7 +18,7 @@ const RESERVED_WORDS = new Set<string>([
   'protected','public','static','null','true','false',
 ]);
 
-// Field type -> wrapper class name (keys expected to match SQL fTypeName output)
+// Field type -> wrapper class name 
 const fieldWrapperLookup: Record<string, string> = {
   Text: 'TextField',
   'Date/Time': 'DateField',
@@ -37,25 +37,25 @@ const fieldWrapperLookup: Record<string, string> = {
   Video: 'VideoField',
 };
 
-// Static imports as requested by spec (superset imports)
-const IMPORT_BLOCK = `import { DetailsPageBase } from '../basePages/DetailsPageBase';
-import { TextField } from '../components/fields/TextField';
-import { ScrField } from '../components/fields/ScrField';
-import { NumericField } from '../components/fields/NumericField';
-import { DateField } from '../components/fields/DateField';
-import { FileField } from '../components/fields/FileField';
-import { McrField } from '../components/fields/McrField';
-import { ApprovalField } from '../components/fields/ApprovalField';
-import { LabelField } from '../components/fields/LabelField';
-import { CheckboxField } from '../components/fields/CheckboxField';
-import { RcrField } from '../components/fields/RcrField';
-import { ChecklistField } from '../components/fields/ChecklistField';
-import { ChoiceField } from '../components/fields/ChoiceField';
-import { AutoNumField } from '../components/fields/AutoNumField';
-import { VideoField } from '../components/fields/VideoField';
-import { CommandField } from '../components/fields/CommandField';
-import { DisplayListField } from '../components/fields/DisplayListField';
-import { FrequencyField } from '../components/fields/FrequencyField';
+// Static imports 
+const IMPORT_BLOCK = `import { DetailsPageBase } from '../../basePages/DetailsPageBase';
+import { TextField } from '../../components/fields/TextField';
+import { ScrField } from '../../components/fields/ScrField';
+import { NumericField } from '../../components/fields/NumericField';
+import { DateField } from '../../components/fields/DateField';
+import { FileField } from '../../components/fields/FileField';
+import { McrField } from '../../components/fields/McrField';
+import { ApprovalField } from '../../components/fields/ApprovalField';
+import { LabelField } from '../../components/fields/LabelField';
+import { CheckboxField } from '../../components/fields/CheckboxField';
+import { RcrField } from '../../components/fields/RcrField';
+import { ChecklistField } from '../../components/fields/ChecklistField';
+import { ChoiceField } from '../../components/fields/ChoiceField';
+import { AutoNumField } from '../../components/fields/AutoNumField';
+import { VideoField } from '../../components/fields/VideoField';
+import { CommandField } from '../../components/fields/CommandField';
+import { DisplayListField } from '../../components/fields/DisplayListField';
+import { FrequencyField } from '../../components/fields/FrequencyField';
 `;
 
 
@@ -160,6 +160,11 @@ function normalizeProcessIds(input: ProcessIdInput): number[] {
   return Array.isArray(input) ? input : [input];
 };
 
+async function loadProcessIds(): Promise<number[]> {
+  const jsonText = await fs.readFile(PROCESS_IDS_PATH, 'utf8');
+  return JSON.parse(jsonText) as number[];
+};
+
 
 export async function generateProcessPages(processId: ProcessIdInput): Promise<string[]> {
   const ids = normalizeProcessIds(processId);
@@ -208,8 +213,8 @@ export async function generateProcessPages(processId: ProcessIdInput): Promise<s
 
 /**
  * CLI usage:
- *   ts-node ./baseFramework/generateProcessPages.ts 2140
- *   ts-node ./baseFramework/generateProcessPages.ts 2140,2142,2144
+ *   ts-node ./baseFramework/PageObjectGenerator.ts 2140
+ *   ts-node ./baseFramework/PageObjectGenerator.ts 2140,2142,2144
  */
 async function cli() {
   const arg = process.argv[2];
@@ -218,7 +223,7 @@ async function cli() {
 
   if (!arg) {
     // no CLI argument → use stored processIds.json
-    input = processIds;
+    input = await loadProcessIds();
   } else {
     const ids = arg
       .split(',')
@@ -232,11 +237,11 @@ async function cli() {
 
   const files = await generateProcessPages(input);
 
-  console.log(`✅ Generated ${files.length} process pages`);
+  console.log(`Generated ${files.length} process pages`);
 };
 
-// Best-effort "run if invoked directly" check that works in ts-node/common setups.
-if (process.argv[1]?.includes('generateProcessPages')) {
+
+if (process.argv[1]?.includes('PageObjectGenerator')) {
   cli().catch(err => {
     console.error(err);
     process.exit(1);

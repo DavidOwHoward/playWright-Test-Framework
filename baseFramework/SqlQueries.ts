@@ -24,17 +24,18 @@ export class SqlQueries {
         INNER JOIN DetailsLayouts ON Processes.Id = DetailsLayouts.ProcessId
         INNER JOIN DetailsLayoutSections ON DetailsLayouts.Id = DetailsLayoutSections.DetailsLayoutId
         INNER JOIN DetailsLayoutFields ON DetailsLayoutSections.Id = DetailsLayoutFields.SectionId
-        INNER JOIN Fields ON Processes.Id = Fields.ProcessId AND DetailsLayoutFields.Name = Fields.Name
+        INNER JOIN Fields ON Processes.Id = Fields.ProcessId AND DetailsLayoutFields.SystemName = Fields.SystemName
         INNER JOIN FieldTypes ON Fields.FieldTypeId = FieldTypes.Id
         WHERE (Processes.IsRemoved = 0)
         GROUP BY Processes.Id, Processes.Name, DetailsLayouts.Name, DetailsLayoutSections.Name,
                  DetailsLayoutFields.Name, Processes.IsRemoved, FieldTypes.Name, FieldTypes.Id,
-                 DetailsLayoutFields.SystemName, Fields.IsRemoved
+                 DetailsLayoutFields.SystemName, Fields.IsRemoved, Fields.Name
         HAVING (DetailsLayouts.Name = N'Default Details Layout')
            AND (Processes.Id = @processId)
            AND (DetailsLayoutSections.Name <> N'_hidden')
            AND (Fields.IsRemoved = 0)
            AND (FieldTypes.Id NOT IN (6,9,11,13,14,17,19,22,24,25,26,27,28,31,32))
+           AND (Fields.name NOT LIKE 'Spacer%')
       `);
 
     return res.recordset ?? [];
@@ -55,7 +56,7 @@ export class SqlQueries {
         INNER JOIN DetailsLayouts ON Processes.Id = DetailsLayouts.ProcessId
         INNER JOIN DetailsLayoutSections ON DetailsLayouts.Id = DetailsLayoutSections.DetailsLayoutId
         INNER JOIN DetailsLayoutFields ON DetailsLayoutSections.Id = DetailsLayoutFields.SectionId
-        INNER JOIN Fields ON Processes.Id = Fields.ProcessId AND DetailsLayoutFields.Name = Fields.Name
+        INNER JOIN Fields ON Processes.Id = Fields.ProcessId AND DetailsLayoutFields.SystemName = Fields.SystemName
         INNER JOIN FieldTypes ON Fields.FieldTypeId = FieldTypes.Id
         INNER JOIN CrossRefRequredFieldStep
           ON Fields.Id = CrossRefRequredFieldStep.FieldId
@@ -90,7 +91,7 @@ export class SqlQueries {
         INNER JOIN DetailsLayouts ON Processes.Id = DetailsLayouts.ProcessId
         INNER JOIN DetailsLayoutSections ON DetailsLayouts.Id = DetailsLayoutSections.DetailsLayoutId
         INNER JOIN DetailsLayoutFields ON DetailsLayoutSections.Id = DetailsLayoutFields.SectionId
-        INNER JOIN Fields ON Processes.Id = Fields.ProcessId AND DetailsLayoutFields.Name = Fields.Name
+        INNER JOIN Fields ON Processes.Id = Fields.ProcessId AND DetailsLayoutFields.SystemName = Fields.SystemName
         INNER JOIN FieldTypes ON Fields.FieldTypeId = FieldTypes.Id
         INNER JOIN CrossRefRequredFieldStep
           ON Fields.Id = CrossRefRequredFieldStep.FieldId
@@ -125,7 +126,7 @@ export class SqlQueries {
         INNER JOIN DetailsLayouts ON Processes.Id = DetailsLayouts.ProcessId
         INNER JOIN DetailsLayoutSections ON DetailsLayouts.Id = DetailsLayoutSections.DetailsLayoutId
         INNER JOIN DetailsLayoutFields ON DetailsLayoutSections.Id = DetailsLayoutFields.SectionId
-        INNER JOIN Fields ON Processes.Id = Fields.ProcessId AND DetailsLayoutFields.Name = Fields.Name
+        INNER JOIN Fields ON Processes.Id = Fields.ProcessId AND DetailsLayoutFields.SystemName = Fields.SystemName
         INNER JOIN FieldTypes ON Fields.FieldTypeId = FieldTypes.Id
         WHERE (Processes.IsRemoved = 0)
         GROUP BY Processes.Id, Processes.Name, DetailsLayouts.Name, DetailsLayoutSections.Name,
