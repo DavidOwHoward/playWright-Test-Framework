@@ -15,9 +15,20 @@ export abstract class BasePage {
     };
 
     protected sectionByName(name: string): Sections {
-        const tab = this.page.getByRole('tablist').locator(`#${name}-section-tab`);
+        let tab: Locator;
+        if(name === '[Frozen Section]'|| name ==='Frozen Section') {
+		   tab = this.page.locator('#sticky');		
+		} else {
+			tab = this.page.getByRole('tablist').locator(`#${name}-section-tab`);
+			}
         return new Sections(this.page, tab);
     };
+
+    // protected sectionByName(name: string): Sections {
+    //     const tab = this.page.getByRole('tablist').locator(`#${name}-section-tab`);
+    //     return new Sections(this.page, tab);
+    // };
+   
 
     protected fieldRootInSection(fieldId: string, sectionName: string) {
         const root = this.fieldRoot(fieldId);
