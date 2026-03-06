@@ -11,7 +11,7 @@ export abstract class BasePage {
     }
 
     protected fieldRoot(id: string): Locator {
-    return this.page.locator(`#${id}_f`);
+    return this.page.locator(`#${id}`);
     };
 
     protected sectionByName(name: string): Sections {
