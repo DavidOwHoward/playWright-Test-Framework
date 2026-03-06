@@ -3,7 +3,6 @@ import {expect, Locator, Page} from '@playwright/test';
 export class ReportsBase{
 
     readonly page: Page;
-    readonly locator: Locator;
     readonly reportsButton: Locator;
     readonly reportsContainer: Locator
     readonly reportsList: Locator;
@@ -36,8 +35,6 @@ export class ReportsBase{
         this.reportsLoad = page.locator('iframe[title="Report viewer container."]')
             .contentFrame()
             .getByText('Done');
-
-
 
         this.reportsContainer = page.locator('eqms-report-viewer');
         this.reportsList = this.reportsContainer
