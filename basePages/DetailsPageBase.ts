@@ -62,11 +62,11 @@ export class DetailsPageBase extends DetailsTopToolBar {
             if (!state) throw new Error('saveRecord(state) required when State dialog appears.');
             await this.selectState(state);
         } else {
-    
+        // tempororary regex until I can find a better way to assert    
         await this.snack.waitForContains(/was/i);
             return;
         };
-  
+        // tempororary regex until I can find a better way to assert
         await this.snack.waitForContains(/was/i);
     };
 
