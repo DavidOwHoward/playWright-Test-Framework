@@ -13,7 +13,7 @@ export interface LoginUser {
 
 export const users: Record<UserKey, LoginUser> = {
   demo: {
-    username: 'demo',
+    username: 'Demo',
     password: env.defaultPassword,
     defaultDomain: '10USA - USA Domain',
     defaultSite: '10-200 - Auto Industrial Mfg'
@@ -23,7 +23,7 @@ export const users: Record<UserKey, LoginUser> = {
     password: env.defaultPassword,
   },
   mgrDoc: {
-    username: 'mgrDoc',
+    username: 'MgrDoc',
     password: env.defaultPassword,
   },
 };
