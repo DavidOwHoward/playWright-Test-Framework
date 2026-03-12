@@ -1,35 +1,39 @@
 import { Given, When, Then } from '@cucumber/cucumber';
 import { users } from "../../config/user";
 import { expect } from '@playwright/test';
+import { CustomWorld } from '../support/world';
 
-Given('the user enters the application URL {string}', async ({login,page}) => {
-           // Write code here that turns the phrase above into concrete actions
-           await login.openPage();
-           
-           return 'pending';
-         });
+Given('the user vists the application login page', async function (this: CustomWorld) {
+  
+    await this.login.openPage();
+});
 
-When('the user enters valid credentials', async ({login,page}) => {
-           // Write code here that turns the phrase above into concrete actions
-           await login.userNameBox.fill(users.mgrDoc.username);
-           await login.passwordBox.fill(users.mgrDoc.password);
-           return 'pending';
-         });
+When('the user logs in with {string} credentials', async function (this: CustomWorld, credentialType: string) {
+    
+    const credentialMap = {
+        valid: users.mgrDoc,
+        invalid: { username: users.mgrDoc.username, password:'123'}
+    } as const;
 
-When('the user clicks the Sign In button', async ({login,page}) =>{
-           // Write code here that turns the phrase above into concrete actions
-           await login.signInButton.click();
-           return 'pending';
-         });
+    const creds = credentialMap[credentialType as keyof typeof credentialMap];
+    if (!creds) throw new Error(`Unknown credential type ${credentialType}`);
+    await this.login.userNameBox.fill(creds.username);
+    await this.login.passwordBox.fill(creds.password);
+    await this.login.signInButton.click();
+});
 
-Then('the user should be logged in successfully', async ({page}) => {
-           // Write code here that turns the phrase above into concrete actions
-              await expect(page).toHaveTitle('Home - EQMS');
-           return 'pending';
-         });
 
-Then('the user should see the Welcome message at the bottom of the home page', async ({login,page}) => {
-           // Write code here that turns the phrase above into concrete actions
-           await login.loginToast.waitFor({state: 'hidden'});
-           return 'pending';
-         });
+Then('the user should be on the home page', async function (this: CustomWorld) {
+  
+    await expect(this.page).toHaveTitle('Home - EQMS');
+});
+
+Then('the user should remain on the login page', async function (this: CustomWorld) {
+      
+    await expect(this.page).toHaveTitle('Login - QAD EQMS');
+});
+
+Then('the user should see an error message', async function (this: CustomWorld) {
+  
+    await this.login.snack.waitForContains(/Login failed. Please check your username and password and try again./);    
+});
