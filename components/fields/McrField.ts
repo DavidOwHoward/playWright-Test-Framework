@@ -32,7 +32,7 @@ export class McrField extends FieldComponent {
     };
 
     private clickFirst() {
-        return this.linkWindow().locator('.k-grid-table').getByRole('row').nth(0).getByRole('checkbox');
+        return this.linkWindow().locator('.k-grid-table').getByRole('row').first().getByRole('checkbox');
     };
 
     private getRow() {
