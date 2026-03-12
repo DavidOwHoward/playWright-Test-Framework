@@ -1,6 +1,7 @@
 import { expect, type Locator, type Page } from '@playwright/test';
 import { baseUrl } from "../fixtures/constants";
 import { LoginUser } from '../config/user';
+import { Snackbar } from '../components/SnackBar';
 
 
 export class loginPage {
@@ -9,6 +10,8 @@ export class loginPage {
     readonly passwordBox: Locator;
     readonly signInButton: Locator;
     readonly loginToast: Locator;
+    readonly snack: Snackbar;
+
 
     constructor(page: Page) {
         this.page = page;
@@ -17,6 +20,7 @@ export class loginPage {
         this.signInButton = page.getByRole("button", {name: 'Sign in'});
         this.loginToast = page.locator('.cdk-overlay-pane')
             .getByText('Welcome');
+        this.snack = new Snackbar(page);
 
     };
     //TO DO: Turn these into one method   
@@ -30,8 +34,8 @@ export class loginPage {
         await this.loginToast.waitFor({state: 'hidden'});
     };
 
-    async openPage(){
-        await this.page.goto(baseUrl);
+    async openPage(url: string = baseUrl){
+        await this.page.goto(url);
         await expect(this.page).toHaveTitle('Login - QAD EQMS');
 
     };
