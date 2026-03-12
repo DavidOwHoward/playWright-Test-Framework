@@ -1,12 +1,17 @@
 {
   "compilerOptions": {
-    "target": "ES2022",
-    "module": "CommonJS",
+    "target": "ES2023",
+    "module": "commonjs",
     "moduleResolution": "Node",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
     "strict": false,
     "skipLibCheck": true
-  }
+  },
+  "exclude": [
+    "node_modules",
+    "playwright-report",
+    "test-results"
+  ]
 }
