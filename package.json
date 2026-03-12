@@ -7,9 +7,9 @@
     "test": "tests"
   },
   "scripts": {
-    "cucumber": "ts-node --project tsconfig.cucumber.json ./node_modules/@cucumber/cucumber/bin/cucumber-js --require src/step-definitions/**/*.ts src/features/**/*.feature",
+    "cucumber": "ts-node --project tsconfig.cucumber.json ./node_modules/@cucumber/cucumber/bin/cucumber-js --require src/support/**/*.ts --require src/step-definitions/**/*.ts src/features/**/*.feature",
     "cucumber:check": "tsc -p tsconfig.cucumber.json --noEmit",
-    "cucumberWithTS": "cucumber-js src/features/*.feature --require-module ts-node/register --require src/step-definitions/**/**/*.ts"
+    "cucumberWithTS": "cucumber-js src/features/*.feature --require-module ts-node/register --require src/support/**/*.ts --require src/step-definitions/**/**/*.ts"
   },
   "keywords": [],
   "author": "",
