@@ -45,7 +45,7 @@ export class FileField extends FieldComponent {
     };
 
 
-    // need to figure out to make one locator for the Office File types and pdf since they are the only file types that will have a specific icon.
+    // need to figure out how to make one locator for the Office File types and pdf since they are the only file types that will have a specific icon.
     private fileTypeIcon() {
         return this.root.locator('#DocumentFile_f').locator('.fa-file-""')
     };
