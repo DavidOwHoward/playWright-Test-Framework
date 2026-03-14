@@ -16,6 +16,7 @@ import { VideoField } from '../../components/fields/VideoField';
 import { CommandField } from '../../components/fields/CommandField';
 import { DisplayListField } from '../../components/fields/DisplayListField';
 import { FrequencyField } from '../../components/fields/FrequencyField';
+import { PictureField } from '../../components/fields/PictureField';
 
 
 export class PackagingSpecifications_p extends DetailsPageBase {
@@ -184,7 +185,7 @@ export class PackagingSpecifications_p extends DetailsPageBase {
 
     const { root, section } = this.fieldRootInSection(`PartPicture1_f`, `Pictures/Drawings`);
 
-    return new Picture(this.page, root, async () => section.openAndWait(root));
+    return new PictureField(this.page, root, async () => section.openAndWait(root));
   }
 
   get PartPicture1Description() {
@@ -198,7 +199,7 @@ export class PackagingSpecifications_p extends DetailsPageBase {
 
     const { root, section } = this.fieldRootInSection(`PartPicture2_f`, `Pictures/Drawings`);
 
-    return new Picture(this.page, root, async () => section.openAndWait(root));
+    return new PictureField(this.page, root, async () => section.openAndWait(root));
   }
 
   get PartPicture2Description() {
@@ -261,14 +262,14 @@ export class PackagingSpecifications_p extends DetailsPageBase {
 
     const { root, section } = this.fieldRootInSection(`PrimaryPackagingPicture1_f`, `Primary Packaging Data`);
 
-    return new Picture(this.page, root, async () => section.openAndWait(root));
+    return new PictureField(this.page, root, async () => section.openAndWait(root));
   }
 
   get PrimaryPackagingPicture2() {
 
     const { root, section } = this.fieldRootInSection(`PrimaryPackagingPicture2_f`, `Primary Packaging Data`);
 
-    return new Picture(this.page, root, async () => section.openAndWait(root));
+    return new PictureField(this.page, root, async () => section.openAndWait(root));
   }
 
   get PrimaryPackagingWidth() {

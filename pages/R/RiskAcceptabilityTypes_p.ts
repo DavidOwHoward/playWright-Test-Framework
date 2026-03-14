@@ -16,6 +16,7 @@ import { VideoField } from '../../components/fields/VideoField';
 import { CommandField } from '../../components/fields/CommandField';
 import { DisplayListField } from '../../components/fields/DisplayListField';
 import { FrequencyField } from '../../components/fields/FrequencyField';
+import { PictureField } from '../../components/fields/PictureField';
 
 
 export class RiskAcceptabilityTypes_p extends DetailsPageBase {

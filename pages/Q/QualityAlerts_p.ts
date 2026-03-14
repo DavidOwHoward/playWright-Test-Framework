@@ -16,6 +16,7 @@ import { VideoField } from '../../components/fields/VideoField';
 import { CommandField } from '../../components/fields/CommandField';
 import { DisplayListField } from '../../components/fields/DisplayListField';
 import { FrequencyField } from '../../components/fields/FrequencyField';
+import { PictureField } from '../../components/fields/PictureField';
 
 
 export class QualityAlerts_p extends DetailsPageBase {
@@ -79,7 +80,7 @@ export class QualityAlerts_p extends DetailsPageBase {
 
     const { root, section } = this.fieldRootInSection(`IssuePicture_f`, `Quality Issue`);
 
-    return new Picture(this.page, root, async () => section.openAndWait(root));
+    return new PictureField(this.page, root, async () => section.openAndWait(root));
   }
 
   get CreateTrainingEvent() {

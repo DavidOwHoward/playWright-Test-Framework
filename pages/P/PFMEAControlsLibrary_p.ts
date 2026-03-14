@@ -16,6 +16,7 @@ import { VideoField } from '../../components/fields/VideoField';
 import { CommandField } from '../../components/fields/CommandField';
 import { DisplayListField } from '../../components/fields/DisplayListField';
 import { FrequencyField } from '../../components/fields/FrequencyField';
+import { PictureField } from '../../components/fields/PictureField';
 
 
 export class PFMEAControlsLibrary_p extends DetailsPageBase {
@@ -149,7 +150,7 @@ export class PFMEAControlsLibrary_p extends DetailsPageBase {
 
     const { root, section } = this.fieldRootInSection(`VisualAids_f`, `Visual Aid`);
 
-    return new Picture(this.page, root, async () => section.openAndWait(root));
+    return new PictureField(this.page, root, async () => section.openAndWait(root));
   }
 
   get _VisualAidsDescription() {

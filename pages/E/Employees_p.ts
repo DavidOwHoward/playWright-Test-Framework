@@ -16,6 +16,7 @@ import { VideoField } from '../../components/fields/VideoField';
 import { CommandField } from '../../components/fields/CommandField';
 import { DisplayListField } from '../../components/fields/DisplayListField';
 import { FrequencyField } from '../../components/fields/FrequencyField';
+import { PictureField } from '../../components/fields/PictureField';
 
 
 export class Employees_p extends DetailsPageBase {
@@ -37,7 +38,7 @@ export class Employees_p extends DetailsPageBase {
 
     const { root, section } = this.fieldRootInSection(`EmployeePhoto_f`, `Employee Information`);
 
-    return new Picture(this.page, root, async () => section.openAndWait(root));
+    return new PictureField(this.page, root, async () => section.openAndWait(root));
   }
 
   get HasAccount() {
@@ -72,7 +73,7 @@ export class Employees_p extends DetailsPageBase {
 
     const { root, section } = this.fieldRootInSection(`Signature_f`, `Employee Information`);
 
-    return new Picture(this.page, root, async () => section.openAndWait(root));
+    return new PictureField(this.page, root, async () => section.openAndWait(root));
   }
 
   get AlternateName() {
