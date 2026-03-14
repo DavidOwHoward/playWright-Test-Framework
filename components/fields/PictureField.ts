@@ -53,8 +53,24 @@ export class PictureField extends FieldComponent {
         ]);
 
         await fileChooser.setFiles(filePath);        
-        await expect(this.imageDescription().innerText, `Check if file uploaded successfully`).toEqual(fileName);
+        await expect(this.imageDescription(), `Check if file uploaded successfully`).toHaveText(fileName);
         await this.snack.waitForGone();
+    };
+
+
+    async addAdditional(filePath: string) {
+
+        const fileName = path.basename(filePath);
+
+        const [fileChooser] = await Promise.all([
+            this.page.waitForEvent('filechooser'),
+            this.addAdditionalPicture().click()
+        ]);
+
+        await fileChooser.setFiles(filePath);        
+        await expect(this.imageDescription(), `Check if file uploaded successfully`).toHaveText(fileName);
+        await this.snack.waitForGone();
+
     };
 
 };
