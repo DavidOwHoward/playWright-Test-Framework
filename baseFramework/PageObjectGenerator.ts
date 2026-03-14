@@ -35,6 +35,7 @@ const fieldWrapperLookup: Record<string, string> = {
   Frequency: 'FrequencyField',
   Command: 'CommandField',
   Video: 'VideoField',
+  Picture:'PictureField'
 };
 
 // Static imports 
