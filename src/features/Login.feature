@@ -1,3 +1,4 @@
+@login
 Feature: Login to application
 
   Background: 
@@ -8,7 +9,12 @@ Feature: Login to application
     Then the user should be on the home page
     
 
-  Scenario: Login to application with invalid credentials    
-    When the user logs in with "invalid" credentials
+  Scenario: User attempts to login with an invalid password
+    When the user logs in with "passwordInvalid" credentials
+    Then the user should remain on the login page
+    Then the user should see an error message
+
+  Scenario: User attempts to login with an invalid username   
+    When the user logs in with "usernameInvalid" credentials
     Then the user should remain on the login page
     Then the user should see an error message

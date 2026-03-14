@@ -1,17 +1,22 @@
 import { expect, type Locator, type Page } from '@playwright/test';
 import { ensureClassAbsent } from "../utils/ensureClassAbsent";
 import { BaseComponent} from "./baseComponent";
+import { th } from '@faker-js/faker/.';
 
 
 export class SideNav extends BaseComponent {
     readonly navSearch: Locator;
     readonly navCollapse: Locator;
+    readonly navGroup: Locator;
+    readonly navChild: Locator;
 
     constructor(page:Page) {
 
         super(page, page.locator('.fm-navigation'));
-        this.navSearch = this.root.getByPlaceholder('Looking for a Process');
+        this.navSearch = this.page.locator('fm-sidenav').getByRole('textbox');
         this.navCollapse = this.root.locator('fm-navigation').getByRole('button').filter({ hasText: 'menu' });
+        this.navGroup = this.root.locator('.mat-mdc-list-item');
+        this.navChild = this.root.locator('.mdc-list-item');
     }
 
     async ensureNavExpanded() {
@@ -41,9 +46,22 @@ export class SideNav extends BaseComponent {
         await expect(navChildItem).toBeVisible();
         await navChildItem.scrollIntoViewIfNeeded();
         await navChildItem.click();
-    }
+    };
 
-}
+    async navContainsProcess(process: string) {
 
+        await this.ensureNavExpanded();
+
+        const items = this.page.locator('.mdc-list-item:visible');
+
+        const texts = await items.allInnerTexts();
+
+        for (const text of texts) {
+            expect(text).toContain(process);
+        }
+
+    };
+
+};
 
 
