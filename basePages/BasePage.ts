@@ -19,7 +19,7 @@ export abstract class BasePage {
         if(name === '[Frozen Section]'|| name ==='Frozen Section') {
 		   tab = this.page.locator('#sticky');		
 		} else {
-			tab = this.page.getByRole('tablist').locator(`#${name}-section-tab`);
+			tab = this.page.getByRole('tablist').getByRole('tab', {name: name});
 			}
         return new Sections(this.page, tab);
     };
