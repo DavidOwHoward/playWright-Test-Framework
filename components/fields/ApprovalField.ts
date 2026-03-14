@@ -10,23 +10,23 @@ export class ApprovalField extends FieldComponent {
     };    
     
     private history() {
-        return this.page.getByRole('button').filter({hasText: 'restore'})
+        return this.root.getByRole('button').filter({hasText: 'restore'})
     };
 
     private showList() {
-        return this.page.getByRole('button').filter({hasText: 'format_list_numbered'});
+        return this.root.getByRole('button').filter({hasText: 'format_list_numbered'});
     };
 
     private reject() {
-        return this.page.getByRole('button').filter({hasText: 'close'});
+        return this.root.getByRole('button').filter({hasText: 'close'});
     };
 
     private approve() {
-        return this.page.getByRole('button').filter({hasText: 'done'});
+        return this.root.getByRole('button').filter({hasText: 'done'});
     };
 
     private historyDialog(){
-        return this.page.getByRole('heading', {name:"Rejection  History"})
+        return this.page.getByRole('dialog').filter({hasText: "Rejection History"})
     };
 
     private closeHistory() {
@@ -34,15 +34,11 @@ export class ApprovalField extends FieldComponent {
     };
 
     private approvalListDialog() {
-        return this.page.getByRole('heading', {name: "Approval Details"});
+        return this.page.getByRole('dialog').filter({hasText:"Approval Details" })
     };
 
     private closeApprovalList() {
         return this.approvalListDialog().getByRole('button', {name: 'Cancel'});
-    };
-    
-    private approveDialog() {
-        return this.page.getByRole('heading', {name: "Sign Off"});
     };
 
 
