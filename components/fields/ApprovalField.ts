@@ -83,8 +83,7 @@ export class ApprovalField extends FieldComponent {
 
         await this.ensureReady();
         await this.approve().click();
-        await expect(dialog.root, 'Check to see if the Sign Off dialog opened').toBeVisible();
-        await dialog.userName.fill(user.username);
+        await expect(dialog.root, 'Check to see if the Sign Off dialog opened').toBeVisible();        
         await dialog.password.fill(user.password);
         if (comments) {
             await dialog.comments.fill(comments);
