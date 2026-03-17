@@ -1,6 +1,7 @@
 import { expect } from "@playwright/test";
 import { FieldComponent } from "./FieldComponents";
 import { ScrPager } from "./fieldWidgets/ScrPager";
+import { isEqual } from "date-fns";
 
 export class ScrField extends FieldComponent {
 
@@ -37,6 +38,12 @@ export class ScrField extends FieldComponent {
         await this.open();
         await expect(this.listBox()).toBeVisible();
         const option = this.page.getByRole('gridcell').getByText(value);
+        const currentText = await this.listBox().innerText();
+        if (currentText) {
+            await this.input().clear();
+        } else {
+            await this.input().fill(value);
+        }
         await expect(option, `Could not find "${value}" in the SCR dropdown options`).toBeVisible();
         await option.click({force: true});
         await expect(this.listBox()).not.toBeVisible();
