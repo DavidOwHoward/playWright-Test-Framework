@@ -2,6 +2,7 @@ import { Locator, type Page, expect} from '@playwright/test';
 import { DetailsTopToolBar } from '../components/DetailsTopToolBar';
 import { ApprovalDialog } from '../components/ApprovalDialog';
 import { LoginUser } from '../config/user';
+import { dateOnly } from '../helpers/dateFormat';
 
 
 export class DetailsPageBase extends DetailsTopToolBar {
@@ -61,10 +62,15 @@ export class DetailsPageBase extends DetailsTopToolBar {
         await expect(stateAfter, `Check to see if state changed to ${newState}`).toBeVisible();   
     };
 
+    async assertState(state: string) {
+
+        await expect(this.saveStateBar.getByRole('button', {name: state}), `Check to see if the state is ${state}`).toBeVisible();
+    };
+
 
     async selectState(state: string) {        
         
-        await expect(this.stateDialog, 'The State popup was not visible').toBeVisible();
+        await expect(this.stateDialog, 'Check to see if State dialog is visible').toBeVisible();
         const stateButton = this.page.getByRole('button', {name: state});
         await expect(stateButton, `Could not find "${state}" in the State dialog`).toBeVisible();
         await this.stateDialog.getByRole('button', {name: state}).click();
@@ -84,7 +90,7 @@ export class DetailsPageBase extends DetailsTopToolBar {
         ]);
 
         if (outcome === 'state') {
-            if (!state) throw new Error('saveRecord(state) required when State dialog appears.');
+            if (!state) throw new Error(`Check to see if ${state} is available.`);
             await this.selectState(state);
         } else {
         // tempororary regex until I can find a better way to assert    
@@ -123,6 +129,10 @@ export class DetailsPageBase extends DetailsTopToolBar {
         await this.approve.reject.click();
         await this.snack.waitForContains(/Approval action completed/i);
         await this.snack.waitForGone();
+    };
+
+    async setToday() {
+        return dateOnly();
     };
 
 };
