@@ -1,0 +1,78 @@
+import { DetailsPageBase } from '../../basePages/DetailsPageBase';
+import { TextField } from '../../components/fields/TextField';
+import { ScrField } from '../../components/fields/ScrField';
+import { NumericField } from '../../components/fields/NumericField';
+import { DateField } from '../../components/fields/DateField';
+import { FileField } from '../../components/fields/FileField';
+import { McrField } from '../../components/fields/McrField';
+import { ApprovalField } from '../../components/fields/ApprovalField';
+import { LabelField } from '../../components/fields/LabelField';
+import { CheckboxField } from '../../components/fields/CheckboxField';
+import { RcrField } from '../../components/fields/RcrField';
+import { ChecklistField } from '../../components/fields/ChecklistField';
+import { ChoiceField } from '../../components/fields/ChoiceField';
+import { AutoNumField } from '../../components/fields/AutoNumField';
+import { VideoField } from '../../components/fields/VideoField';
+import { CommandField } from '../../components/fields/CommandField';
+import { DisplayListField } from '../../components/fields/DisplayListField';
+import { FrequencyField } from '../../components/fields/FrequencyField';
+import { PictureField } from '../../components/fields/PictureField';
+
+
+export class FMEAMSRActionPriority_p extends DetailsPageBase {
+  get ActionPriority() {
+
+    const { root, section } = this.fieldRootInSection(`ActionPriority_f`, `General`);
+
+    return new TextField(this.page, root, async () => section.openAndWait(root));
+  }
+
+  get Comments() {
+
+    const { root, section } = this.fieldRootInSection(`Comments_f`, `General`);
+
+    return new TextField(this.page, root, async () => section.openAndWait(root));
+  }
+
+  get Effect() {
+
+    const { root, section } = this.fieldRootInSection(`Effect_f`, `General`);
+
+    return new TextField(this.page, root, async () => section.openAndWait(root));
+  }
+
+  get EffectivenessofMonitoring() {
+
+    const { root, section } = this.fieldRootInSection(`EffectivenessofMonitoring_f`, `General`);
+
+    return new TextField(this.page, root, async () => section.openAndWait(root));
+  }
+
+  get F() {
+
+    const { root, section } = this.fieldRootInSection(`F_f`, `General`);
+
+    return new NumericField(this.page, root, async () => section.openAndWait(root));
+  }
+
+  get M() {
+
+    const { root, section } = this.fieldRootInSection(`M_f`, `General`);
+
+    return new NumericField(this.page, root, async () => section.openAndWait(root));
+  }
+
+  get PredictionofFailureCauseOccurring() {
+
+    const { root, section } = this.fieldRootInSection(`PredictionofFailureCauseOcc_f`, `General`);
+
+    return new TextField(this.page, root, async () => section.openAndWait(root));
+  }
+
+  get S() {
+
+    const { root, section } = this.fieldRootInSection(`S_f`, `General`);
+
+    return new NumericField(this.page, root, async () => section.openAndWait(root));
+  }
+}

@@ -1,0 +1,246 @@
+import { DetailsPageBase } from '../../basePages/DetailsPageBase';
+import { TextField } from '../../components/fields/TextField';
+import { ScrField } from '../../components/fields/ScrField';
+import { NumericField } from '../../components/fields/NumericField';
+import { DateField } from '../../components/fields/DateField';
+import { FileField } from '../../components/fields/FileField';
+import { McrField } from '../../components/fields/McrField';
+import { ApprovalField } from '../../components/fields/ApprovalField';
+import { LabelField } from '../../components/fields/LabelField';
+import { CheckboxField } from '../../components/fields/CheckboxField';
+import { RcrField } from '../../components/fields/RcrField';
+import { ChecklistField } from '../../components/fields/ChecklistField';
+import { ChoiceField } from '../../components/fields/ChoiceField';
+import { AutoNumField } from '../../components/fields/AutoNumField';
+import { VideoField } from '../../components/fields/VideoField';
+import { CommandField } from '../../components/fields/CommandField';
+import { DisplayListField } from '../../components/fields/DisplayListField';
+import { FrequencyField } from '../../components/fields/FrequencyField';
+import { PictureField } from '../../components/fields/PictureField';
+
+
+export class DesignHistoryFileItems_p extends DetailsPageBase {
+  get ObsoleteWarning() {
+
+    const { root, section } = this.fieldRootInSection(`ObsoleteWarning_f`, `[Frozen Section]`);
+
+    return new LabelField(this.page, root, async () => section.openAndWait(root));
+  }
+
+  get _ApplytoInputsOutputs() {
+
+    const { root, section } = this.fieldRootInSection(`ApplytoInputsOutputs_f`, `General`);
+
+    return new CheckboxField(this.page, root, async () => section.openAndWait(root));
+  }
+
+  get _DesignInputs() {
+
+    const { root, section } = this.fieldRootInSection(`DesignInputsFromUserReq_f`, `General`);
+
+    return new DisplayListField(this.page, root, async () => section.openAndWait(root));
+  }
+
+  get _DesignOutputs() {
+
+    const { root, section } = this.fieldRootInSection(`DesignOutputs_f`, `General`);
+
+    return new DisplayListField(this.page, root, async () => section.openAndWait(root));
+  }
+
+  get DocumentationDescription() {
+
+    const { root, section } = this.fieldRootInSection(`Description_f`, `General`);
+
+    return new TextField(this.page, root, async () => section.openAndWait(root));
+  }
+
+  get DocumentationTitle() {
+
+    const { root, section } = this.fieldRootInSection(`Title_f`, `General`);
+
+    return new TextField(this.page, root, async () => section.openAndWait(root));
+  }
+
+  get JustificationforNoDocumentation() {
+
+    const { root, section } = this.fieldRootInSection(`JustificationforNoDocumenta_f`, `General`);
+
+    return new TextField(this.page, root, async () => section.openAndWait(root));
+  }
+
+  get Sequence() {
+
+    const { root, section } = this.fieldRootInSection(`Sequence_f`, `General`);
+
+    return new NumericField(this.page, root, async () => section.openAndWait(root));
+  }
+
+  get _Validations() {
+
+    const { root, section } = this.fieldRootInSection(`Validations_f`, `General`);
+
+    return new DisplayListField(this.page, root, async () => section.openAndWait(root));
+  }
+
+  get _Verifications() {
+
+    const { root, section } = this.fieldRootInSection(`Verifications_f`, `General`);
+
+    return new DisplayListField(this.page, root, async () => section.openAndWait(root));
+  }
+
+  get DesignControl() {
+
+    const { root, section } = this.fieldRootInSection(`DesignControl_f`, `General`);
+
+    return new ScrField(this.page, root, async () => section.openAndWait(root));
+  }
+
+  get _DesignInputforDHF() {
+
+    const { root, section } = this.fieldRootInSection(`DesignInput_f`, `General`);
+
+    return new ScrField(this.page, root, async () => section.openAndWait(root));
+  }
+
+  get _DesignOutputforDHF() {
+
+    const { root, section } = this.fieldRootInSection(`DesignOutput_f`, `General`);
+
+    return new ScrField(this.page, root, async () => section.openAndWait(root));
+  }
+
+  get _DesignTransferforDHF() {
+
+    const { root, section } = this.fieldRootInSection(`DesignTransfer_f`, `General`);
+
+    return new ScrField(this.page, root, async () => section.openAndWait(root));
+  }
+
+  get DFMEAFailureAnalysisLibrary() {
+
+    const { root, section } = this.fieldRootInSection(`DFMEAFailureAnalysisLibrary_f`, `General`);
+
+    return new ScrField(this.page, root, async () => section.openAndWait(root));
+  }
+
+  get Document() {
+
+    const { root, section } = this.fieldRootInSection(`Document_f`, `General`);
+
+    return new ScrField(this.page, root, async () => section.openAndWait(root));
+  }
+
+  get DocumentationType() {
+
+    const { root, section } = this.fieldRootInSection(`DocumentationType_f`, `General`);
+
+    return new ScrField(this.page, root, async () => section.openAndWait(root));
+  }
+
+  get Drawing() {
+
+    const { root, section } = this.fieldRootInSection(`Drawing_f`, `General`);
+
+    return new ScrField(this.page, root, async () => section.openAndWait(root));
+  }
+
+  get LibrarySpecification() {
+
+    const { root, section } = this.fieldRootInSection(`LibrarySpecification_f`, `General`);
+
+    return new ScrField(this.page, root, async () => section.openAndWait(root));
+  }
+
+  get PFMEAFailureAnalysisLibrary() {
+
+    const { root, section } = this.fieldRootInSection(`PFMEAFailureAnalysisLibrary_f`, `General`);
+
+    return new ScrField(this.page, root, async () => section.openAndWait(root));
+  }
+
+  get Process() {
+
+    const { root, section } = this.fieldRootInSection(`Process_f`, `General`);
+
+    return new ScrField(this.page, root, async () => section.openAndWait(root));
+  }
+
+  get Record() {
+
+    const { root, section } = this.fieldRootInSection(`Record_f`, `General`);
+
+    return new ScrField(this.page, root, async () => section.openAndWait(root));
+  }
+
+  get Responsibility() {
+
+    const { root, section } = this.fieldRootInSection(`Responsibility_f`, `General`);
+
+    return new ScrField(this.page, root, async () => section.openAndWait(root));
+  }
+
+  get RiskManagement() {
+
+    const { root, section } = this.fieldRootInSection(`RiskManagement_f`, `General`);
+
+    return new ScrField(this.page, root, async () => section.openAndWait(root));
+  }
+
+  get _UserRequirementforDHF() {
+
+    const { root, section } = this.fieldRootInSection(`UserRequirement_f`, `General`);
+
+    return new ScrField(this.page, root, async () => section.openAndWait(root));
+  }
+
+  get _ValidationforDHF() {
+
+    const { root, section } = this.fieldRootInSection(`Validation_f`, `General`);
+
+    return new ScrField(this.page, root, async () => section.openAndWait(root));
+  }
+
+  get _VerificationforDHF() {
+
+    const { root, section } = this.fieldRootInSection(`Verification_f`, `General`);
+
+    return new ScrField(this.page, root, async () => section.openAndWait(root));
+  }
+
+  get __DesignInputs() {
+
+    const { root, section } = this.fieldRootInSection(`DesignInputs_f`, `General`);
+
+    return new McrField(this.page, root, async () => section.openAndWait(root));
+  }
+
+  get ___DesignInputs() {
+
+    const { root, section } = this.fieldRootInSection(`ValidatedDesignInputs_f`, `General`);
+
+    return new McrField(this.page, root, async () => section.openAndWait(root));
+  }
+
+  get __DesignOutputs() {
+
+    const { root, section } = this.fieldRootInSection(`DesignOutputsForV_f`, `General`);
+
+    return new McrField(this.page, root, async () => section.openAndWait(root));
+  }
+
+  get ___DesignOutputs() {
+
+    const { root, section } = this.fieldRootInSection(`ValidatedDesignOutputs_f`, `General`);
+
+    return new McrField(this.page, root, async () => section.openAndWait(root));
+  }
+
+  get UserRequirements() {
+
+    const { root, section } = this.fieldRootInSection(`UserRequirements_f`, `General`);
+
+    return new McrField(this.page, root, async () => section.openAndWait(root));
+  }
+}
