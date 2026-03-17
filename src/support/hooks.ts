@@ -9,9 +9,7 @@ import { DetailsTopToolBar } from '../../components/DetailsTopToolBar';
 
 setDefaultTimeout(60000);
 
-BeforeAll(async function () {
-  console.log('\nExecuting test suite')
-});
+
 
 Before(async function (this: CustomWorld) {
   this.browser = await chromium.launch({

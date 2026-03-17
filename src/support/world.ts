@@ -1,5 +1,5 @@
 import { World, IWorldOptions, setWorldConstructor } from '@cucumber/cucumber';
-import { Browser, BrowserContext, Page, chromium } from '@playwright/test';
+import { Browser, BrowserContext, Page } from '@playwright/test';
 import { loginPage } from '../../basePages/LoginBase';
 import { SideNav } from '../../components/sideNav';
 import { SearchScreen } from '../../basePages/SearchScreenBase';
@@ -17,6 +17,14 @@ export class CustomWorld extends World {
   search!: SearchScreen;
   details!: DetailsTopToolBar;
   reports!: ReportsBase;
+
+  // Generic test data
+  testData: Record<string, any> = {};
+
+  // On Demand page instantiation
+  getPage<T>(PageClass: new (page: Page) => T): T {
+    return new PageClass(this.page);
+  };
 
   constructor(options: IWorldOptions) {
     super(options);
