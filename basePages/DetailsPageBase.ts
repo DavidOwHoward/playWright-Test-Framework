@@ -16,7 +16,8 @@ export class DetailsPageBase extends DetailsTopToolBar {
     readonly saveStateBar: Locator;
     readonly stateDialog: Locator;
     readonly approveDialog: Locator
-    readonly approve: ApprovalDialog;    
+    readonly approve: ApprovalDialog;
+    readonly breadcrumb: Locator;    
 
     constructor(page: Page)  {
 
@@ -35,12 +36,12 @@ export class DetailsPageBase extends DetailsTopToolBar {
         this.closeButton = this.saveStateBar
             .getByRole('button', { name: 'Close', exact: true });
 
-        // this.stateSelector = this.saveStateBar
-            // .getByRole('button', {name:'Active'});
-
         this.stateDialog = page.locator('eqms-details-layout-dialog-confirm-state');
         this.approveDialog = page.getByRole('button', {name: "Approve / Reject"});
 
+        this.breadcrumb = page.locator('fm-breadcrumbs')
+            .locator('.breadcrumbs-container')
+            .locator('ul')
         
 
 };
@@ -52,9 +53,9 @@ export class DetailsPageBase extends DetailsTopToolBar {
 
     async moveState(oldState: string, newState: string) {
 
-        let currentState = await this.saveStateBar.getByRole('button', {name: oldState});
+        let currentState = await this.saveStateBar.getByRole('button', { name: oldState});
         const stateMenu = this.page.getByRole('menu').getByRole('menuitem', {name:"Show States Diagram"});
-        const nextState = this.page.getByRole('menu').getByRole('menuitem', {name:newState});
+        const nextState = this.page.getByRole('menu').getByRole('menuitem', { name: newState });
         await currentState.click();
         await expect(stateMenu, `Check to see if state menu appeared`).toBeVisible();
         await nextState.click();
@@ -71,9 +72,9 @@ export class DetailsPageBase extends DetailsTopToolBar {
     async selectState(state: string) {        
         
         await expect(this.stateDialog, 'Check to see if State dialog is visible').toBeVisible();
-        const stateButton = this.page.getByRole('button', {name: state});
+        const stateButton = this.page.getByRole('button', {name: state, exact: true});
         await expect(stateButton, `Could not find "${state}" in the State dialog`).toBeVisible();
-        await this.stateDialog.getByRole('button', {name: state}).click();
+        await this.stateDialog.getByRole('button', {name: state, exact: true}).click();
         await this.snack.waitForContains(/was/i);
     };
 
