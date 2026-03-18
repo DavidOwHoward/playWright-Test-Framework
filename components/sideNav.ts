@@ -35,7 +35,7 @@ export class SideNav extends BaseComponent {
     }
 
 
-    async navOpenProcess(group: string, process: string) {
+    async openProcess(group: string, process: string) {
         await this.ensureNavExpanded();
 
         const navGroupItem = this.root.locator('.mat-mdc-list-item', { hasText: group});
