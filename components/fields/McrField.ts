@@ -35,8 +35,16 @@ export class McrField extends FieldComponent {
         return this.linkWindow().locator('.k-grid-table').getByRole('row').first().getByRole('checkbox');
     };
 
-    private getRow() {
+    private getLinkRow() {
         return this.linkWindow().locator('.k-grid-table').getByRole('row');
+    };
+
+    private add() {
+        return this.root.getByRole('button').filter({hasText:"add_circle_outline"});
+    };
+
+    private getTableRow() {
+        return this.root.locator('.k-grid-table').getByRole('row');
     };
 
 
@@ -45,7 +53,7 @@ export class McrField extends FieldComponent {
         this.ensureReady();
         await this.link().click();
         await this.linkSearch().fill(value);
-        await expect(this.getRow().first(), `Check for ${value}`).toContainText(value);
+        await expect(this.getLinkRow().first(), `Check for ${value}`).toContainText(value);
         await this.clickFirst().click();
         await expect(this.clickFirst(), 'Check if checked').toBeChecked();
         await this.linkButton().click();
@@ -62,8 +70,18 @@ export class McrField extends FieldComponent {
         await expect(item, `Check if ${value} is unlinked`).not.toBeVisible();
     };
 
+    async addItem() {
 
+       await this.ensureReady();
+       await this.add().click();
 
+    };
+
+    async assertRowValue(value: string) {
+
+        await this.ensureReady();
+        await expect(this.getTableRow()).toContainText(value);
+    };
 
 
 };
