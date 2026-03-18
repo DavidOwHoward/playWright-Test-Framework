@@ -47,7 +47,7 @@ export class HomeTopToolBar {
         this.globalClose = page.locator('eqms-global-search')
             .getByRole('button', { name: 'Close', exact: true });
 
-        this.profile = page.locator('button#profile-shell');
+        this.profile = page.locator('#profile-shell');
         this.profileSettings = page.getByRole('menuitem', { name: 'Settings' });
         this.logout = page.getByRole('menuitem', { name: 'Sign Out' });
 
@@ -141,7 +141,7 @@ export class HomeTopToolBar {
 
 
     async userLogout() {
-        await this.profileSettings.click();
+        await this.profile.click();
         await this.logout.click();
         await expect(this.page).toHaveTitle('Login - QAD EQMS');
 
