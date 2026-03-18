@@ -5,6 +5,7 @@ import { DetailsPageBase } from "../basePages/DetailsPageBase";
 import { ReportsBase } from "../components/ReportBase";
 import { loginPage } from "../basePages/LoginBase";
 import { DetailsTopToolBar } from '../components/DetailsTopToolBar';
+import { HomeTopToolBar } from '../components/HomeTopToolBar';
 
 
 type baseFixtures = {
@@ -13,6 +14,8 @@ type baseFixtures = {
     reports: ReportsBase;
     search: SearchScreen
     details: DetailsTopToolBar;
+    home: HomeTopToolBar;
+
 
 }
 
@@ -32,6 +35,9 @@ export const test = base.extend<baseFixtures>({
     reports: async ({page}, use) => {
         await use(new ReportsBase(page));
     },
+    home: async ({page}, use) => {
+        await use(new HomeTopToolBar(page));
+    }
 
 })
 
