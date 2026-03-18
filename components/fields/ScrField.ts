@@ -31,7 +31,13 @@ export class ScrField extends FieldComponent {
         await this.ensureReady();
         await this.dropDown().click();
         
-    };   
+    };
+    
+    async assertVisibility() {
+
+        await this.ensureReady();
+        await expect(this.input()).toBeVisible();
+    }
     
     async set(value: string) {
 
