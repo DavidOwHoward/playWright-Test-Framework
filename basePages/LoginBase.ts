@@ -29,7 +29,7 @@ export class loginPage {
         await this.userNameBox.fill(user.username);
         await this.passwordBox.fill(user.password);
         await this.signInButton.click();
-        await expect(this.page).toHaveTitle('Home - EQMS');
+        await expect(this.loginToast, 'Assert successful login').toBeVisible({timeout: 10000});
     //wait for the toast to go away since some test run fast enough that it can be in the way of grabbing elements
         await this.loginToast.waitFor({state: 'hidden'});
     };
