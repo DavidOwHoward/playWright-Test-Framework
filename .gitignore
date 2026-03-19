@@ -16,3 +16,10 @@ node_modules/
 /.idea/
 .gitignore
 /tests/testnotes
+pages/Documnents_p.ts
+README.md
+baseFramework/Framework Utils/examplesBuilder.ts
+baseFramework/Framework Utils/tableBuilder.ts
+baseFramework/Framework Utils/createTable.ts
+baseFramework/Framework Utils/table.ts
+components/fields/fieldWidgets/ValidationErrorCheck.ts
