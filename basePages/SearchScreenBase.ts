@@ -3,6 +3,7 @@ import { clearSortCheck } from "../utils/clearSortCheck"
 import { groupColumn } from "../utils/dragAndDrop";
 import { KendoGrid} from "../components/KendoGrid";
 
+
 export class SearchScreen {
     readonly page: Page;
     readonly searchBox: Locator;
@@ -21,6 +22,7 @@ export class SearchScreen {
     readonly refreshButton: Locator;
     readonly clearSortButton: Locator;
     readonly clearGroupButton: Locator;
+    readonly clearFilterButton: Locator;
     readonly actionsExport: Locator;
     readonly actionsBulk: Locator;
     readonly favoriteIcon: Locator;
@@ -42,7 +44,7 @@ export class SearchScreen {
         this.groupPanelRemove = this.groupPanel
             .locator('.k-chip-remove-action')
 
-        this.groupGridRoot = page.locator('.k-grid-table-wrap')
+        this.groupGridRoot = page.locator('.k-grid-table-wrap')        
         this.grid = new KendoGrid(this.groupGridRoot)
         this.clearSearch = page.locator('#filter-text-clear-search-toolbar')
         this.addButton = page.locator('#new-search-toolbar');
@@ -54,6 +56,7 @@ export class SearchScreen {
         this.refreshButton = page.locator('#refresh-search-footer');
         this.clearSortButton = page.locator('#clear-sorting-search-toolbar');
         this.clearGroupButton = page.locator('#grouping-color-search-toolbar');
+        this.clearFilterButton = page.locator('#clear-filter-search-toolbar');
         this.actionsExport = page.locator('#export-search-toolbar');
         this.actionsBulk = page.locator('#bulk-search-toolbar');
         this.favoriteIcon = this.favoriteButton.locator('mat-icon')
@@ -61,9 +64,23 @@ export class SearchScreen {
 
     };
     //this is going to be turned into its own method when I get to working with the search screen
-    async findRecordSearch(searchText: string) {
+    async searchRecord(searchText: string) {
 
         await this.searchBox.fill(searchText);
+    };
+
+    async openRecord(recordName: string): Promise<void> {    
+        
+        await this.searchRecord(recordName);
+
+        if(await this.clearFilterButton.isVisible()) {
+            await this.clearFilterButton.click();
+            await expect(this.clearFilterButton, 'Check to see if clear filter button disappears after clicking').not.toBeVisible();
+            await this.searchGrid.getByText(`${recordName}`).dblclick();
+        } else {
+            await this.searchGrid.getByText(`${recordName}`).dblclick();
+        }
+
     };
 
     async ClearSearch() {
@@ -76,15 +93,22 @@ export class SearchScreen {
         await this.addButton.click();
     };
 
-    async openRecord(search: string): Promise<void> {
+    // async openRecord(search: string): Promise<void> {
 
-        await this.searchGrid.getByText(`${search}`).dblclick();
+    //     await this.searchGrid.getByText(`${search}`).dblclick();
 
-    }
+    // }
 
     async clearSort() {
         await this.clearSortButton.click();
         await clearSortCheck(this.page);
+    }
+
+    async clearGroup() {
+
+        await this.clearGroupButton.click();
+        await expect(this.groupPanel).not.toBeVisible();
+
     }
 
     async dragDrop(column: string) {
