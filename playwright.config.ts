@@ -38,8 +38,26 @@ export default defineConfig({
 
   /* Configure projects for major browsers */
   projects: [
+    // Api testing project
+    {
+        name: 'apiTests',
+        testMatch: /.*\.api\.spec\.ts/,
+        testDir: './tests/apiTests',
+        workers: 1,
+        fullyParallel: false,
+        use: {
+            baseURL: 'https://homedev.qad.com/WebAPI/api/',
+            extraHTTPHeaders: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+        },
+      },
+    },
     {
       name: 'chromium',
+      testMatch: /.*\.ui\.spec\.ts/,
+      // workers: 1,
+      // fullyParallel: false,
       use: { ...devices['Desktop Chrome'],
           viewport: {width: 1920, height: 1080},
           headless: false
