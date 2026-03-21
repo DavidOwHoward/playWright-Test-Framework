@@ -88,9 +88,9 @@ test.describe("Authorized user", () => {
 });
 
 test.describe("Unauthorized user", () => {
-  test("Unauthorized user cannot access new record api for Documents Process", async ({
-    request}) => {
-
+  test("User with valid credentials cannot access new record api for a process they do not have access to", async ({
+    request,
+  }) => {
     const token = await getAccessToken(users["ls-buy"]);
 
     const response = await request.get(
@@ -101,6 +101,6 @@ test.describe("Unauthorized user", () => {
     );
     expect(response.status(), "Assert HTTP response status").toBe(400);
     //expect(response.text()).toContain("User not authorized to create object type Documents_pEdit");
-    console.log(response)
+    console.log(response);
   });
 });
