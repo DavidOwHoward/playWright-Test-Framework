@@ -14,6 +14,7 @@ export class DetailsTopToolBar extends BasePage{
     readonly actionsButton: Locator;
     readonly attachmentsButton: Locator;
     readonly commentsButton: Locator;
+    readonly quickFilter: Locator;
 
     constructor(page: Page) {
 
@@ -30,10 +31,13 @@ export class DetailsTopToolBar extends BasePage{
         this.actionsButton = this.page.getByRole('button', { name: 'Actions' });
         this.attachmentsButton = this.page.getByRole('button', { name: 'Attachments' });
         this.commentsButton = this.page.locator('#comments-details-toolbar');
+        this.quickFilter = this.topToolBar.locator('#assign-filter--search-toolbar');
     };
 
     async openActions() {
         await this.actionsButton.click();
     };
+
+    
 
 };
