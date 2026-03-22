@@ -1,3 +1,0 @@
-import { FieldComponent } from "./FieldComponents";
-
-export class PictureField extends FieldComponent {}

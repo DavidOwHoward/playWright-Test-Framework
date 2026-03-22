@@ -2,7 +2,7 @@ import { test, expect } from "@playwright/test";
 import { getAccessToken } from "../../helpers/getTokenApi";
 import { users } from "../../config/user";
 
-test.describe("Authorized user", () => {
+test.describe("Validating access to the WebApi's add record endpoint", () => {
   let token: string;
 
   test.beforeAll(async () => {
@@ -10,7 +10,7 @@ test.describe("Authorized user", () => {
   });
 
   test(
-    "New record api returns valid response",
+    "Add record endpoint returns valid response",
     { tag: ["@Api"] },
     async ({ request }) => {
       const response = await request.get(
@@ -47,7 +47,7 @@ test.describe("Authorized user", () => {
   );
 
   test(
-    "New record api returns 401 for unauthenticated requests",
+    "Add record endpoint returns 401 for unauthenticated requests",
     { tag: ["@Api"] },
     async ({ request }) => {
       const response = await request.get(
@@ -58,7 +58,7 @@ test.describe("Authorized user", () => {
   );
 
   test(
-    "New record api returns 400 for invalid endpoint",
+    "Add record endpoint returns 400 for invalid endpoint",
     { tag: ["@Api"] },
     async ({ request }) => {
       const response = await request.get(
@@ -74,7 +74,7 @@ test.describe("Authorized user", () => {
   );
 
   test(
-    "New record api returns 404 for missing required parameters",
+    "Add record endpoint returns 404 for missing required parameters",
     { tag: ["@Api"] },
     async ({ request }) => {
       const response = await request.get("Documents_p/?skipAdminFilter=true", {
@@ -88,7 +88,7 @@ test.describe("Authorized user", () => {
 });
 
 test.describe("Unauthorized user", () => {
-  test("User with valid credentials cannot access new record api for a process they do not have access to", async ({
+  test("User with valid credentials cannot access add record endpoint for a process they do not have access to", async ({
     request,
   }) => {
     const token = await getAccessToken(users["ls-buy"]);
@@ -100,7 +100,5 @@ test.describe("Unauthorized user", () => {
       },
     );
     expect(response.status(), "Assert HTTP response status").toBe(400);
-    //expect(response.text()).toContain("User not authorized to create object type Documents_pEdit");
-    console.log(response);
   });
 });
