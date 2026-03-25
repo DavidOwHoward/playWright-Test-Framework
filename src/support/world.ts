@@ -1,8 +1,8 @@
 import { World, IWorldOptions, setWorldConstructor } from '@cucumber/cucumber';
 import { Browser, BrowserContext, Page } from '@playwright/test';
-import { loginPage } from '../../basePages/LoginBase';
-import { SideNav } from '../../components/sideNav';
-import { SearchScreen } from '../../basePages/SearchScreenBase';
+import { loginPage } from '../../BasePages/LoginBase';
+import { SideNav } from '../../components/SideNav';
+import { SearchScreen } from '../../BasePages/SearchScreenBase';
 import { ReportsBase } from '../../components/ReportBase';
 import { DetailsTopToolBar } from '../../components/DetailsTopToolBar';
 

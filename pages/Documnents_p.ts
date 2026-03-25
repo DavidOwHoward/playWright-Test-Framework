@@ -1,8 +1,8 @@
 import { type Page, Locator } from '@playwright/test';
-import { DetailsPageBase } from '../basePages/DetailsPageBase';
+import { DetailsPageBase } from '../BasePages/DetailsPageBase';
 import { TextField } from '../components/fields/TextField';
 import { ScrField } from '../components/fields/ScrField';
-import { NumericField } from '../components/fields/Numeric';
+import { NumericField } from '../components/fields/NumericField';
 import { DateField } from '../components/fields/DateField';
 import { FileField } from '../components/fields/FileField';
 
@@ -20,7 +20,7 @@ export class Documents extends DetailsPageBase {
 
         const { root, section} = this.fieldRootInSection('DocumentType', 'General');
 
-        return new ScrField(this.page, root, async () => section.openAndWait(root));
+        return new ScrField(this.page, root)//, async () => section.openAndWait(root));
     };
     
     get notificationRole() {

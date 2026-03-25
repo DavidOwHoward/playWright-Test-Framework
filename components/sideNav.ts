@@ -1,7 +1,7 @@
 import { expect, type Locator, type Page } from '@playwright/test';
 import { ensureClassAbsent } from "../utils/ensureClassAbsent";
-import { BaseComponent} from "./baseComponent";
-import { th } from '@faker-js/faker/.';
+import { BaseComponent } from "./BaseComponent"
+
 
 
 export class SideNav extends BaseComponent {

@@ -1,9 +1,9 @@
 import { test as base } from '@playwright/test';
-import { SideNav } from "../components/sideNav";
-import { SearchScreen } from "../basePages/SearchScreenBase";
-import { DetailsPageBase } from "../basePages/DetailsPageBase";
+import { SideNav } from "../components/SideNav";
+import { SearchScreen } from "../BasePages/SearchScreenBase";
+import { DetailsPageBase } from "../BasePages/DetailsPageBase";
 import { ReportsBase } from "../components/ReportBase";
-import { loginPage } from "../basePages/LoginBase";
+import { loginPage } from "../BasePages/LoginBase";
 import { DetailsTopToolBar } from '../components/DetailsTopToolBar';
 import { HomeTopToolBar } from '../components/HomeTopToolBar';
 

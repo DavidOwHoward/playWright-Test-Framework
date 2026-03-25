@@ -1,9 +1,9 @@
 import { Before, After, Status, setDefaultTimeout, BeforeAll, AfterAll } from '@cucumber/cucumber';
 import { chromium } from '@playwright/test';
 import { CustomWorld } from './world';
-import { loginPage } from '../../basePages/LoginBase';
-import { SideNav } from '../../components/sideNav';
-import { SearchScreen } from '../../basePages/SearchScreenBase';
+import { loginPage } from '../../BasePages/LoginBase';
+import { SideNav } from '../../components/SideNav';
+import { SearchScreen } from '../../BasePages/SearchScreenBase';
 import { ReportsBase } from '../../components/ReportBase';
 import { DetailsTopToolBar } from '../../components/DetailsTopToolBar';
 

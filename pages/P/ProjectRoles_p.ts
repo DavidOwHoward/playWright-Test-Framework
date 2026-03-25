@@ -1,4 +1,4 @@
-import { DetailsPageBase } from '../../basePages/DetailsPageBase';
+import { DetailsPageBase } from '../../BasePages/DetailsPageBase';
 import { TextField } from '../../components/fields/TextField';
 import { ScrField } from '../../components/fields/ScrField';
 import { NumericField } from '../../components/fields/NumericField';
