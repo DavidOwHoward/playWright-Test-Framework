@@ -36,7 +36,7 @@ export class loginPage {
 
     async openPage(url: string = baseUrl){
         await this.page.goto(url);
-        await expect(this.page).toHaveTitle('Login - QAD EQMS');
+        await expect(this.page).toHaveTitle('Login - EQMS');
 
     };
 };
