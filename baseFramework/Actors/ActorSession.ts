@@ -38,6 +38,7 @@ export class ActorSession {
     return this;
   }
 
+  // Helper function to make login one step in tests
   async login(url: string = baseUrl): Promise<void> {
     await this.loginPage.openPage(url);
     await this.loginPage.loginUser(this.user);
