@@ -143,7 +143,7 @@ export class HomeTopToolBar {
     async userLogout() {
         await this.profile.click();
         await this.logout.click();
-        await expect(this.page).toHaveTitle('Login - QAD EQMS');
+        await expect(this.page).toHaveTitle('Login - EQMS');
 
     }
 
