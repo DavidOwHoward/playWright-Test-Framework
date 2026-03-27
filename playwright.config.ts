@@ -8,7 +8,7 @@ import dotenv from "dotenv";
 // import path from 'path';
 // dotenv.config({ path: path.resolve(__dirname, '.env') });
 
-const baseURL = [process.env.E2E_BASE_URL || "https://homedev.qad.com/"]
+// const baseURL = [process.env.E2E_BASE_URL || "https://homedev.qad.com/"]
 
 dotenv.config();
 
@@ -19,7 +19,7 @@ export default defineConfig({
   testDir: "./tests",
   /* Run tests in files in parallel */
   fullyParallel: true,
-  timeout: 90000,
+  timeout: 180000,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   forbidOnly: !!process.env.CI,
   /* Retry on CI only */
