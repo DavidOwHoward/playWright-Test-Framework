@@ -3,8 +3,12 @@ import { expect, Locator, Page } from '@playwright/test';
 export class Snackbar {
   constructor(private readonly page: Page) {}
 
+  
+  get container(): Locator {
+    return this.page.locator('.cdk-overlay-pane').locator('simple-snack-bar');
+  };
   get message(): Locator {
-    return this.page.locator('.mat-mdc-snack-bar-label.mdc-snackbar__label');
+    return this.container.locator('.mat-mdc-snack-bar-label.mdc-snackbar__label');
   };
 
   async expectContains(text: string | RegExp, msg = 'Assert confirmation of Save') {
@@ -17,7 +21,7 @@ export class Snackbar {
   };
 
   async waitForGone() {
-    await expect(this.message).toBeHidden();
+    await expect(this.message).toHaveCount(0, { timeout: 10000 });
   };
   
 };

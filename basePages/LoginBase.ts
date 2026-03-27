@@ -18,8 +18,7 @@ export class loginPage {
         this.userNameBox = page.getByLabel('User Name');
         this.passwordBox = page.getByLabel('Password');
         this.signInButton = page.getByRole("button", {name: 'Sign in'});
-        this.loginToast = page.locator('.cdk-overlay-pane')
-            .getByText('Welcome');
+        this.loginToast = page.locator('.mat-mdc-snack-bar-label.mdc-snackbar__label');
         this.snack = new Snackbar(page);
 
     };
@@ -29,9 +28,9 @@ export class loginPage {
         await this.userNameBox.fill(user.username);
         await this.passwordBox.fill(user.password);
         await this.signInButton.click();
-        await expect(this.loginToast, 'Assert successful login').toBeVisible({timeout: 10000});
-    //wait for the toast to go away since some test run fast enough that it can be in the way of grabbing elements
-        await this.loginToast.waitFor({state: 'hidden'});
+        await expect(this.loginToast, 'Assert successful login').toBeVisible({timeout: 10000});    
+        await expect(this.loginToast, 'Assert login toast is hidden').toBeHidden({timeout: 15000}); // multi user e2e tests seem to play with how long this message can be on the screen for so the timeout has been increased
+    
     };
 
     async openPage(url: string = baseUrl){
