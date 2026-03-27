@@ -1,35 +1,41 @@
-import { test } from "../../fixtures/fixtures";
+import {  test } from "../../fixtures/tests";
 import { users } from "../../config/user";
 import { Documents_p } from "../../pages/D/Documents_p";
 import { testFiles } from "../../fixtures/fileExports";
 import { DocumentSkillTrainingRoles_p } from "../../pages/D/DocumentSkillTrainingRoles_p";
 import { SkillTrainingQuestions_p } from "../../pages/S/SkillTrainingQuestions_p";
+import { TrainingEvents_p } from "../../pages/T/TrainingEvents_p";
+import { TrainingEventLogs_p } from "../../pages/T/TrainingEventLogs_p";
+import { faker } from "@faker-js/faker";
 
-test("Documents and Training Workflow", async ({
-  login,
-  nav,
-  search,
-  home,
-  page,
-}) => {
-  const doc = new Documents_p(page);
-  const docTraining = new DocumentSkillTrainingRoles_p(page);
-  const docSkill = new SkillTrainingQuestions_p(page);
-  const uniqueTitle = `Gamma Ray Operating Instructions ${Date.now()}`;
+
+
+test("Documents and Training Workflow", async ({ actors }) => {
+  const demo = await actors.as(users.demo);
+
+  const doc = demo.process(Documents_p);
+  const docTraining = demo.process(DocumentSkillTrainingRoles_p);
+  const docSkill = demo.process(SkillTrainingQuestions_p);
+  const event = demo.process(TrainingEvents_p);
+
+  const mgr = await actors.as(users.mgrDoc);
+  const mgrDoc = mgr.process(Documents_p);
+  const mgrLogs = mgr.process(TrainingEventLogs_p);
+
+  const uniqueTitle = `Gamma Ray Operating Instructions - ${faker.string.alphanumeric({ length: 10 })}`;
 
   await test.step("Create a Document record in Draft state", async () => {
-    await login.openPage();
-    await login.loginUser(users.demo);
-    await nav.openProcess("Document Control", "Documents");
-    await search.addNewRecord();
+    await demo.login();
+    await demo.nav.openProcess("Document Control", "Documents");
+    await demo.search.addNewRecord();
     await doc.DocumentTitle.set(uniqueTitle);
     await doc.DocumentType.set("General Documents");
     await doc.EffectiveDate.setToday();
     await doc.DocumentFile.uploadFile(testFiles.testDoc);
     await doc.AutomaticallyCreateNewSkill.check();
     await doc.saveRecord("DRAFT");
-  });
-  await test.step("Creating a training event and linking a Training Role", async () => {
+  });  
+  await test.step("Creating a training event and link Training Role", async () => {
     await doc.CreateTrainingEvent.check();
     await doc.TrainingRoles.addItem();
     await docTraining.TrainingRole.assertVisibility();
@@ -55,15 +61,79 @@ test("Documents and Training Workflow", async ({
   });
 
   await test.step("Log in as each approver and approve the Document", async () => {
-    await home.userLogout();
-    await login.loginUser(users.mgrDoc);
-    await nav.openProcess("Document Control", "Documents");
-    await search.openRecord(uniqueTitle);
-    await doc.approveRecord(users.mgrDoc, "Approving the document");
-    await home.userLogout();
-    await login.loginUser(users.demo);
-    await nav.openProcess("Document Control", "Documents");
-    await search.openRecord(uniqueTitle);
+    await demo.home.userLogout();     
+
+    await mgr.login();
+    await mgr.nav.openProcess("Document Control", "Documents");
+    await mgr.search.openRecord(uniqueTitle);
+    await mgrDoc.approveRecord(users.mgrDoc, "Approving the document");
+    await mgr.home.userLogout();
+    await demo.login();
+    await demo.nav.openProcess("Document Control", "Documents");
+    await demo.search.openRecord(uniqueTitle);
     await doc.approveRecord(users.demo, "Approving the document");
+    await doc._TrainingEvents.assertValue("New version training for document: " + uniqueTitle);    
+    await doc._TrainingEvents.open("New version training for document: " + uniqueTitle);    
+    await event.TrainingEventDescription.expectVisible();
+    await demo.home.userLogout();    
   });
+
+  await test.step("Log in as each user and complete the training log", async () => {
+    await mgr.login();
+    await mgr.action.openAssignment("Training-Management","Training Event Awaiting Review", uniqueTitle);
+    await mgrLogs.Employee.assertVisibility();
+    await mgrLogs.TrainingEvaluationQuestions.selectAnswerBool("Pass");
+    await mgrLogs.Comments.set("I have reviewed the document");
+    await mgrLogs.saveRecord();
+
+  });
+
+  await test.step("Login as Cindy Smith and complete the training log", async () => {
+    const mgr2 = await actors.as(users.mgrDoc2);
+    const mgr2logs = mgr2.process(TrainingEventLogs_p);
+    await mgr2.login();
+    await mgr2.action.openAssignment("Training-Management","Training Event Awaiting Review", uniqueTitle);
+    await mgr2logs.Employee.assertVisibility();
+    await mgr2logs.TrainingEvaluationQuestions.selectAnswerBool("Pass");
+    await mgr2logs.Comments.set("I have reviewed the document");
+    await mgr2logs.saveRecord();
+    await mgr2.home.userLogout();
+  });
+
+  await test.step("Login as Jack Welch and complete the training log", async () => {
+    const quality1 = await actors.as(users.quality1);
+    const quality1logs = quality1.process(TrainingEventLogs_p);
+    await quality1.login();
+    await quality1.action.openAssignment("Training-Management","Training Event Awaiting Review", uniqueTitle);
+    await quality1logs.Employee.assertVisibility();
+    await quality1logs.TrainingEvaluationQuestions.selectAnswerBool("Pass");
+    await quality1logs.Comments.set("I have reviewed the document");
+    await quality1logs.saveRecord();
+    await quality1.home.userLogout();
+  });
+
+  await test.step("Login as Audit and complete the training log", async () => {
+    const audit = await actors.as(users.Audit);
+    const auditlogs = audit.process(TrainingEventLogs_p);
+    await audit.login();
+    await audit.action.openAssignment("Training-Management","Training Event Awaiting Review", uniqueTitle);
+    await auditlogs.Employee.assertVisibility();
+    await auditlogs.TrainingEvaluationQuestions.selectAnswerBool("Pass");
+    await auditlogs.Comments.set("I have reviewed the document");
+    await auditlogs.saveRecord();
+    await audit.home.userLogout();
+  }); 
+
+  await test.step("Login as Jack Welch and verify the training log is completed", async () => {
+    const quality = await actors.as(users.quality);
+    const qualityLogs = quality.process(TrainingEventLogs_p);
+    await quality.login();
+    await quality.action.openAssignment("Training-Management","Training Event Awaiting Review", uniqueTitle);
+    await qualityLogs.Employee.assertVisibility();
+    await qualityLogs.TrainingEvaluationQuestions.selectAnswerBool("Pass");
+    await qualityLogs.Comments.set("I have reviewed the document");
+    await qualityLogs.saveRecord();
+    await quality.home.userLogout();
+  });
+
 });
