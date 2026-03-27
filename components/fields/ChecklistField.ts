@@ -42,7 +42,8 @@ export class ChecklistField extends FieldComponent {
         await expect(this.answerList).toBeHidden();
         break;
     }
-    await this.answer.blur();
+    
+    await this.root.click(); // click outside to trigger any onBlur events
     await expect(this.answer).toHaveText(answer);
   }
 }
