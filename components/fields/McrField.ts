@@ -83,5 +83,10 @@ export class McrField extends FieldComponent {
         await expect(this.getTableRow()).toContainText(value);
     };
 
+    async open(searchString: string) {
+        await this.ensureReady();
+        await this.getTableRow().filter({ hasText: searchString }).first().dblclick();
+    }
+
 
 };
