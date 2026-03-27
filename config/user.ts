@@ -1,7 +1,7 @@
 import { env } from './env';
 
 // depending on how deep I go with this, may want to split users into Roles and have the function pick any user with that role. However, that may not work as a lot of the workflows need to check a specific user. Something to come back to later
-export type UserKey = 'demo' | 'admin' | 'mgrDoc' | 'quality' | 'ls-buy' | 'itar' | '31S1002QM';
+export type UserKey = 'demo' | 'admin' | 'mgrDoc' | 'quality' | 'ls-buy' | 'itar' | '31S1002QM' | 'mgrDoc2'| 'quality1' | 'Audit';
 
 export interface LoginUser {
   username: string;
@@ -41,5 +41,18 @@ export const users: Record<UserKey, LoginUser> = {
   '31S1002QM': {
     username: '31S1002QM',
     password: env.defaultPassword,
-  }
+  },
+  mgrDoc2: {
+    username: 'MgrDoc2',
+    password: env.defaultPassword,
+  },
+  quality1: {
+    username: 'Quality1',
+    password: env.defaultPassword,
+  },
+  Audit: {
+    username: 'Audit',
+    password: env.defaultPassword,
+  },
+
 };
