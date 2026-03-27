@@ -5,6 +5,7 @@ import { SearchScreen } from "../../BasePages/SearchScreenBase";
 import { HomeTopToolBar } from "../../components/HomeTopToolBar";
 import { LoginUser } from "../../config/user";
 import { baseUrl } from "../../fixtures/constants";
+import { ActionManager } from "../../components/ActionManager";
 
 type PageCtor<T> = new (page: Page) => T;
 
@@ -19,6 +20,8 @@ export class ActorSession {
   nav!: SideNav;
   search!: SearchScreen;
   home!: HomeTopToolBar;
+  action!: ActionManager;
+
 
   constructor(browser: Browser, user: LoginUser) {
     this.browser = browser;
@@ -34,6 +37,7 @@ export class ActorSession {
     this.nav = new SideNav(this.page);
     this.search = new SearchScreen(this.page);
     this.home = new HomeTopToolBar(this.page);
+    this.action = new ActionManager(this.page);
 
     return this;
   }

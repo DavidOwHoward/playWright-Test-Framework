@@ -6,6 +6,7 @@ import { ReportsBase } from "../components/ReportBase";
 import { loginPage } from "../BasePages/LoginBase";
 import { DetailsTopToolBar } from '../components/DetailsTopToolBar';
 import { HomeTopToolBar } from '../components/HomeTopToolBar';
+import { ActionManager } from '../components/ActionManager';
 
 
 type baseFixtures = {
@@ -15,6 +16,7 @@ type baseFixtures = {
     search: SearchScreen
     details: DetailsTopToolBar;
     home: HomeTopToolBar;
+    action: ActionManager;
 
 
 }
@@ -37,8 +39,10 @@ export const test = base.extend<baseFixtures>({
     },
     home: async ({page}, use) => {
         await use(new HomeTopToolBar(page));
-    }
-
+    },
+    action: async ({page}, use) => {
+        await use(new ActionManager(page));
+    },
 })
 
 export { expect } from '@playwright/test'
