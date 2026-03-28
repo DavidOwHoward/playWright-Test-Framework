@@ -9,7 +9,7 @@ export class Sections {
             return;
         }
         await this.tabButton.click();
-        await expect(fieldRoot, "Section did not open or field is not visible").toBeVisible();
+        await expect(fieldRoot, "Check to see if field is visible, if not, click on its section and assert it's visiblity").toBeVisible();
     };
 
 }
