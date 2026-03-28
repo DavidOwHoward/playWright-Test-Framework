@@ -110,14 +110,26 @@ export class DetailsPageBase extends DetailsTopToolBar {
 
     await this.saveButton.click();
 
-    if (await this.stateDialog.isVisible()) {
-      if (!state) throw new Error(`Check to see if ${state} is available.`);
-      await this.selectState(state);
-      return;
-    } else {
-      await this.snack.waitForContains(/was/i);
-      await this.snack.waitForGone();
-    }
+    const result = await Promise.race([
+    this.stateDialog.waitFor({ state: 'visible' }).then(() => 'dialog' as const),
+    this.snack.waitForContains(/was/i).then(() => 'snack' as const),
+  ]);
+
+  if (result === 'dialog') {
+    if (!state) throw new Error(`State argument required but was not provided.`);
+    await this.selectState(state);
+  } else {
+    await this.snack.waitForGone();
+  }
+
+    // if (await this.stateDialog.isVisible({timeout: 2000})) {
+    //   if (!state) throw new Error(`Check to see if ${state} is available.`);
+    //   await this.selectState(state);
+    //   return;
+    // } else {
+    //   await this.snack.waitForContains(/was/i);
+    //   await this.snack.waitForGone();
+    // }
 
     await expect(
       this.saveButton,
