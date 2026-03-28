@@ -8,7 +8,7 @@ export class Snackbar {
     return this.page.locator('.cdk-overlay-pane').locator('simple-snack-bar');
   };
   get message(): Locator {
-    return this.container.locator('.mat-mdc-snack-bar-label.mdc-snackbar__label');
+    return this.page.locator('.mat-mdc-snack-bar-label.mdc-snackbar__label');
   };
 
   async expectContains(text: string | RegExp, msg = 'Assert confirmation of Save') {

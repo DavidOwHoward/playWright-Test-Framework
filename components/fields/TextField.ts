@@ -10,7 +10,10 @@ export class TextField extends FieldComponent {
 
     async set(value: string) {
         await this.ensureReady();
-        await this.control().fill(value);
+        const control = this.control();
+        await control.fill(value);
+        await control.blur();
+        await expect(control, "Text field value did not match after setting").toHaveValue(value);
     };
     
     async expectValue(value:string) {
