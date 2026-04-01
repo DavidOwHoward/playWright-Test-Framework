@@ -43,58 +43,36 @@ export class DetailsPageBase extends DetailsTopToolBar {
   }
 
   async closeRecord() {
-    await expect(
-      this.saveButton,
-      "Check to see if Save button is disabled.",
-    ).toHaveClass(/mat-mdc-button-disabled/);
+    await expect(this.saveButton,"Check to see if Save button is disabled.").toHaveClass(/mat-mdc-button-disabled/);
     await this.closeButton.click();
   }
 
-  async moveState(oldState: string, newState: string) {
-    let currentState = await this.saveStateBar.getByRole("button", {
-      name: oldState,
-    });
+  async moveState(oldState: string, newState: string) {let currentState = await this.saveStateBar.getByRole("button", {name: oldState});
     const stateMenu = this.page
       .getByRole("menu")
       .getByRole("menuitem", { name: "Show States Diagram" });
     const nextState = this.page
       .getByRole("menu")
       .getByRole("menuitem", { name: newState });
+
     await currentState.click();
-    await expect(
-      stateMenu,
-      `Check to see if state menu appeared`,
-    ).toBeVisible();
+    await expect(stateMenu,`Check to see if state menu appeared`).toBeVisible();
     await nextState.click();
-    const stateAfter = await this.saveStateBar.getByRole("button", {
-      name: newState,
-    });
-    await expect(
-      stateAfter,
-      `Check to see if state changed to ${newState}`,
-    ).toBeVisible();
+
+    const stateAfter = await this.saveStateBar.getByRole("button", {name: newState,});
+    await expect(stateAfter,`Check to see if state changed to ${newState}`).toBeVisible();
   }
 
   async assertState(state: string) {
-    await expect(
-      this.saveStateBar.getByRole("button", { name: state }),
-      `Check to see if the state is ${state}`,
-    ).toBeVisible();
+    await expect(this.saveStateBar.getByRole("button", { name: state }),`Check to see if the state is ${state}`).toBeVisible();
   }
 
   async selectState(state: string) {
-    await expect(
-      this.stateDialog,
-      "Check to see if State dialog is visible",
-    ).toBeVisible();
-    const stateButton = this.page.getByRole("button", {
-      name: state,
-      exact: true,
-    });
-    await expect(
-      stateButton,
-      `Could not find "${state}" in the State dialog`,
-    ).toBeVisible();
+    await expect(this.stateDialog,"Check to see if State dialog is visible",).toBeVisible();
+    
+    const stateButton = this.page.getByRole("button", {name: state, exact: true,});
+
+    await expect(stateButton,`Could not find "${state}" in the State dialog`,).toBeVisible();
     await this.stateDialog
       .getByRole("button", { name: state, exact: true })
       .click();
@@ -103,11 +81,7 @@ export class DetailsPageBase extends DetailsTopToolBar {
   }
 
   async saveRecord(state?: string) {
-    await expect(
-      this.saveButton,
-      "Check to see if Save button is enabled.",
-    ).not.toHaveClass(/mat-mdc-button-disabled/);
-
+    await expect(this.saveButton,"Check to see if Save button is enabled.").not.toHaveClass(/mat-mdc-button-disabled/);
     await this.saveButton.click();
 
     const result = await Promise.race([
@@ -121,20 +95,7 @@ export class DetailsPageBase extends DetailsTopToolBar {
   } else {
     await this.snack.waitForGone();
   }
-
-    // if (await this.stateDialog.isVisible({timeout: 2000})) {
-    //   if (!state) throw new Error(`Check to see if ${state} is available.`);
-    //   await this.selectState(state);
-    //   return;
-    // } else {
-    //   await this.snack.waitForContains(/was/i);
-    //   await this.snack.waitForGone();
-    // }
-
-    await expect(
-      this.saveButton,
-      "Check to see if Save button is disabled after save.",
-    ).toHaveClass(/mat-mdc-button-disabled/);
+    await expect(this.saveButton,"Check to see if Save button is disabled after save.").toHaveClass(/mat-mdc-button-disabled/);
     await this.page
       .waitForLoadState("networkidle", { timeout: 10000 })
       .catch(() => {});
@@ -142,12 +103,7 @@ export class DetailsPageBase extends DetailsTopToolBar {
 
   async approveRecord(user: LoginUser, comments?: string) {
     await this.approveDialog.click();
-    await expect(
-      this.approve.root,
-      "Check to see if Approval dialog is visible",
-    ).toBeVisible();
-    // the below assertion is not working for some reason. it is resolving to 9 locators according to the error. will need to possibly revist the locator
-    // await expect(this.approve.userName, 'Check to see if current users user name filled in by default').toContainText(user.username);
+    await expect(this.approve.root,"Check to see if Approval dialog is visible").toBeVisible();    
     await this.approve.password.fill(user.password);
     if (comments) {
       await this.approve.comments.fill(comments);
@@ -158,17 +114,9 @@ export class DetailsPageBase extends DetailsTopToolBar {
   }
 
   async rejectRecord(user: LoginUser, comments: string) {
-    await expect(
-      this.approve.root,
-      "Check to see if Approval dialog is visible",
-    ).toBeVisible();
-    // the below assertion is not working for some reason. it is resolving to 9 locators according to the error. will need to possibly revist the locator
-    // await expect(this.approve.userName, 'Check to see if current users user name filled in by default').toContainText(user.username);
+    await expect(this.approve.root,"Check to see if Approval dialog is visible",).toBeVisible();    
     await this.approve.password.fill(user.password);
-    await expect(
-      this.approve.reject,
-      "Check to see if Reject button is disabled before comments added",
-    ).toBeDisabled();
+    await expect(this.approve.reject,"Check to see if Reject button is disabled before comments added",).toBeDisabled();
     await this.approve.comments.fill(comments);
     await this.approve.reject.click();
     await this.snack.waitForContains(/Approval action completed/i);

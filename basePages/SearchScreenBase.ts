@@ -91,13 +91,7 @@ export class SearchScreen {
     async addNewRecord() {
 
         await this.addButton.click();
-    };
-
-    // async openRecord(search: string): Promise<void> {
-
-    //     await this.searchGrid.getByText(`${search}`).dblclick();
-
-    // }
+    };  
 
     async clearSort() {
         await this.clearSortButton.click();
@@ -105,7 +99,6 @@ export class SearchScreen {
     }
 
     async clearGroup() {
-
         await this.clearGroupButton.click();
         await expect(this.groupPanel).not.toBeVisible();
 

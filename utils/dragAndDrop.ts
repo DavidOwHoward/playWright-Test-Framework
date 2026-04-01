@@ -1,8 +1,5 @@
 import { expect, type Page } from '@playwright/test';
 
-// function does all the actions needed to group data on the search screen and then asserts that the amount of grouped rows is greater than 0. Currently only supports grouping by 1 column.
-//TODO: refactor to group by more than one column
-
 
 export async function groupColumn(page: Page, column: string) {
         const anchor = page.locator('.k-drag-clue');

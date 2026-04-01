@@ -1,6 +1,6 @@
 import { Page } from '@playwright/test';
 
-// function to check that the clear sort button cleared all the sorts
+// checks that the clear sort button cleared all the sorts
 
 export async function clearSortCheck(page: Page): Promise<boolean> {
 

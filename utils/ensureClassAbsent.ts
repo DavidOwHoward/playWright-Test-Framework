@@ -1,8 +1,8 @@
 import { Locator, Page } from '@playwright/test';
 
 
-//helper function that can be used to determine of class variable is absent in a given DOM object
-
+// helper function that can be used to determine of class variable is absent in a given DOM object
+// used navigation to determine if it is expanded or not
 type EnsureClassOptions = {
     maxRetries?: number;
     retryDelayMs?: number;
