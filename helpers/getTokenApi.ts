@@ -2,6 +2,9 @@ import { request, expect } from "@playwright/test";
 import { tokenApi } from "../fixtures/constants";
 import { LoginUser } from "../config/user";
 
+// supports getting a bearer token for access to the WebApi. The function can be called with either a LoginUser object or with a username and password as separate arguments. It makes a POST request to the token API endpoint, sending the credentials in the request body as form data. 
+// The response is expected to contain an access token, which is extracted and returned by the function. 
+
 type TokenResponse = {
   access_token: string;
   token_type?: string;
