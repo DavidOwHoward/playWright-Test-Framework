@@ -7,7 +7,7 @@
     "test": "tests"
   },
   "scripts": {
-    "cucumberWithTS": "cucumber-js src/features/*.feature --require-module ts-node/register --require src/step-definitions/**/*.ts",
+    "cucumberWithTS": "cucumber-js src/features/*.feature --require-module ts-node/register --require src/step-definitions/**/*.ts --require src/support/**/*.ts",
     "cucumber": "ts-node --project tsconfig.cucumber.json ./src/cucumberRunner.ts"
     
   },

@@ -12,7 +12,8 @@ interface ProfileCommands {
 
 const profiles: ProfileCommands = {
     navigation: `${common} --tags "@navigation"`,
-    login: `${common} --tags "@login"`
+    login: `${common} --tags "@login"`,
+    e2e: `${common} --tags "@e2e"`,
 };
 
 const profile = process.argv[2];
@@ -22,7 +23,7 @@ if (!profile || !profiles[profile]) {
     process.exit(1);
 };
 
-let command = `npx cucumber-js ${profiles[profile as 'navigation' | 'login']}`;
+let command = `npx cucumber-js ${profiles[profile as 'navigation' | 'login' | 'e2e']}`;
 
 exec(command, {encoding: 'utf-8'}, (error: Error | null, stdout: string) => {
 

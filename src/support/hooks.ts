@@ -1,47 +1,31 @@
-import { Before, After, Status, setDefaultTimeout, BeforeAll, AfterAll } from '@cucumber/cucumber';
+import { Before, After, Status, setDefaultTimeout, AfterAll } from '@cucumber/cucumber';
 import { chromium } from '@playwright/test';
 import { CustomWorld } from './world';
-import { loginPage } from '../../BasePages/LoginBase';
-import { SideNav } from '../../components/SideNav';
-import { SearchScreen } from '../../BasePages/SearchScreenBase';
-import { ReportsBase } from '../../components/ReportBase';
-import { DetailsTopToolBar } from '../../components/DetailsTopToolBar';
+import { ActorsManager } from '../../BaseFramework/Actors/ActorsManager';
+import { ActorSession } from '../../BaseFramework/Actors/ActorSession';
 
-setDefaultTimeout(60000);
-
-
+setDefaultTimeout(360000);
 
 Before(async function (this: CustomWorld) {
   this.browser = await chromium.launch({
     headless: false,
-    args: ['--window-size=1920,1080']
-  });
+  });  
 
-  this.context = await this.browser.newContext({
-    viewport: { width: 1920, height: 1080 }
-  });
-
-  this.page = await this.context.newPage();
-
-  // Instantiate all POM classes
-  this.login   = new loginPage(this.page);
-  this.nav     = new SideNav(this.page);
-  this.search  = new SearchScreen(this.page);
-  this.details = new DetailsTopToolBar(this.page);
-  this.reports = new ReportsBase(this.page);
+  this.actors = new ActorsManager(this.browser);
+  this.currentActor = undefined;
+  this.testData = {};
 });
 
 AfterAll(async function () {
-  console.log('\nTest suite execution complete')
+  console.log('\nTest suite execution complete');
 });
 
 After(async function (this: CustomWorld, scenario) {
-  // Screenshot on failure
-  if (scenario.result?.status === Status.FAILED && this.page) {
-    const screenshot = await this.page.screenshot({ fullPage: true });
+  if (scenario.result?.status === Status.FAILED && this.currentActor?.page) {
+    const screenshot = await this.currentActor.page.screenshot({ fullPage: true });
     await this.attach(screenshot, 'image/png');
   }
 
-  await this.context?.close();
+  await this.actors?.dispose();
   await this.browser?.close();
 });

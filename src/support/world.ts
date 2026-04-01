@@ -1,33 +1,38 @@
 import { World, IWorldOptions, setWorldConstructor } from '@cucumber/cucumber';
-import { Browser, BrowserContext, Page } from '@playwright/test';
-import { loginPage } from '../../BasePages/LoginBase';
-import { SideNav } from '../../components/SideNav';
-import { SearchScreen } from '../../BasePages/SearchScreenBase';
-import { ReportsBase } from '../../components/ReportBase';
-import { DetailsTopToolBar } from '../../components/DetailsTopToolBar';
+import { Browser } from '@playwright/test';
+import { ActorSession } from '../../BaseFramework/Actors/ActorSession';
+import { ActorsManager } from '../../BaseFramework/Actors/ActorsManager';
+import { LoginUser } from '../../config/user';
+
 
 export class CustomWorld extends World {
   browser!: Browser;
-  context!: BrowserContext;
-  page!: Page;
-
-  // POM Classes
-  login!: loginPage;
-  nav!: SideNav;
-  search!: SearchScreen;
-  details!: DetailsTopToolBar;
-  reports!: ReportsBase;
+  actors!: ActorsManager;
+  currentActor?: ActorSession;
+  
 
   // Generic test data
   testData: Record<string, any> = {};
 
-  // On Demand page instantiation
-  getPage<T>(PageClass: new (page: Page) => T): T {
-    return new PageClass(this.page);
-  };
-
   constructor(options: IWorldOptions) {
     super(options);
+  }
+
+  async as(user: LoginUser): Promise<ActorSession> {
+    return this.actors.as(user);
+  }
+
+  async useActor(user: LoginUser): Promise<ActorSession> {
+    const actor = await this.actors.as(user);
+    this.currentActor = actor;
+    return actor;
+  }
+
+  get actor(): ActorSession {
+    if (!this.currentActor) {
+      throw new Error('No current actor is set for this scenario. Call useActor(user) first.');
+    }
+    return this.currentActor;
   }
 }
 
