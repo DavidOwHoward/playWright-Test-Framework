@@ -1,36 +1,32 @@
-import { type Page} from '@playwright/test';
+import { type Page, type Locator, expect} from '@playwright/test';
 
+type ConfirmationButton =
+    | 'Yes'
+    | 'No'
+    | 'Leave'
+    | 'Continue Editing'
+    | 'Cancel'
+    | 'Remove';
 
 export class ConfirmationDialog {
-    constructor(private page: Page, private title: string) {}
+    constructor(
+        private readonly page: Page,
+        private readonly title: string
+    ) {}
 
-    get root() {
-        return this.page.getByRole('dialog')
+    get root(): Locator {
+        return this.page
+            .getByRole('dialog')
             .filter({ has: this.page.getByRole('heading', { name: this.title }) });
-    };
+    }
 
-    get yes() {
-        return this.root.getByRole('button', { name: 'Yes' });
-    };
+    button(name: ConfirmationButton): Locator {
+        return this.root.getByRole('button', { name });
+    }
 
-    get no() {
-        return this.root.getByRole('button', { name: 'No' });
-    };
+    async dialog(name: ConfirmationButton): Promise<void> {
+        await this.button(name).click();
+    }
 
-    get leave() {
-        return this.root.getByRole('button', { name: 'Leave' });
-    };
+}
 
-    get continue() {
-        return this.root.getByRole('button', { name: 'Continue Editing' });
-    };
-
-    get cancel() {
-        return this.root.getByRole('button', { name: 'Cancel' });
-    };
-
-    get remove() {
-        return this.root.getByRole('button', { name: 'Remove' });
-    };
-
-};
