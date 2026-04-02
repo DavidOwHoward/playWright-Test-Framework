@@ -1,9 +1,8 @@
 import { Locator, type Page} from '@playwright/test';
-import { Snackbar } from './SnackBar';
-import { BasePage } from '../BasePages/BasePage';
+import { DetailsPageBase } from '../BasePages/DetailsPageBase';
 
 
-export class DetailsTopToolBar extends BasePage{
+export class DetailsTopToolBar extends DetailsPageBase{
 
     
     readonly topToolBar: Locator;

@@ -3,8 +3,9 @@ import { DetailsTopToolBar } from "../components/DetailsTopToolBar";
 import { ApprovalDialog } from "../components/ApprovalDialog";
 import { LoginUser } from "../config/user";
 import { dateOnly } from "../helpers/dateFormat";
+import { BasePage } from "./BasePage";
 
-export class DetailsPageBase extends DetailsTopToolBar {
+export class DetailsPageBase extends BasePage {
   readonly footer: Locator;
   readonly closeButton: Locator;
   readonly saveButton: Locator;
@@ -70,11 +71,11 @@ export class DetailsPageBase extends DetailsTopToolBar {
   async selectState(state: string) {
     await expect(this.stateDialog,"Check to see if State dialog is visible",).toBeVisible();
     
-    const stateButton = this.page.getByRole("button", {name: state, exact: true,});
+    const stateButton = this.page.getByRole("button", {name: state.toUpperCase()});
 
-    await expect(stateButton,`Could not find "${state}" in the State dialog`,).toBeVisible();
+    await expect(stateButton,`Check to see if ${state.toUpperCase()} is visible in the State dialog`,).toBeVisible();
     await this.stateDialog
-      .getByRole("button", { name: state, exact: true })
+      .getByRole("button", { name: state.toUpperCase()})
       .click();
     await this.snack.waitForContains(/was/i);
     await this.snack.waitForGone();

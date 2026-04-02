@@ -1,22 +1,23 @@
 import { test as base } from '@playwright/test';
 import { SideNav } from "../components/SideNav";
 import { SearchScreen } from "../BasePages/SearchScreenBase";
-import { DetailsPageBase } from "../BasePages/DetailsPageBase";
-import { ReportsBase } from "../components/ReportBase";
+import { ReportsPage } from "../components/ReportPage";
 import { loginPage } from "../BasePages/LoginBase";
-import { DetailsTopToolBar } from '../components/DetailsTopToolBar';
+import { DetailsPageBase } from '../BasePages/DetailsPageBase';
 import { HomeTopToolBar } from '../components/HomeTopToolBar';
 import { ActionManager } from '../components/ActionManager';
+
 
 
 type baseFixtures = {
     login: loginPage;
     nav: SideNav;
-    reports: ReportsBase;
+    reports: ReportsPage;
     search: SearchScreen
-    details: DetailsTopToolBar;
+    details: DetailsPageBase;
     home: HomeTopToolBar;
     action: ActionManager;
+   
 
 
 }
@@ -32,10 +33,10 @@ export const test = base.extend<baseFixtures>({
         await use(new SearchScreen(page));
     },
     details: async ({page}, use) => {
-        await use(new DetailsTopToolBar(page));
+        await use(new DetailsPageBase(page));
     },
     reports: async ({page}, use) => {
-        await use(new ReportsBase(page));
+        await use(new ReportsPage(page));
     },
     home: async ({page}, use) => {
         await use(new HomeTopToolBar(page));
