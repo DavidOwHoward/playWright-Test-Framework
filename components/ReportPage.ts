@@ -1,5 +1,7 @@
 import {expect, Locator, Page} from '@playwright/test';
 
+type EasyReports = 'Portrait' | 'Portrait Fit to Page' | 'Landscape' | 'Landscape Fit to Page';
+
 export class ReportsPage {
 
     readonly page: Page;
@@ -25,7 +27,7 @@ export class ReportsPage {
     readonly reportSearch: Locator;
     readonly reportsLoad: Locator;
     readonly reportsPage: Locator;
-
+    
 
 
     constructor(page: Page) {
@@ -100,9 +102,17 @@ export class ReportsPage {
         this.reportSearch = this.reportsList
             .locator('mat-icon', {hasText:"Search"})
 
-        this.reportsPage = this.page.locator('.trv-page-container');
+        this.reportsPage = this.page.locator('.trv-page-container');        
 
+    }
+
+    async openEasyReport(reportName: EasyReports) {
+
+        
+        const reportOption = this.reportsList.getByText(reportName, {exact: true});
+        await reportOption.click();
+        await expect(this.reportsLoad, `Check to see if ${reportName} report loaded`).toBeVisible();
 
 
     }
-}
+};
