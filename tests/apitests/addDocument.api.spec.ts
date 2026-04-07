@@ -5,7 +5,7 @@ import { docPayload } from "../../testFiles/apiPayloads/addDocumentRecord";
 
 test(
   "Add a Document record(no file) via API and validate user permissions",
-  { tag: ["@Api"] },
+  { tag: ["@Api", "@Smoke"] },
   async ({ request }) => {
     let id: number;
     await test.step("Add a Document record via the WebAPI", async () => {
