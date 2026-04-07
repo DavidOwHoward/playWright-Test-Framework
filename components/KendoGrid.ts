@@ -1,12 +1,14 @@
-import {expect, Locator} from '@playwright/test';
+import {expect, Locator, Page} from '@playwright/test';
+import { SearchScreen } from '../BasePages/SearchScreenBase';
 
 
 export class KendoGrid {
     readonly root: Locator;
+    readonly page: Page;
 
-
-    constructor(root: Locator) {
-        this.root = root;
+    constructor(page:Page) {
+        this.page = page;
+        this.root = this.page.locator('.k-grid-table-wrap')
 
     };
 

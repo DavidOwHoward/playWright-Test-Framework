@@ -45,7 +45,7 @@ export class SearchScreen {
             .locator('.k-chip-remove-action')
 
         this.groupGridRoot = page.locator('.k-grid-table-wrap')        
-        this.grid = new KendoGrid(this.groupGridRoot)
+        this.grid = new KendoGrid(page)
         this.clearSearch = page.locator('#filter-text-clear-search-toolbar')
         this.addButton = page.locator('#new-search-toolbar');
         this.ellipseButton = page.locator('#more-search-toolbar');
@@ -101,11 +101,15 @@ export class SearchScreen {
     async clearGroup() {
         await this.clearGroupButton.click();
         await expect(this.groupPanel).not.toBeVisible();
-
     }
 
     async dragDrop(column: string) {
         await groupColumn(this.page , column)
+    }
+
+    async openReports() {
+        await this.reportsButton.click();
+        await expect(this.page.locator('eqms-reports-viewer'), `Check if reports viewer opened after clicking reports button`).toBeVisible();
     }
 
     async toggleFavorite() {
