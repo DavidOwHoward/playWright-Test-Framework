@@ -2,7 +2,7 @@ import { Before, After, Status, setDefaultTimeout, AfterAll } from '@cucumber/cu
 import { chromium } from '@playwright/test';
 import { CustomWorld } from './world';
 import { ActorsManager } from '../../BaseFramework/Actors/ActorsManager';
-import { ActorSession } from '../../BaseFramework/Actors/ActorSession';
+
 
 setDefaultTimeout(360000);
 
