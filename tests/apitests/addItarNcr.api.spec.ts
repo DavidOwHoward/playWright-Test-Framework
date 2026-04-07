@@ -3,7 +3,7 @@ import { getAccessToken } from "../../helpers/getTokenApi";
 import { users } from "../../config/user";
 import { itarNCRPayload } from "../../testFiles/apiPayloads/itarNCR";
 
-test("Itar Security Workflow", { tag: ["@Api"] }, async ({ request }) => {
+test("Itar Security Workflow", { tag: ["@Api", "@Smoke"] }, async ({ request }) => {
   let id: number;
   await test.step("Add an ITAR restricted record to Non-Conformances via the WebAPI", async () => {
     const token = await getAccessToken(users.itar);
