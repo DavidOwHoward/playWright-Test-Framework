@@ -11,7 +11,7 @@ test.describe("Validating access to the WebApi's add record endpoint", () => {
 
   test(
     "Add record endpoint returns valid response",
-    { tag: ["@Api"] },
+    { tag: ["@Api", "@Smoke"] },
     async ({ request }) => {
       const response = await request.get(
         "process/Documents_p/0?skipAdminFilter=true",
