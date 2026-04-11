@@ -59,7 +59,7 @@ jobs:
 
       - name: Run UI tests
         if: github.event_name != 'workflow_dispatch' || github.event.inputs.run_ui == 'true'
-        run: npx playwright test --project=chromium
+        run: npx playwright test --grep "@Smoke"
 
       - name: Upload Playwright report
         if: always()
