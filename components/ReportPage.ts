@@ -25,7 +25,7 @@ export class ReportsPage {
     readonly landscape: Locator;
     readonly landscapeFit: Locator;
     readonly reportSearch: Locator;
-    readonly reportsLoad: Locator;
+    readonly reportsLoad: Locator;    
     readonly reportsPage: Locator;
     
 
@@ -36,7 +36,7 @@ export class ReportsPage {
         this.reportsButton = page.getByRole('button', {name: 'Reports'});
         this.reportsLoad = page.locator('iframe[title="Report viewer container."]')
             .contentFrame()
-            .locator('.trv-error-message')
+            .locator('.trv-centered')
             //.getByText('Done');
 
         this.reportsContainer = page.locator('eqms-report-viewer');
@@ -107,11 +107,11 @@ export class ReportsPage {
 
     }
 
-    async openEasyReport(reportName: EasyReports) {
-
-        
+    async openEasyReport(reportName: EasyReports) {        
         const reportOption = this.reportsList.getByText(reportName, {exact: true});
+
         await reportOption.click();
+        await expect(this.reportsLoad, `Check to see if loading message appears`).toBeVisible();
         await expect(this.reportsLoad, `Check to see if ${reportName} report loaded`).toHaveText('Done');
 
 
