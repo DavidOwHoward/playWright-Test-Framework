@@ -28,6 +28,7 @@ jobs:
 
     env:
       CI: true
+      NODE_EXTRA_CA_CERTS: = "C:\Users\dairu\oneDrive\desktop\cert.pem"
       NODE_TLS_REJECT_UNAUTHORIZED: = "0"      
       defaultPassword: ${{ secrets.DEFAULTPASSWORD }}
       
