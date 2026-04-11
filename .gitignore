@@ -6,13 +6,11 @@ node_modules/
 /blob-report/
 /playwright/.cache/
 /playwright/.auth/
-/.env
-/config/env.ts
+
 /tests/tests/locatorListValidat.spec.ts
 /tests/tests/navTest.spec.ts
 /tests/tests/reportSanitytest.spec.ts
 /tests/tests/topToolBarSanity.spec.ts
-/testFiles
 /.idea/
 .gitignore
 /tests/testnotes
@@ -23,3 +21,14 @@ baseFramework/Framework Utils/tableBuilder.ts
 baseFramework/Framework Utils/createTable.ts
 baseFramework/Framework Utils/table.ts
 components/fields/fieldWidgets/ValidationErrorCheck.ts
+/reports-ese
+output/playwright/profile/2026-03-27-docs-training/Audit.har
+.gitignore
+output/playwright/profile/2026-03-27-docs-training/Demo.har
+output/playwright/profile/2026-03-27-docs-training/MgrDoc.har
+output/playwright/profile/2026-03-27-docs-training/MgrDoc2.har
+output/playwright/profile/2026-03-27-docs-training/Quality.har
+.gitignore
+output/playwright/profile/2026-03-27-docs-training/Quality1.har
+src/features/hooks1.ts
+src/features/world1.ts
