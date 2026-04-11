@@ -36,7 +36,8 @@ export class ReportsPage {
         this.reportsButton = page.getByRole('button', {name: 'Reports'});
         this.reportsLoad = page.locator('iframe[title="Report viewer container."]')
             .contentFrame()
-            .getByText('Done');
+            .locator('.trv-error-message')
+            //.getByText('Done');
 
         this.reportsContainer = page.locator('eqms-report-viewer');
         this.reportsList = this.reportsContainer
@@ -111,7 +112,7 @@ export class ReportsPage {
         
         const reportOption = this.reportsList.getByText(reportName, {exact: true});
         await reportOption.click();
-        await expect(this.reportsLoad, `Check to see if ${reportName} report loaded`).toBeVisible();
+        await expect(this.reportsLoad, `Check to see if ${reportName} report loaded`).toHaveText('Done');
 
 
     }
