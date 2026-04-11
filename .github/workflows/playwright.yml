@@ -70,7 +70,7 @@ jobs:
           name: playwright-report-${{ github.run_number}}
           path: |
             reports-ese/html/
-          retention: 30
+          retention-days: 30
       - name: Send email with report
         if: always()
         uses: dawidd6/action-send-mail@v3
@@ -81,7 +81,7 @@ jobs:
           username: ${{ secrets.GMAIL_USERNAME }}
           password: ${{ secrets.GMAIL_APP_PASSWORD }}
           subject: "Playwright Report - Run #${{ github.run_number }} | API: ${{ steps.run_api_tests.outcome == 'success' && '✅ PASSED' || steps.run_api_tests.outcome == 'failure' && '❌ FAILED' || '⏭️ SKIPPED' }} | UI: ${{ steps.run_ui_tests.outcome == 'success' && '✅ PASSED' || steps.run_ui_tests.outcome == 'failure' && '❌ FAILED' || '⏭️ SKIPPED' }}"
-          to: you@gmail.com
+          to: Dairu81@gmail.com
           from: ${{ secrets.GMAIL_USERNAME }}
           body: |
             Playwright test run #${{ github.run_number }} has completed.
