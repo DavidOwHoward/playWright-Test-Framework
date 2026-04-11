@@ -28,9 +28,9 @@ jobs:
 
     env:
       CI: true
-      BASE_URL: ${{ secrets.BASE_URL }} 
+      NODE_TLS_REJECT_UNAUTHORIZED: = "0"      
       defaultPassword: ${{ secrets.DEFAULTPASSWORD }}
-      NODE_TLS_REJECT_UNAUTHORIZED: = "0"
+      
       
     steps:
       - name: Checkout
