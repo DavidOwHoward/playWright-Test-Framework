@@ -62,6 +62,18 @@ jobs:
         id: run_ui_tests
         if: github.event_name != 'workflow_dispatch' || github.event.inputs.run_ui == 'true'
         run: npx playwright test --grep "@Smoke"
+      
+      - name: Copy report to reports folder
+        if: always()
+        run: |
+          mkdir -p reports
+          cp -r reports-ese/html/. reports/
+          
+      - name: Zip the report
+        if: always()
+        run: Compress-Archive -Path reports\* -DestinationPath playwright-report.zip
+        shell: powershell
+
 
       - name: Upload Playwright report
         if: always()
