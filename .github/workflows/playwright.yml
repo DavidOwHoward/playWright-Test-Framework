@@ -28,15 +28,10 @@ jobs:
 
     env:
       CI: true
-      BASE_URL: ${{ secrets.BASE_URL }}
-      API_BASE_URL: ${{ secrets.API_BASE_URL }}
-      DEFAULT_USERNAME: ${{ secrets.DEFAULT_USERNAME }}      
+      BASE_URL: ${{ secrets.BASE_URL }} 
       defaultPassword: ${{ secrets.DEFAULTPASSWORD }}
-      SQL_SERVER: ${{ secrets.SQL_SERVER }}
-      SQL_DATABASE: ${{ secrets.SQL_DATABASE }}
-      SQL_USERNAME: ${{ secrets.SQL_USERNAME }}
-      SQL_PASSWORD: ${{ secrets.SQL_PASSWORD }}
-
+      NODE_TLS_REJECT_UNAUTHORIZED: = "0"
+      
     steps:
       - name: Checkout
         uses: actions/checkout@v4
