@@ -62,8 +62,9 @@ export async function getAccessToken(
         `Token response missing access_token: ${JSON.stringify(json)}`,
       );
     }
-
+      
     return json.access_token;
+    
   } finally {
     await requestContext.dispose();
   }
