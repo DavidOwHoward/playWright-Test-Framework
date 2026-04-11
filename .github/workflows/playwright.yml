@@ -9,8 +9,8 @@ on:
     inputs:
       run_ui:
         description: "Run UI tests"
-        required: true
-        default: "true"
+        required: false
+        default: "false"
       run_api:
         description: "Run API tests"
         required: true
