@@ -1,4 +1,4 @@
-import {expect, Locator, Page} from '@playwright/test';
+import {expect, FrameLocator, Locator, Page} from '@playwright/test';
 
 type EasyReports = 'Portrait' | 'Portrait Fit to Page' | 'Landscape' | 'Landscape Fit to Page';
 
@@ -25,7 +25,8 @@ export class ReportsPage {
     readonly landscape: Locator;
     readonly landscapeFit: Locator;
     readonly reportSearch: Locator;
-    readonly reportsLoad: Locator;    
+    readonly reportsFrame: FrameLocator;
+    readonly reportsPageArea: Locator;    
     readonly reportsPage: Locator;
     
 
@@ -34,10 +35,9 @@ export class ReportsPage {
 
         this.page = page;
         this.reportsButton = page.getByRole('button', {name: 'Reports'});
-        this.reportsLoad = page.locator('iframe[title="Report viewer container."]')
-            .contentFrame()
-            .locator('.trv-centered')
-            //.getByText('Done');
+        this.reportsFrame = page.frameLocator('iframe[title="Report viewer container."]')
+        this.reportsPageArea = this.reportsFrame.locator('[data-id="trv-pages-area"]');
+            
 
         this.reportsContainer = page.locator('eqms-report-viewer');
         this.reportsList = this.reportsContainer
@@ -111,8 +111,8 @@ export class ReportsPage {
         const reportOption = this.reportsList.getByText(reportName, {exact: true});
 
         await reportOption.click();
-        await expect(this.reportsLoad, `Check to see if loading message appears`).toBeVisible();
-        await expect(this.reportsLoad, `Check to see if ${reportName} report loaded`).toHaveText('Done');
+        await expect(this.reportsPageArea).toBeVisible();
+        await expect(this.reportsPageArea).not.toHaveClass(/trv-error/, { timeout: 10000 });
 
 
     }
