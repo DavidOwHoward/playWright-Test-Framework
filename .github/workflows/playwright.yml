@@ -54,10 +54,12 @@ jobs:
         run: npx playwright install --with-deps
 
       - name: Run API tests
+        id: run_api_tests
         if: github.event_name != 'workflow_dispatch' || github.event.inputs.run_api == 'true'
         run: npx playwright test --grep "@Api"
 
       - name: Run UI tests
+        id: run_ui_tests
         if: github.event_name != 'workflow_dispatch' || github.event.inputs.run_ui == 'true'
         run: npx playwright test --grep "@Smoke"
 
@@ -69,3 +71,35 @@ jobs:
           path: |
             reports-ese/html/
           retention: 30
+      - name: Send email with report
+        if: always()
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          secure: true
+          username: ${{ secrets.GMAIL_USERNAME }}
+          password: ${{ secrets.GMAIL_APP_PASSWORD }}
+          subject: "Playwright Report - Run #${{ github.run_number }} | API: ${{ steps.run_api_tests.outcome == 'success' && '✅ PASSED' || steps.run_api_tests.outcome == 'failure' && '❌ FAILED' || '⏭️ SKIPPED' }} | UI: ${{ steps.run_ui_tests.outcome == 'success' && '✅ PASSED' || steps.run_ui_tests.outcome == 'failure' && '❌ FAILED' || '⏭️ SKIPPED' }}"
+          to: you@gmail.com
+          from: ${{ secrets.GMAIL_USERNAME }}
+          body: |
+            Playwright test run #${{ github.run_number }} has completed.
+
+            ── API Tests (@Api) ────────────────────────────
+            Result: ${{ steps.run_api_tests.outcome == 'success' && 'PASSED ✅' || steps.run_api_tests.outcome == 'failure' && 'FAILED ❌' || 'SKIPPED ⏭️' }}
+
+            ── UI Tests (@Smoke) ────────────────────────────
+            Result: ${{ steps.run_ui_tests.outcome == 'success' && 'PASSED ✅' || steps.run_ui_tests.outcome == 'failure' && 'FAILED ❌' || 'SKIPPED ⏭️' }}
+
+            ────────────────────────────────────────────────
+            Branch:      ${{ github.ref_name }}
+            Commit:      ${{ github.sha }}
+            Triggered by: ${{ github.actor }}
+
+            The full HTML report is attached as a ZIP file.
+            Unzip it and open index.html in your browser to view.
+
+            View run on GitHub:
+            ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          attachments: playwright-report.zip
