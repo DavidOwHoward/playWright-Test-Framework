@@ -112,7 +112,7 @@ export class ReportsPage {
 
         await reportOption.click();
         await expect(this.reportsPageArea).toBeVisible();
-        await expect(this.reportsPageArea).not.toHaveClass(/trv-error/, { timeout: 10000 });
+        await expect(this.reportsPageArea, `Check to see if report loads with no errors`).not.toHaveClass(/trv-error/, { timeout: 10000 });
 
 
     }
