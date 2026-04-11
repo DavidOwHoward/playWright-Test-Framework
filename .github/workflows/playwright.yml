@@ -27,16 +27,8 @@ jobs:
     timeout-minutes: 60
 
     env:
-      CI: true
-      BASE_URL: ${{ secrets.BASE_URL }}
-      API_BASE_URL: ${{ secrets.API_BASE_URL }}
-      DEFAULT_USERNAME: ${{ secrets.DEFAULT_USERNAME }}
-      DEFAULT_PASSWORD: ${{ secrets.DEFAULT_PASSWORD }}
-      SQL_SERVER: ${{ secrets.SQL_SERVER }}
-      SQL_DATABASE: ${{ secrets.SQL_DATABASE }}
-      SQL_USERNAME: ${{ secrets.SQL_USERNAME }}
-      SQL_PASSWORD: ${{ secrets.SQL_PASSWORD }}
-
+      CI: true     
+      
     steps:
       - name: Checkout
         uses: actions/checkout@v4
