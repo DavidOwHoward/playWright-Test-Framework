@@ -27,7 +27,13 @@ jobs:
     timeout-minutes: 60
 
     env:
-      CI: true     
+      CI: true
+      defaultPassword: ${{ secrets.DEFAULTPASSWORD }}
+      sqlUserName: ${{ secrets.SQLUSERNAME }}
+      sqlPassword: ${{ secrets.SQLPASSWORD }}
+      sqlServer: ${{ secrets.SQLSERVER }}
+      sqlDatabase: ${{ secrets.SQLDATABASE }}
+      NODE_TLS: ${{ secrets.NODETLS }}
       
     steps:
       - name: Checkout
