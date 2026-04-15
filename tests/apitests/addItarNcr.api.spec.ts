@@ -2,6 +2,7 @@ import { test, expect } from "@playwright/test";
 import { getAccessToken } from "../../helpers/getTokenApi";
 import { users } from "../../config/user";
 import { itarNCRPayload } from "../../testFiles/apiPayloads/itarNCR";
+import * as apiExpect from "../../helpers/api/ApiAssertions";
 
 test("Itar Security Workflow", { tag: ["@Api", "@Smoke"] }, async ({ request }) => {
   let id: number;
@@ -14,10 +15,7 @@ test("Itar Security Workflow", { tag: ["@Api", "@Smoke"] }, async ({ request }) 
       data: itarNCRPayload,
     });
 
-    expect(
-      response.status(),
-      `Expected successful 200 response, got ${response.status()}`,
-    ).toBe(200);
+    expect(response.status(),`Expected successful 200 response, got ${response.status()}`,).toBe(200);
 
     const body = await response.json();
     expect(body).toBeDefined();
@@ -34,9 +32,8 @@ test("Itar Security Workflow", { tag: ["@Api", "@Smoke"] }, async ({ request }) 
       },
     });
 
-    expect(
-      response.status(),
-      `Expected 403 response for ITAR restricted record, got ${response.status()}`,
-    ).toBe(403);
+    const body = await response.text();
+    expect(response.status(),`Expected 403 response for ITAR restricted record, got ${response.status()}`,).toBe(403);
+    expect(body, `Validate the response contains the correct error message`).toContain("The current user is not allowed to see this record.");
   });
 });
