@@ -78,8 +78,8 @@ export class FileField extends FieldComponent {
         
         await this.ensureReady();
         await this.checkOutButton().click();
-        await expect(this.checkOutDialog().root, "Assert that Check Out dialog is visible").toBeVisible();
-        await this.checkOutDialog().yes.click();
+        await expect(this.checkOutDialog().root, "Assert that Check Out dialog is visible").toBeVisible();        
+        await this.checkOutDialog().button("Yes").click();
         await expect(this.checkInButton(), "Assert that Check In button is visible after checking out file").toBeVisible();
     };
 
@@ -88,7 +88,7 @@ export class FileField extends FieldComponent {
         await this.ensureReady();
         await this.checkInButton().click();
         await expect(this.checkInDialog().root, "Assert that Check In dialog is visible").toBeVisible();
-        await this.checkInDialog().yes.click();
+        await this.checkInDialog().button("Yes").click();
         await expect(this.checkOutButton(), "Assert that Check Out button is visible after checking in file").toBeVisible();
 
     };
