@@ -33,7 +33,7 @@ jobs:
       sqlPassword: ${{ secrets.SQLPASSWORD }}
       sqlServer: ${{ secrets.SQLSERVER }}
       sqlDatabase: ${{ secrets.SQLDATABASE }}
-      NODE_TLS: ${{ secrets.NODETLS }}
+      NODETLS: ${{ secrets.NODETLS }}
       
     steps:
       - name: Checkout
